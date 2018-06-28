@@ -1,0 +1,12 @@
+$theme-color:#4A90E2;
+
+$button-default-color: $theme-color;
+$button-default-background-color: #ddd;
+
+$button-primary-color: #fff;
+$button-primary-background-color: $theme-color;
+
+$button-ghost-color: $theme-color;
+$button-ghost-background-color: #fff;
+
+@import 'base';
