@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import Demo from '@/components/demo'
+import Demo from './routers/demo'
 
 import Accordion from '../src/components/accordion'
 import AccordionItem from '../src/components/accordionItem'
