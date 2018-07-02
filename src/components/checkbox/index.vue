@@ -1,89 +1,123 @@
 <template>
-  <div class="sq-checkbox-wrap" >
-    <div class="sq-checkbox__checkbox" :class="[name === saveName ? 'sq-checkbox__checked' : '']" @click="$_click">
-      <input type="checkbox" name="" :id="id">
-    </div>
-    <div class="sq-checkbox__text">
-      <label :for="id" style="height: 100%;display: inline-block;" @click="$_click">
+  <span class="sq-checkbox" :class="checkboxClasses">
+    <span @click="change" class="sq-checkbox-wrap">
+      <span class="sq-checkbox-icon" :class="checkboxIconClasses"></span>
+      <span class="sq-checkbox-text">
         <slot></slot>
-      </label>
-    </div>
-  </div>
+      </span>
+    </span>
+  </span>
 </template>
 
 <script>
 export default {
+  /**
+   * name在checkboxGroup组件逻辑引用，若修改name值，则checkboxGroup中需相应修改
+   */
   name: 'sq-checkbox',
 
   props: {
+    borderType: {
+      type: String,
+      default: 'round', // 默认圆形，可设置正方形
+      validator (value) {
+        return ['round', 'square'].indexOf(value) > -1
+      }
+    },
     name: {
+      type: null,
       required: true
     },
-    value: {
+    disabled: {
       type: Boolean,
       default: false
     }
   },
 
+  computed: {
+    isGroupDisabled () {
+      return this.$parent.disabled
+    },
+    checkboxClasses () {
+      return {
+        'sq-checkbox-disabled': this.disabled
+      }
+    },
+    checkboxIconClasses () {
+      return {
+        'sq-checkbox-checked': this.name === this.currentValue.filter(item => { return this.name === item })[0],
+        'sq-checkbox-square': this.borderType === 'square',
+        'sq-checkbox-checked-disabled': this.isGroupDisabled || this.disabled
+      }
+    }
+  },
+
   data () {
     return {
-      saveName: this.name,
-      id: Math.random()
+      currentValue: []
     }
   },
 
   methods: {
-    $_click (event) {
-      this.$emit('input', !this.value)
+    change () {
+      if (this.disabled || this.isGroupDisabled) return
+      this.$parent.update(this.name)
     }
+  },
+
+  mounted () {
+    this.$parent.update()
   }
 }
 
 </script>
 <style lang='scss'>
-.sq-checkbox-wrap {
-  display: inline-flex;
-  vertical-align: middle;
-  .sq-checkbox__checkbox {
-    margin-right: 6px;
-    position: relative;
-    input[type="checkbox"] {
-      margin: 0;
-      visibility: hidden;
-    }
+@import '../../assets/style/components/var.scss';
+
+.sq-checkbox {
+  display: inline-block;
+  &-wrap {
+    display: flex;
+    align-items: baseline;
+  }
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background: #ffffff;
+    transform: translateY(-2px);
+    border: 1px solid #ccc;
+    box-sizing: border-box;
     &::before {
       content: '';
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      background-color: #D8D8D8;// #0097DF;
-      position: absolute;
-      left: -2px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-radius: 50%;
-    }
-    &::after {
-      content: "";
-      display: inline-block;
-      width: 4px;
-      height: 8px;
-      position: absolute;
-      top: 50%;
-      margin-top: -3px;
-      left: 0;
-      border: 2px solid #eee;
+      width: .25em;
+      height: .5em;
+      border: 2px solid #fff;
       border-top: 0;
       border-left: 0;
-      transform: rotate(45deg) translateY(-50%) scale(0);
-      transition: all .2s ease-in-out;
+      transition: transform .2s ease-in-out;
+      transform: rotate(45deg) scale(0) translateY(-1px) translateX(-1px);
     }
   }
-}
-.sq-checkbox__checked.sq-checkbox__checkbox::before {
-  background-color: #0097DF;
-}
-.sq-checkbox__checked.sq-checkbox__checkbox::after {
-  transform: rotate(45deg) translateY(-50%) scale(1);
+  &-checked {
+    background-color: $theme-color;
+    border-color: $theme-color;
+    &.sq-checkbox-checked-disabled {
+      background-color: #ccc;
+      border-color: #ccc;
+    }
+    &.sq-checkbox-icon {
+      &::before {
+        transform: rotate(45deg) scale(1) translateY(-1px) translateX(-1px);
+      }
+    }
+  }
+  &-text {
+    display: inline-block;
+    margin-left: 6px;
+  }
 }
 </style>

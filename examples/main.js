@@ -14,6 +14,8 @@ import Button from '../src/components/button'
 import Carlicense from '../src/components/carlicense'
 import Cell from '../src/components/cell'
 import CellGroup from '../src/components/cellGroup'
+import Checkbox from '../src/components/checkbox'
+import CheckboxGroup from '../src/components/checkboxGroup'
 import ChildinsuranceCell from '../src/components/childinsuranceCell'
 import CitySelector from '../src/components/citySelector'
 import Datepicker from '../src/components/datepicker'
@@ -47,6 +49,8 @@ const components = [
   Carlicense,
   Cell,
   CellGroup,
+  Checkbox,
+  CheckboxGroup,
   ChildinsuranceCell,
   CitySelector,
   Datepicker,

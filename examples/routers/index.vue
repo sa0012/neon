@@ -37,6 +37,7 @@ export default {
       ],
       // 表单
       list2: [
+        { to: 'checkbox', name: 'Checkbox - 多选框' },
         { to: 'field', name: 'Field - 输入框' },
         { to: 'radio', name: 'Radio - 单选框' },
         { to: 'switch', name: 'Switch - 开关' }

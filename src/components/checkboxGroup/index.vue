@@ -1,16 +1,16 @@
 <template>
-  <span class="sq-radio-group" :class="classes">
+  <span class="sq-checkbox-group" :class="classes">
     <slot></slot>
   </span>
 </template>
 
 <script>
 export default {
-  name: 'sq-radio-group',
+  name: 'sq-checkbox-group',
 
   props: {
     value: {
-      type: null,
+      type: Array,
       required: true
     },
     disabled: {
@@ -28,9 +28,9 @@ export default {
   computed: {
     classes () {
       return [
-        this.type ? `sq-radio-group-${this.type}` : '',
+        this.type ? `sq-checkbox-group-${this.type}` : '',
         {
-          'sq-radio-group-disabled': this.disabled
+          'sq-checkbox-group-disabled': this.disabled
         }
       ]
     }
@@ -38,20 +38,29 @@ export default {
 
   methods: {
     getChildrens () {
-      return this.$children.filter(item => item.$options.name === 'sq-radio')
+      return this.$children.filter(item => item.$options.name === 'sq-checkbox')
     },
 
     update (currentValue) {
       if (currentValue) {
-        this.$emit('input', currentValue)
+        if (this.value.includes(currentValue)) {
+          let flag = 0
+          this.value.forEach((item, index) => {
+            if (item === currentValue) {
+              flag = index
+            }
+          })
+          this.value.splice(flag, 1)
+        } else {
+          this.value.push(currentValue)
+        }
+        this.$emit('input', this.value)
         return
       }
       const children = this.getChildrens()
 
       children.forEach(item => {
-        if (this.value === item.name) {
-          item.currentValue = this.value
-        }
+        item.currentValue = this.value
       })
     }
   },
@@ -73,24 +82,24 @@ export default {
 <style lang="scss">
 @import '../../assets/style/mixins.scss';
 
-.sq-radio-group {
+.sq-checkbox-group {
   &-cell,
   &-cell-between {
     display: block;
-    .sq-radio {
+    .sq-checkbox {
       display: block;
       background-color: #ffffff;
       height: 48px;
       line-height: 48px;
       padding: 0 16px;
-      &~.sq-radio {
+      &~.sq-checkbox {
         @include mix-1px($top: 1, $position-left: 16px);
       }
     }
   }
   &-cell-between {
-    .sq-radio {
-      .sq-radio-wrap {
+    .sq-checkbox {
+      .sq-checkbox-wrap {
         justify-content: space-between;
         flex-direction: row-reverse;
       }

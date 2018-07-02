@@ -29,8 +29,14 @@
       <sq-radio name="hmg">哈密瓜</sq-radio>
     </sq-radio-group>
 
-    <p>列表样式</p>
+    <p>默认列表样式</p>
     <sq-radio-group v-model="value5" type="cell" @change="change">
+      <sq-radio name="pg">苹果</sq-radio>
+      <sq-radio name="xj">香蕉</sq-radio>
+      <sq-radio name="hmg" disabled>哈密瓜</sq-radio>
+    </sq-radio-group>
+    <p>列表样式</p>
+    <sq-radio-group v-model="value5" type="cell-between" @change="change">
       <sq-radio name="pg">苹果</sq-radio>
       <sq-radio name="xj">香蕉</sq-radio>
       <sq-radio name="hmg" disabled>哈密瓜</sq-radio>

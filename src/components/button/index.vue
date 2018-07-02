@@ -4,15 +4,18 @@
     :class="classes"
     :disabled="disabled"
     :style="{'backgroundColor':disabled ? '#ddd' : ''}"
-    @click="handleClick">
+    @click="handleClick"
+  >
     <!-- <Icon class="ivu-load-loop" type="load-c" v-if="loading"></Icon> -->
     <!-- <Icon :type="icon" v-if="icon && !loading"></Icon> -->
-    <span class="sq-btn-icon" v-if="icon || $slots.icon">
-      <slot name="icon">
-        <!-- <i v-if="icon" class="sq-icon" :class="'sq-icon-' + icon"></i> // 显示自己icon库里的图标-->
-      </slot>
-    </span>
-    <span class="sq-btn-text"><slot></slot></span>
+    <div class="sq-btn-wrap">
+      <span class="sq-btn-icon" v-if="icon || $slots.icon">
+        <slot name="icon">
+          <i v-if="icon" class="iconfont" :class="'icon-' + icon"></i>
+        </slot>
+      </span>
+      <span class="sq-btn-text"><slot></slot></span>
+    </div>
   </button>
 </template>
 
