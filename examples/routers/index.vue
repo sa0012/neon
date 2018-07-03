@@ -46,7 +46,7 @@ export default {
       list3: [
         { to: 'actionsheet', name: 'Actionsheet - 行动按钮' },
         { to: 'dialog', name: 'Dialog - 对话框' },
-        { to: 'datepicker', name: 'Datepicker - 日期选择' },
+        { to: 'datePicker', name: 'DatePicker - 日期选择' },
         { to: 'picker', name: 'Picker - 选择器' },
         { to: 'toast', name: 'Toast - 轻提示' }
       ],

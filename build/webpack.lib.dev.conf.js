@@ -11,12 +11,12 @@ delete baseWebpackConfig.output
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    'isc-mui': path.resolve(__dirname, '../src/index.js')
+    'neon': path.resolve(__dirname, '../src/index.js')
   },
   output: {
     path: path.resolve(__dirname, '../lib'),
     filename: '[name].js',
-    library: 'isc-mui',
+    library: 'neon',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },

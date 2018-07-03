@@ -15,7 +15,7 @@ export default new Router({
     { path: '/icon', meta: { name: '图标' }, component: () => import('../routers/icon.vue') },
     { path: '/accordion', meta: { name: '折叠面板' }, component: () => import('../routers/accordion.vue') },
     { path: '/switch', meta: { name: '开关' }, component: () => import('../routers/switch.vue') },
-    { path: '/datepicker', meta: { name: '日期选择' }, component: () => import('../routers/datepicker.vue') },
+    { path: '/datePicker', meta: { name: '日期选择' }, component: () => import('../routers/datePicker.vue') },
     { path: '/loadmore', meta: { name: '加载更多' }, component: () => import('../routers/loadmore.vue') },
     { path: '/citySelector', meta: { name: '城市选择' }, component: () => import('../routers/citySelector.vue') },
     { path: '/noticeBar', meta: { name: '通告栏' }, component: () => import('../routers/noticeBar.vue') },

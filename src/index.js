@@ -8,7 +8,7 @@ import Cell from '@/components/cell'
 import CellGroup from '@/components/cellGroup'
 import ChildinsuranceCell from '@/components/childinsuranceCell'
 import CitySelector from '@/components/citySelector'
-import Datepicker from '@/components/datepicker'
+import DatePicker from '@/components/datePicker'
 import Field from '@/components/field'
 import Fieldgroup from '@/components/fieldGroup'
 import Loadmore from '@/components/loadmore'
@@ -39,7 +39,7 @@ const components = [
   CellGroup,
   ChildinsuranceCell,
   CitySelector,
-  Datepicker,
+  DatePicker,
   Field,
   Fieldgroup,
   Loadmore,
@@ -79,7 +79,7 @@ export {
   CellGroup,
   ChildinsuranceCell,
   CitySelector,
-  Datepicker,
+  DatePicker,
   Field,
   Fieldgroup,
   Loadmore,

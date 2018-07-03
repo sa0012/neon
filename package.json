@@ -5,6 +5,8 @@
   "author": "insaicFE",
   "main": "lib/index.js",
   "scripts": {
+    "dev-doc": "cd document && npm run dev",
+    "build-doc": "npm run build:exam && cd document && npm run build",
     "dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
@@ -67,6 +69,7 @@
     "vue-router": "^3.0.1",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
+    "vuepress": "^0.10.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
