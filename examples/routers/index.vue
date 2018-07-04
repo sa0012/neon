@@ -8,60 +8,33 @@
       </a>
     </div>
     <h5 class="title">上汽保险移动端Vue组件库</h5>
-    <sq-demo title="基础组件" :list="list1" v-model="isShow1"></sq-demo>
-    <sq-demo title="表单组件" :list="list2" v-model="isShow2"></sq-demo>
-    <sq-demo title="操作反馈" :list="list3" v-model="isShow3"></sq-demo>
+    <sq-demo title="基础组件" :list="base" v-model="isShow1"></sq-demo>
+    <sq-demo title="表单组件" :list="form" v-model="isShow2"></sq-demo>
+    <sq-demo title="操作反馈" :list="action" v-model="isShow3"></sq-demo>
     <!-- <sq-drop title="高阶组件" :list="list4" v-model="isShow4"></sq-drop> -->
-    <sq-demo title="业务组件" :list="list5" v-model="isShow5"></sq-demo>
+    <sq-demo title="业务组件" :list="business" v-model="isShow5"></sq-demo>
   </div>
 </template>
 
 <script>
+import menu from '../menu.js'
+
 export default {
   name: 'App',
   data () {
     return {
       // 基础
-      list1: [
-        { to: 'accordion', name: 'Accordion - 折叠面板' },
-        { to: 'button', name: 'Button - 按钮' },
-        { to: 'cell', name: 'Cell - 单元格' },
-        { to: 'icon', name: 'Icon - 图标' },
-        { to: 'loadmore', name: 'Loadmore - 加载更多' },
-        { to: 'noticeBar', name: 'NoticeBar - 通告栏' },
-        { to: 'popup', name: 'Popup - 弹出层' },
-        { to: 'stepper', name: 'Stepper - 步进器' },
-        { to: 'swiper', name: 'Swiper - 轮播' },
-        { to: 'tabs', name: 'Tabs - 标签页' },
-        { to: 'tag', name: 'Tag - 标记' }
-      ],
+      base: menu.base,
       // 表单
-      list2: [
-        { to: 'checkbox', name: 'Checkbox - 多选框' },
-        { to: 'field', name: 'Field - 输入框' },
-        { to: 'radio', name: 'Radio - 单选框' },
-        { to: 'switch', name: 'Switch - 开关' }
-      ],
+      form: menu.form,
       // 操作反馈
-      list3: [
-        { to: 'actionsheet', name: 'Actionsheet - 行动按钮' },
-        { to: 'dialog', name: 'Dialog - 对话框' },
-        { to: 'datePicker', name: 'DatePicker - 日期选择' },
-        { to: 'picker', name: 'Picker - 选择器' },
-        { to: 'toast', name: 'Toast - 轻提示' }
-      ],
+      action: menu.action,
       // // 高阶组件
       // list4: [
       //   { to: 'carLicense', name: 'carLicense22' },
       // ],
       // 业务组件
-      list5: [
-        { to: 'agree', name: 'Agree - 勾选按钮' },
-        { to: 'carLicense', name: 'CarLicense - 车牌录入键盘' },
-        { to: 'childinsuranceCell', name: 'ChildinsuranceCell - 子险列表' },
-        { to: 'citySelector', name: 'CitySelector - 城市选择' },
-        { to: 'submitBar', name: 'SubmitBar - 提交订单栏' }
-      ],
+      business: menu.business,
       isShow1: false,
       isShow2: false,
       isShow3: false,
