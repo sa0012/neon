@@ -1,5 +1,8 @@
 @import './var';
-.sq-btn {
+
+$prefixCls: sq-btn;
+
+.#{$prefixCls} {
   display: inline-block;
   position: relative;
   outline: 0;
@@ -60,14 +63,16 @@
     font-size: 14px;
   }
   // icon
-  .sq-btn-icon {
+  &-icon {
     .iconfont {
       font-size: inherit;
     }
     img {
       vertical-align: middle;
+      width: 1em;
+      height: 1em;
     }
-    &+.sq-btn-text {
+    & + .#{$prefixCls}-text {
       margin-left: 4px;
     }
   }

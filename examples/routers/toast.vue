@@ -1,9 +1,14 @@
 <template>
   <div class="demo-page-wrap">
-    <sq-button type="primary" @click="showToast">默认3s关闭关闭</sq-button>
-    <sq-button type="primary" @click="showToastsuccess">成功</sq-button>
-    <sq-button type="primary" @click="showToasterror">-1,不关闭，通过JS关闭</sq-button>
-    <sq-button type="primary" @click="showTloading">loading</sq-button>
+    <demo-title>消息提示</demo-title>
+    <sq-button type="primary" size="small" @click="showToast">消息提示</sq-button>
+
+    <demo-title>成功/失败提示</demo-title>
+    <sq-button type="primary" size="small" @click="showSuccess">成功提示</sq-button>
+    <sq-button type="primary" size="small" @click="showError">失败提示</sq-button>
+
+    <demo-title>加载提示</demo-title>
+    <sq-button type="primary" size="small" @click="showLoading">加载提示</sq-button>
   </div>
 </template>
 
@@ -20,23 +25,23 @@ export default {
     showToast () {
       this.$toast.text('测试~~')
     },
-    showToastsuccess () {
-      this.$toast.success('测试~~showToastsuccess', 2000)
+    showSuccess () {
+      this.$toast.success('操作成功', 2000)
     },
-    showToasterror () {
-      this.$toast.error('测试~~showToasterror', -1)
+    showError () {
+      this.$toast.error('5秒后关闭', -1)
       setTimeout(() => {
         this.$toast.hide(() => {
           console.log(22)
         })
       }, 5000)
     },
-    showTloading () {
-      this.$toast.loading('测试~~loading')
+    showLoading () {
+      this.$toast.loading('加载中..')
     }
   }
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 </style>

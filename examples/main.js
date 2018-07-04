@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 
 import Demo from './routers/demo'
+import DemoTitle from './routers/demoTitle'
 
 import Accordion from '@/components/accordion'
 import AccordionItem from '@/components/accordionItem'
@@ -55,6 +56,7 @@ const components = [
   CitySelector,
   DatePicker,
   Demo,
+  DemoTitle,
   Field,
   Fieldgroup,
   Loadmore,

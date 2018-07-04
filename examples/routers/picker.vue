@@ -1,23 +1,24 @@
 <template>
   <div class="demo-page-wrap">
-    <h4>['']数据形式</h4>
+    <demo-title>单列形式 -- ['']数据结构</demo-title>
     <sq-picker
       :columns="list1"
       @on-change="onChange"
     />
-    <h4>[[''],['']]数据形式</h4>
+
+    <demo-title>多列形式 -- [[''],['']]数据结构</demo-title>
     <sq-picker
       :columns="list2"
       @on-change="onChange"
     />
-    <h4>[{},{}]数据形式</h4>
+    <demo-title>多列形式 -- [{},{}]数据结构</demo-title>
     <sq-picker
       :columns="list3"
       @on-change="onChange"
       value-key="label"
     />
 
-    <h4>联动形式</h4>
+    <demo-title>联动形式</demo-title>
     <sq-picker
       show-toolbar
       :columns="list4"
@@ -27,14 +28,14 @@
       @on-change="handleChange"
     />
     
-    <h4>异步请求loading</h4>
+    <demo-title>loading状态</demo-title>
     <sq-picker
       :columns="list0"
       :loading="true"
     />
 
-    <h4>搭配popup使用</h4>
-    <sq-button type="primary" @click="isShow = !isShow">show</sq-button>
+    <demo-title>搭配popup使用</demo-title>
+    <sq-button type="primary" size="small" @click="isShow = !isShow">show</sq-button>
     <sq-popup v-model="isShow" position="bottom">
       <sq-picker
         show-toolbar
@@ -340,5 +341,5 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 </style>

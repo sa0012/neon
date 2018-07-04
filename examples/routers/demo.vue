@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 a {
   color: #000;
   text-decoration: none;

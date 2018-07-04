@@ -3,7 +3,7 @@
     :type="htmlType"
     :class="classes"
     :disabled="disabled"
-    :style="{'backgroundColor':disabled ? '#ddd' : ''}"
+    :style="{'opacity':disabled ? '.5' : ''}"
     @click="handleClick"
   >
     <!-- <Icon class="ivu-load-loop" type="load-c" v-if="loading"></Icon> -->

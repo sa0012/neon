@@ -1,10 +1,11 @@
 <template>
   <div class="demo-page-wrap">
-    <h4>alert</h4>
-    <sq-button type="primary" @click="showToast">alert</sq-button>
+    <demo-title>消息提示</demo-title>
+    <sq-button type="primary" size="small" @click="showToast1">Alert</sq-button>
+    <sq-button type="primary" size="small" @click="showToast2">带标题Alert</sq-button>
 
-    <h4>confirm</h4>
-    <sq-button type="primary" @click="showToastsuccess">confirm</sq-button>
+    <demo-title>消息确认</demo-title>
+    <sq-button type="primary" size="small" @click="showToastsuccess">Confirm</sq-button>
   </div>
 </template>
 
@@ -18,9 +19,19 @@ export default {
   },
 
   methods: {
-    showToast () {
+    showToast1 () {
       this.$dialog.alert({
         title: '',
+        message: '测试~~message',
+        onConfirm: () => {
+          console.log('点击了alert确认按钮')
+          this.$dialog.hide()
+        }
+      })
+    },
+    showToast2 () {
+      this.$dialog.alert({
+        title: '系统提示',
         message: '测试~~message',
         onConfirm: () => {
           console.log('点击了alert确认按钮')
@@ -46,5 +57,5 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 </style>

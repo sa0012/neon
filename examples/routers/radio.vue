@@ -1,47 +1,48 @@
 <template>
-  <div class="">
-    <!-- demo-page-wrap -->
-    <p>
+  <div>
+    <p style="padding-left:15px;">
       <sq-radio-group v-model="value1" @change="change">
         <sq-radio name="pt">普通</sq-radio>
       </sq-radio-group>
     </p>
-    <p>
+    <p style="padding-left:15px;">
       <sq-radio-group v-model="value2" @change="change">
         <sq-radio name="mrxz">默认选中</sq-radio>
       </sq-radio-group>
     </p>
-    <p>
+    <p style="padding-left:15px;">
       <sq-radio-group v-model="value3" disabled @change="change">
         <sq-radio name="jy">禁用</sq-radio>
       </sq-radio-group>
     </p>
-    <p>
+    <p style="padding-left:15px;">
       <sq-radio-group v-model="value4" disabled @change="change">
         <sq-radio name="xzqjy">选中且禁用</sq-radio>
       </sq-radio-group>
     </p>
     
-    <p>禁用状态</p>
-    <sq-radio-group v-model="radioValue" @change="change" :disabled="radioDisabled">
+    <demo-title left>禁用状态</demo-title>
+    <sq-radio-group style="padding-left:15px;" v-model="radioValue" @change="change" :disabled="radioDisabled">
       <sq-radio name="pg">苹果</sq-radio>
       <sq-radio name="xj">香蕉</sq-radio>
       <sq-radio name="hmg">哈密瓜</sq-radio>
     </sq-radio-group>
 
-    <p>默认列表样式</p>
+    <demo-title left>列表 cell 样式</demo-title>
     <sq-radio-group v-model="value5" type="cell" @change="change">
       <sq-radio name="pg">苹果</sq-radio>
       <sq-radio name="xj">香蕉</sq-radio>
       <sq-radio name="hmg" disabled>哈密瓜</sq-radio>
     </sq-radio-group>
-    <p>列表样式</p>
+
+    <demo-title left>列表 cell-between 样式</demo-title>
     <sq-radio-group v-model="value5" type="cell-between" @change="change">
       <sq-radio name="pg">苹果</sq-radio>
       <sq-radio name="xj">香蕉</sq-radio>
       <sq-radio name="hmg" disabled>哈密瓜</sq-radio>
     </sq-radio-group>
-    <p>列表禁用状态</p>
+
+    <demo-title left>列表禁用状态</demo-title>
     <sq-radio-group v-model="value5" type="cell" @change="change" :disabled="radioDisabled">
       <sq-radio name="pg">苹果</sq-radio>
       <sq-radio name="xj">香蕉</sq-radio>
@@ -74,5 +75,5 @@ export default {
 }
 
 </script>
-<style lang='scss' scoped>
+<style lang='scss'>
 </style>

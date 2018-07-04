@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $theme-color: #4a90e2;
 
 .demo-icon-row {

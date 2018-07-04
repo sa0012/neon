@@ -244,36 +244,39 @@ export default {
   },
 
   watch: {
-    carNumber () {
-      if (this.carNumber.length === 0) {
-        !this.isNumKeyDisabled && (this.isNumKeyDisabled = true)
-        this.isEnKeyDisabled && (this.isEnKeyDisabled = false)
-        this.isShowDelIcon && (this.isShowDelIcon = false)
-      }
+    carNumber: {
+      handler () {
+        if (this.carNumber.length === 0) {
+          !this.isNumKeyDisabled && (this.isNumKeyDisabled = true)
+          this.isEnKeyDisabled && (this.isEnKeyDisabled = false)
+          this.isShowDelIcon && (this.isShowDelIcon = false)
+        }
 
-      if (this.carNumber.length > 0) {
-        this.isNumKeyDisabled && (this.isNumKeyDisabled = false)
-        !this.isEnKeyDisabled && (this.isEnKeyDisabled = true)
-        this.carNumber.length > 1 && !this.isShowDelIcon && (this.isShowDelIcon = true)
-        this.carNumber.length === 1 && this.isShowDelIcon && (this.isShowDelIcon = false)
-      }
+        if (this.carNumber.length > 0) {
+          this.isNumKeyDisabled && (this.isNumKeyDisabled = false)
+          !this.isEnKeyDisabled && (this.isEnKeyDisabled = true)
+          this.carNumber.length > 1 && !this.isShowDelIcon && (this.isShowDelIcon = true)
+          this.carNumber.length === 1 && this.isShowDelIcon && (this.isShowDelIcon = false)
+        }
 
-      // this.carNumber 为 第2 到 第8位
-      // 严格校验新能源车牌号码的约束规则：
-      // 沪【第1位】  A【第2位】  D【第3位】  K【第4位】   1【第5位】   2【第6位】   3【第7位】   4【第8位】
-      // 当第3位为D/F时，第4位可字母和数字，第5-8位必须纯数字；
-      // 当第8位为D/F时，第3-7位必须纯数字；
-      if (this.carNumber.length === 7 && (/[A-Z][DF][0-9A-Z]\d{4}/.test(this.carNumber) || /[A-Z]\d{5}[DF]/.test(this.carNumber))) {
-        this.hasEnergyText = true
-      } else {
-        this.hasEnergyText && (this.hasEnergyText = false)
-      }
+        // this.carNumber 为 第2 到 第8位
+        // 严格校验新能源车牌号码的约束规则：
+        // 沪【第1位】  A【第2位】  D【第3位】  K【第4位】   1【第5位】   2【第6位】   3【第7位】   4【第8位】
+        // 当第3位为D/F时，第4位可字母和数字，第5-8位必须纯数字；
+        // 当第8位为D/F时，第3-7位必须纯数字；
+        if (this.carNumber.length === 7 && (/[A-Z][DF][0-9A-Z]\d{4}/.test(this.carNumber) || /[A-Z]\d{5}[DF]/.test(this.carNumber))) {
+          this.hasEnergyText = true
+        } else {
+          this.hasEnergyText && (this.hasEnergyText = false)
+        }
 
-      if (this.carNumber.length === 6 || this.carNumber.length === 7) {
-        this.closeBtnText !== '完成' && (this.closeBtnText = '完成')
-      } else {
-        this.closeBtnText === '完成' && (this.closeBtnText = this.closeButtonText)
-      }
+        if (this.carNumber.length === 6 || this.carNumber.length === 7) {
+          this.closeBtnText !== '完成' && (this.closeBtnText = '完成')
+        } else {
+          this.closeBtnText === '完成' && (this.closeBtnText = this.closeButtonText)
+        }
+      },
+      immediate: true
     }
   },
 
