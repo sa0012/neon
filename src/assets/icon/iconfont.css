@@ -14,6 +14,24 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@keyframes animationloading {
+  0% {
+      transform: rotate(0)
+  }
+
+  50% {
+      transform: rotate(180deg)
+  }
+
+  to {
+      transform: rotate(1turn)
+  }
+}
+
+.icon-loading {
+  display: inline-block;
+  animation: animationloading .8s linear infinite;
+}
 
 .icon-circle-left:before { content: "\e60a"; }
 

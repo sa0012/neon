@@ -7,8 +7,8 @@
         :bottom-fun="getData"
         :is-finished-load="isFinishedLoad"
       >
-        <ul>
-          <li v-for="(index) in list" :key="index" >
+        <ul class="ul">
+          <li class="li" v-for="(index) in list" :key="index" >
             {{ index }}
           </li>
         </ul>
@@ -66,12 +66,12 @@ export default {
   margin: 0;
   background: bisque;
 }*/
-ul {
+.ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
-li {
+.li {
   display: block;
   margin: 0;
   height: 50px;
@@ -79,17 +79,5 @@ li {
   text-align: center;
   border-bottom: 1px solid #ccc;
   box-sizing: border-box;
-  /* background: 0px 0px / cover no-repeat; */
 }
-img {
-  width: 100%;
-  height: 400px;
-}
-a {
-  color: #42b983;
-}
-
-/* .is-transition {
-  transition: transform 0.3s linear;
-} */
 </style>

@@ -8,8 +8,12 @@ import Cell from '@/components/cell'
 import CellGroup from '@/components/cellGroup'
 import ChildinsuranceCell from '@/components/childinsuranceCell'
 import CitySelector from '@/components/citySelector'
+<<<<<<< HEAD
 import ChooseCar from '@/components/chooseCar'
 import Datepicker from '@/components/datepicker'
+=======
+import DatePicker from '@/components/datePicker'
+>>>>>>> 98462385003535195de676a0622b164cd16ce813
 import Field from '@/components/field'
 import Fieldgroup from '@/components/fieldGroup'
 import Loadmore from '@/components/loadmore'
@@ -18,6 +22,7 @@ import Picker from '@/components/picker'
 import Popup from '@/components/popup'
 import Radio from '@/components/radio'
 import RadioGroup from '@/components/radioGroup'
+import Sendcode from '@/components/sendcode'
 import Stepper from '@/components/stepper'
 import SubmitBar from '@/components/submitBar'
 import Swiper from '@/components/swiper'
@@ -40,8 +45,12 @@ const components = [
   CellGroup,
   ChildinsuranceCell,
   CitySelector,
+<<<<<<< HEAD
   ChooseCar,
   Datepicker,
+=======
+  DatePicker,
+>>>>>>> 98462385003535195de676a0622b164cd16ce813
   Field,
   Fieldgroup,
   Loadmore,
@@ -50,6 +59,7 @@ const components = [
   Popup,
   Radio,
   RadioGroup,
+  Sendcode,
   Stepper,
   SubmitBar,
   Swiper,
@@ -81,8 +91,12 @@ export {
   CellGroup,
   ChildinsuranceCell,
   CitySelector,
+<<<<<<< HEAD
   ChooseCar,
   Datepicker,
+=======
+  DatePicker,
+>>>>>>> 98462385003535195de676a0622b164cd16ce813
   Field,
   Fieldgroup,
   Loadmore,
@@ -91,6 +105,7 @@ export {
   Popup,
   Radio,
   RadioGroup,
+  Sendcode,
   Stepper,
   SubmitBar,
   Swiper,

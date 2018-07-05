@@ -1,5 +1,6 @@
 build
 config
+document
 examples
 deploy.sh
 favicon.ico

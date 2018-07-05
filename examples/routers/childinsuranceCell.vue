@@ -1,12 +1,12 @@
 <template>
   <div class="childinsuranceCell-page">
+    <demo-title left>基础用法</demo-title>
     <sq-childinsurance-cell
       label="司机责任险"
       middle-text="不计免赔"
       right-text="投保"
       v-model="exemptSelected"
     />
-    <sq-button @click="click">{{ exemptSelected }}</sq-button>
   </div>
 </template>
 
@@ -28,5 +28,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

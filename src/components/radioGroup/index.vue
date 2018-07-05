@@ -20,7 +20,7 @@ export default {
     type: {
       type: String,
       validator (value) {
-        return ['button', 'cell'].indexOf(value) > -1
+        return ['button', 'cell', 'cell-between'].indexOf(value) > -1
       }
     }
   },
@@ -28,9 +28,9 @@ export default {
   computed: {
     classes () {
       return [
+        this.type ? `sq-radio-group-${this.type}` : '',
         {
-          'sq-radio-group-disabled': this.disabled,
-          'sq-radio-group-cell': this.type === 'cell'
+          'sq-radio-group-disabled': this.disabled
         }
       ]
     }
@@ -74,7 +74,8 @@ export default {
 @import '../../assets/style/mixins.scss';
 
 .sq-radio-group {
-  &-cell {
+  &-cell,
+  &-cell-between {
     display: block;
     .sq-radio {
       display: block;
@@ -82,12 +83,16 @@ export default {
       height: 48px;
       line-height: 48px;
       padding: 0 16px;
+      &~.sq-radio {
+        @include mix-1px($top: 1, $position-left: 16px);
+      }
+    }
+  }
+  &-cell-between {
+    .sq-radio {
       .sq-radio-wrap {
         justify-content: space-between;
         flex-direction: row-reverse;
-      }
-      &~.sq-radio {
-        @include mix-1px($top: 1, $position-left: 16px);
       }
     }
   }

@@ -5,37 +5,41 @@ import App from './App'
 import router from './router'
 
 import Demo from './routers/demo'
+import DemoTitle from './routers/demoTitle'
 
-import Accordion from '../src/components/accordion'
-import AccordionItem from '../src/components/accordionItem'
-import Actionsheet from '../src/components/actionsheet'
-import Agree from '../src/components/agree'
-import Button from '../src/components/button'
-import Carlicense from '../src/components/carlicense'
-import Cell from '../src/components/cell'
-import CellGroup from '../src/components/cellGroup'
-import ChildinsuranceCell from '../src/components/childinsuranceCell'
-import CitySelector from '../src/components/citySelector'
+import Accordion from '@/components/accordion'
+import AccordionItem from '@/components/accordionItem'
+import Actionsheet from '@/components/actionsheet'
+import Agree from '@/components/agree'
+import Button from '@/components/button'
+import Carlicense from '@/components/carlicense'
+import Cell from '@/components/cell'
+import CellGroup from '@/components/cellGroup'
+import Checkbox from '@/components/checkbox'
+import CheckboxGroup from '@/components/checkboxGroup'
+import ChildinsuranceCell from '@/components/childinsuranceCell'
+import CitySelector from '@/components/citySelector'
 import ChooseCar from '../src/components/chooseCar'
-import Datepicker from '../src/components/datepicker'
-import Field from '../src/components/field'
-import Fieldgroup from '../src/components/fieldGroup'
-import Loadmore from '../src/components/loadmore'
-import NoticeBar from '../src/components/noticeBar'
-import Picker from '../src/components/picker'
-import Popup from '../src/components/popup'
-import Radio from '../src/components/radio'
-import RadioGroup from '../src/components/radioGroup'
-import Stepper from '../src/components/stepper'
-import SubmitBar from '../src/components/submitBar'
-import Swiper from '../src/components/swiper'
-import Switch from '../src/components/switch'
-import Tabpane from '../src/components/tabpane'
-import Tabs from '../src/components/tabs'
-import Tag from '../src/components/tag'
+import DatePicker from '@/components/datePicker'
+import Field from '@/components/field'
+import Fieldgroup from '@/components/fieldGroup'
+import Loadmore from '@/components/loadmore'
+import NoticeBar from '@/components/noticeBar'
+import Picker from '@/components/picker'
+import Popup from '@/components/popup'
+import Radio from '@/components/radio'
+import RadioGroup from '@/components/radioGroup'
+import Sendcode from '@/components/sendcode'
+import Stepper from '@/components/stepper'
+import SubmitBar from '@/components/submitBar'
+import Swiper from '@/components/swiper'
+import Switch from '@/components/switch'
+import Tabpane from '@/components/tabpane'
+import Tabs from '@/components/tabs'
+import Tag from '@/components/tag'
 
-import Toast from '../src/components/toast'
-import Dialog from '../src/components/dialog'
+import Toast from '@/components/toast'
+import Dialog from '@/components/dialog'
 
 import '../src/assets/icon/iconfont.css'
 import Filter from './filter'
@@ -51,11 +55,14 @@ const components = [
   Carlicense,
   Cell,
   CellGroup,
+  Checkbox,
+  CheckboxGroup,
   ChildinsuranceCell,
   CitySelector,
   ChooseCar,
   Datepicker,
   Demo,
+  DemoTitle,
   Field,
   Fieldgroup,
   Loadmore,
@@ -64,6 +71,7 @@ const components = [
   Popup,
   Radio,
   RadioGroup,
+  Sendcode,
   Stepper,
   SubmitBar,
   Swiper,

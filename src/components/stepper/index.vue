@@ -12,6 +12,7 @@
         :readonly="readonlyInput"
         :disabled="isInputDisabled"
         @input="$_onInput"
+        :class="inputClasses"
       >
       <span class="sq-stepper-right" :class="addClasses" @click="$_add">
         <i class="iconfont icon-jia"></i>
@@ -52,6 +53,11 @@ export default {
           'sq-stepper-cut-disabled': this.isCutDisabled
         }
       ]
+    },
+    inputClasses () {
+      return {
+        'sq-stepper-input-disabled': this.readonlyInput
+      }
     },
     addClasses () {
       return [
@@ -171,13 +177,15 @@ export default {
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
   }
   &-input {
     position: relative;
     width: 40px;
     height: 27px;
-    margin: 0 5px;
-    padding: 0;
+    padding: 0 5px;
+    margin: 0;
     font-size: 16px;
     color: #333;
     text-align: center;
@@ -185,6 +193,10 @@ export default {
     outline: 0;
     -webkit-appearance: none;
   }
+  &-input-disabled {
+    background-color: rgba(201, 201, 201, .5);
+  }
+
   &-cut-disabled,
   &-add-disabled {
     border-color: #ccc;

@@ -1,14 +1,21 @@
 <template>
   <div class="demo-page-wrap">
-    <h4>true</h4>
+    <demo-title>选中状态</demo-title>
     <sq-switch v-model="isChecked1"/>
-    <h4>false</h4>
+
+    <demo-title>未选中状态</demo-title>
     <sq-switch v-model="isChecked2"/>
-    <h4>diaabled</h4>
-    <sq-switch v-model="isChecked" disabled/>
-    <h4>size 40px</h4>
-    <sq-switch v-model="isChecked" size="40px"/>
-    {{ isChecked }}
+
+    <demo-title>选中下的禁用状态</demo-title>
+    <sq-switch v-model="isChecked3" disabled/>
+
+    <demo-title>未选中下的禁用状态</demo-title>
+    <sq-switch v-model="isChecked4" disabled/>
+  
+
+    <demo-title>调整大小</demo-title>
+    <sq-switch v-model="isChecked5" size="20px"/>
+    <sq-switch v-model="isChecked5" size="40px"/>
   </div>
 </template>
 
@@ -18,9 +25,11 @@ export default {
 
   data () {
     return {
-      isChecked: false,
       isChecked1: true,
-      isChecked2: false
+      isChecked2: false,
+      isChecked3: true,
+      isChecked4: false,
+      isChecked5: false
     }
   },
 
@@ -28,5 +37,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

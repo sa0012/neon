@@ -90,6 +90,16 @@ export default {
         })
       }
     }
+  },
+
+  watch: {
+    value: {
+      handler (val, oldVal) {
+        console.log(oldVal)
+        console.log(val)
+      },
+      immediate: true
+    }
   }
 }
 </script>

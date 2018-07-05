@@ -1,13 +1,13 @@
 <template>
-  <div class="demo-page-wrap">
-    <h4>基础形式</h4>
+  <div>
+    <demo-title left>基础用法</demo-title>
     <sq-submit-bar
       label="保费："
       price="3000"
       button-text="立即投保"
       @submit="onSubmit"
     />
-    <h4>禁用形式</h4>
+    <demo-title left>禁止提交状态</demo-title>
     <sq-submit-bar
       disabled
       label="保费："
@@ -35,5 +35,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

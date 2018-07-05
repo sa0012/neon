@@ -6,12 +6,6 @@
 
 <script>
 export default {
-  name: 'App',
-  data () {
-    return {
-      show: false
-    }
-  }
 }
 </script>
 
@@ -23,7 +17,7 @@ body {
   padding: 0;
 }
 body {
-  background-color: #f8f8f8;
+  background-color: #EDF0F4;
   // padding: 20px;
   box-sizing: border-box;
 }
@@ -44,6 +38,6 @@ body {
   padding: 20px;
   min-height: 100%;
   box-sizing: border-box;
-  background-color: #ECEFF9;
+  background-color: #EDF0F4;
 }
 </style>

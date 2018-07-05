@@ -1,41 +1,49 @@
 <template>
   <div>
-    <h4 class="center">普通形式 -- 当前选中的值：{{ active2 }}</h4>
-    <sq-accordion v-model="active2">
+    <demo-title left>普通形式</demo-title>
+    <sq-accordion v-model="active1">
       <sq-accordion-item title="选项一" :name="1">
-        <div>我是内容</div>
-        <div>我是内容</div>
+        <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
       </sq-accordion-item>
       <sq-accordion-item title="选项二" :name="2">
-        <div>我是内容</div>
-        <div>我是内容</div>
+       <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
       </sq-accordion-item>
       <sq-accordion-item title="选项三" :name="3">
-        <div>我是内容</div>
-        <div>我是内容</div>
+        <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
       </sq-accordion-item>
     </sq-accordion>
-    <h4 class="center">手风琴形式 -- 当前选中的值：{{ active }}</h4>
-    <sq-accordion v-model="active" accordion>
+
+    <demo-title left>手风琴形式</demo-title>
+    <sq-accordion v-model="active2" accordion>
       <sq-accordion-item title="选项一" :name="1">
-        <div>我是内容</div>
-        <div>我是内容</div>
-        <div>我是内容</div>
-        <div>我是内容</div>
+       <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
       </sq-accordion-item>
       <sq-accordion-item title="选项二" :name="2">
-        <div>我是内容</div>
-        <div>我是内容</div>
-        <div>我是内容</div>
-        <div>我是内容</div>
+        <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
       </sq-accordion-item>
       <sq-accordion-item title="选项三" :name="3">
-        <div>我是内容</div>
-        <div>我是内容</div>
-        <div>我是内容</div>
-        <div>我是内容</div>
+        <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
       </sq-accordion-item>
     </sq-accordion>
+
+    <!-- <div class="demo-title demo-pdleft-15">手动触发展开项</div>
+    <sq-checkbox-group v-model="active3">
+      <sq-checkbox :name="1">选项一</sq-checkbox>
+      <sq-checkbox :name="2">选项二</sq-checkbox>
+      <sq-checkbox :name="3">选项三</sq-checkbox>
+    </sq-checkbox-group>
+
+    <sq-accordion v-model="active3">
+      <sq-accordion-item title="选项一" :name="1">
+        <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
+      </sq-accordion-item>
+      <sq-accordion-item title="选项二" :name="2">
+        <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
+      </sq-accordion-item>
+      <sq-accordion-item title="选项三" :name="3">
+        <div>我是内容</div><div>我是内容</div><div>我是内容</div><div>我是内容</div>
+      </sq-accordion-item>
+    </sq-accordion> -->
   </div>
 </template>
 
@@ -45,8 +53,9 @@ export default {
 
   data () {
     return {
-      active: [],
-      active2: [3]
+      active1: [3],
+      active2: [],
+      active3: []
     }
   },
 
@@ -54,8 +63,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.center {
-  text-align: center;
-}
+<style lang="scss">
 </style>

@@ -8,13 +8,15 @@ export default new Router({
     return { x: 0, y: 0 }
   },
   routes: [
+    { path: '/sendcode', meta: { name: '发送验证码' }, component: () => import('../routers/sendcode.vue') },
+    { path: '/checkbox', meta: { name: '多选框' }, component: () => import('../routers/checkbox.vue') },
     { path: '/submitBar', meta: { name: '提交订单栏' }, component: () => import('../routers/submitBar.vue') },
     { path: '/tag', meta: { name: '标记' }, component: () => import('../routers/tag.vue') },
     { path: '/stepper', meta: { name: '步进器' }, component: () => import('../routers/stepper.vue') },
     { path: '/icon', meta: { name: '图标' }, component: () => import('../routers/icon.vue') },
     { path: '/accordion', meta: { name: '折叠面板' }, component: () => import('../routers/accordion.vue') },
     { path: '/switch', meta: { name: '开关' }, component: () => import('../routers/switch.vue') },
-    { path: '/datepicker', meta: { name: '日期选择' }, component: () => import('../routers/datepicker.vue') },
+    { path: '/datePicker', meta: { name: '日期选择' }, component: () => import('../routers/datePicker.vue') },
     { path: '/loadmore', meta: { name: '加载更多' }, component: () => import('../routers/loadmore.vue') },
     { path: '/citySelector', meta: { name: '城市选择' }, component: () => import('../routers/citySelector.vue') },
     { path: '/noticeBar', meta: { name: '通告栏' }, component: () => import('../routers/noticeBar.vue') },

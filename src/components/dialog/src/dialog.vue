@@ -38,11 +38,6 @@ export default {
   props: {
     type: {
       type: String
-      // ,
-      // default: 'text',
-      // validator (value) {
-      //   return ['text', 'success', 'error'].indexOf(value) > -1
-      // }
     },
     clickCloseMark: {
       type: Boolean,

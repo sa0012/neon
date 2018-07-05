@@ -1,0 +1,47 @@
+<template>
+  <div>
+    <demo-title left>基础形式</demo-title>
+    {{ code }}
+    <sq-sendcode
+      v-model="sendcode1"
+      :code.sync="code"
+      @click="send1"
+    ></sq-sendcode>
+
+    <demo-title left>嵌入fieldgroup形式</demo-title>
+    <sq-fieldgroup>
+      <sq-field label="手机号码" placeholder="请输入手机号码" v-model="name"></sq-field>
+      <sq-sendcode
+        v-model="sendcode2"
+        @click="send2"
+      ></sq-sendcode>
+    </sq-fieldgroup>
+  </div>
+</template>
+
+<script>
+export default {
+  name: '',
+
+  data () {
+    return {
+      sendcode1: false,
+      sendcode2: false,
+      name: '',
+      code: ''
+    }
+  },
+
+  methods: {
+    send1 () {
+      this.sendcode1 = true
+    },
+    send2 () {
+      this.sendcode2 = true
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+</style>
