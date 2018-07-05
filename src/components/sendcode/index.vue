@@ -50,6 +50,9 @@ export default {
     },
     code: {
       type: [String, Number]
+    },
+    sessionStorageKey: {
+      type: String
     }
   },
 
@@ -81,6 +84,9 @@ export default {
     },
     run () {
       this.disabled = true
+      if (this.sessionStorageKey) {
+        window.sessionStorage[this.sessionStorageKey] = new Date().getTime() + this.runTime * 1000
+      }
       this.timerObj = setInterval(() => {
         if (this.runTime <= 1) {
           this.timeInit()
@@ -107,8 +113,16 @@ export default {
     }
   },
 
+  created () {
+    const oldTime = ~~((window.sessionStorage[this.sessionStorageKey] - new Date().getTime()) / 1000)
+    if (oldTime > 0 && this.sessionStorageKey) {
+      this.$emit('input', true)
+      this.runTime = oldTime
+    }
+  },
+
   beforeDestroy () {
-    clearInterval(this.timerObj)
+    !this.sessionStorageKey && clearInterval(this.timerObj)
   }
 }
 </script>

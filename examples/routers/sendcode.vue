@@ -5,6 +5,7 @@
     <sq-sendcode
       v-model="sendcode1"
       :code.sync="code"
+      session-storage-key="sessionStorageKey"
       @click="send1"
     ></sq-sendcode>
 
