@@ -1,7 +1,17 @@
 <template>
   <div>
     <div class="address">
-      <brand-cars :code="code" :loadMoreArr="loadMoreArr" :carsData="carsData" :selectCar="selectCar" :selectModel="selectModel" @brandCategoryCode="getBrandCategoryCode" @brandModelId="getBrandModelId" @loadMore="getLoadMore">
+      <brand-cars 
+        :code="code" 
+        :loadMoreArr="loadMoreArr" 
+        :carsData="carsData" 
+        :selectCar="selectCar" 
+        :selectModel="selectModel" 
+        @brandCategoryCode="getBrandCategoryCode" 
+        @brandModelId="getBrandModelId" 
+        @loadMore="getLoadMore"
+        @carDetail="getCarDetail"
+        >
         <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
@@ -53,6 +63,9 @@ export default {
       console.log('this is a loadmore function')
       this.loadMoreArr = selectModel.result.content
       callback(this.loadMoreArr)
+    },
+    getCarDetail (detail) {
+      console.log(detail)
     }
   }
 }

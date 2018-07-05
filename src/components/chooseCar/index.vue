@@ -61,7 +61,7 @@
               <li class="sq-selectmodel-list" v-for="(item, index) in selectModel" :key="index">
                 <h3 class="sq-selectmodel-second-title" v-if="item.carYear">{{ item.carYear }}款</h3>
                 <ul class="sq-selectmodel-detail-ul">
-                  <li class="sq-selectmodel-detail-item" @click="closeSelectModel()" v-for="detail in item.insurerVehicleModelMOs" :key="detail.modelCode">
+                  <li class="sq-selectmodel-detail-item" @click="closeSelectModel(detail)" v-for="detail in item.insurerVehicleModelMOs" :key="detail.modelCode">
                     <div class="sq-selectmodel-car-list-item" v-if="detail.carYear">
                       {{ `${detail.displayName}` }}
                     </div>
@@ -167,9 +167,10 @@ export default {
       this.showSelectCar = false
       document.querySelector('.sq-brandCars').style.overflow = 'auto'
     },
-    closeSelectModel () {
+    closeSelectModel (detail) {
       document.querySelector('.sq-brandCars').style.overflow = 'scroll'
       this.showSelectModel = false
+      this.$emit('carDetail', detail)
     },
     callback (arr) {
       setTimeout(() => {
