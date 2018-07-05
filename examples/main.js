@@ -16,6 +16,7 @@ import Cell from '../src/components/cell'
 import CellGroup from '../src/components/cellGroup'
 import ChildinsuranceCell from '../src/components/childinsuranceCell'
 import CitySelector from '../src/components/citySelector'
+import ChooseCar from '../src/components/chooseCar'
 import Datepicker from '../src/components/datepicker'
 import Field from '../src/components/field'
 import Fieldgroup from '../src/components/fieldGroup'
@@ -37,6 +38,9 @@ import Toast from '../src/components/toast'
 import Dialog from '../src/components/dialog'
 
 import '../src/assets/icon/iconfont.css'
+import Filter from './filter'
+
+Filter(Vue)
 
 const components = [
   Accordion,
@@ -49,6 +53,7 @@ const components = [
   CellGroup,
   ChildinsuranceCell,
   CitySelector,
+  ChooseCar,
   Datepicker,
   Demo,
   Field,
@@ -65,10 +70,11 @@ const components = [
   Switch,
   Tabpane,
   Tabs,
-  Tag 
+  Tag
 ]
 
 components.forEach(component => {
+  // console.log(component.name)
   Vue.component(component.name, component)
 })
 
@@ -81,7 +87,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { 
+  components: {
     App
   },
   template: '<App/>'
