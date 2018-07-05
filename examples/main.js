@@ -28,6 +28,7 @@ import Picker from '@/components/picker'
 import Popup from '@/components/popup'
 import Radio from '@/components/radio'
 import RadioGroup from '@/components/radioGroup'
+import Sendcode from '@/components/sendcode'
 import Stepper from '@/components/stepper'
 import SubmitBar from '@/components/submitBar'
 import Swiper from '@/components/swiper'
@@ -65,6 +66,7 @@ const components = [
   Popup,
   Radio,
   RadioGroup,
+  Sendcode,
   Stepper,
   SubmitBar,
   Swiper,

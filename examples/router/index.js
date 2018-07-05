@@ -8,6 +8,7 @@ export default new Router({
     return { x: 0, y: 0 }
   },
   routes: [
+    { path: '/sendcode', meta: { name: '发送验证码' }, component: () => import('../routers/sendcode.vue') },
     { path: '/checkbox', meta: { name: '多选框' }, component: () => import('../routers/checkbox.vue') },
     { path: '/submitBar', meta: { name: '提交订单栏' }, component: () => import('../routers/submitBar.vue') },
     { path: '/tag', meta: { name: '标记' }, component: () => import('../routers/tag.vue') },

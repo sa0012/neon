@@ -23,7 +23,9 @@ export default {
   .sq-field {
     border-radius: 5px;
   }
-  .sq-field~.sq-field {
+  .sq-field~.sq-field,
+  .sq-field~.sq-sendcode,
+  .sq-sendcode~.sq-field {
     margin-top: 10px;
   }
   .sq-field:not(:last-child)::after {
