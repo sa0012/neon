@@ -60,7 +60,7 @@ const components = [
   ChildinsuranceCell,
   CitySelector,
   ChooseCar,
-  Datepicker,
+  DatePicker,
   Demo,
   DemoTitle,
   Field,
