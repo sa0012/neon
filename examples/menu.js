@@ -39,6 +39,7 @@ export default {
     { to: 'childinsuranceCell', name: 'ChildinsuranceCell - 子险列表' },
     { to: 'citySelector', name: 'CitySelector - 城市选择' },
     { to: 'sendcode', name: 'Sendcode - 发送验证码' },
-    { to: 'submitBar', name: 'SubmitBar - 提交订单栏' }
+    { to: 'submitBar', name: 'SubmitBar - 提交订单栏' },
+    { to: 'chooseCar', name: 'chooseCar - 选择车型' }
   ]
 }

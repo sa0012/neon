@@ -19,6 +19,7 @@ import Checkbox from '@/components/checkbox'
 import CheckboxGroup from '@/components/checkboxGroup'
 import ChildinsuranceCell from '@/components/childinsuranceCell'
 import CitySelector from '@/components/citySelector'
+import ChooseCar from '../src/components/chooseCar'
 import DatePicker from '@/components/datePicker'
 import Field from '@/components/field'
 import Fieldgroup from '@/components/fieldGroup'
@@ -40,7 +41,10 @@ import Tag from '@/components/tag'
 import Toast from '@/components/toast'
 import Dialog from '@/components/dialog'
 
-import '@/assets/icon/iconfont.css'
+import '../src/assets/icon/iconfont.css'
+import Filter from './filter'
+
+Filter(Vue)
 
 const components = [
   Accordion,
@@ -55,6 +59,7 @@ const components = [
   CheckboxGroup,
   ChildinsuranceCell,
   CitySelector,
+  ChooseCar,
   DatePicker,
   Demo,
   DemoTitle,
@@ -73,10 +78,11 @@ const components = [
   Switch,
   Tabpane,
   Tabs,
-  Tag 
+  Tag
 ]
 
 components.forEach(component => {
+  // console.log(component.name)
   Vue.component(component.name, component)
 })
 
@@ -89,7 +95,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { 
+  components: {
     App
   },
   template: '<App/>'

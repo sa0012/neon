@@ -8,7 +8,12 @@ import Cell from '@/components/cell'
 import CellGroup from '@/components/cellGroup'
 import ChildinsuranceCell from '@/components/childinsuranceCell'
 import CitySelector from '@/components/citySelector'
+<<<<<<< HEAD
+import ChooseCar from '@/components/chooseCar'
+import Datepicker from '@/components/datepicker'
+=======
 import DatePicker from '@/components/datePicker'
+>>>>>>> 98462385003535195de676a0622b164cd16ce813
 import Field from '@/components/field'
 import Fieldgroup from '@/components/fieldGroup'
 import Loadmore from '@/components/loadmore'
@@ -40,7 +45,12 @@ const components = [
   CellGroup,
   ChildinsuranceCell,
   CitySelector,
+<<<<<<< HEAD
+  ChooseCar,
+  Datepicker,
+=======
   DatePicker,
+>>>>>>> 98462385003535195de676a0622b164cd16ce813
   Field,
   Fieldgroup,
   Loadmore,
@@ -81,7 +91,12 @@ export {
   CellGroup,
   ChildinsuranceCell,
   CitySelector,
+<<<<<<< HEAD
+  ChooseCar,
+  Datepicker,
+=======
   DatePicker,
+>>>>>>> 98462385003535195de676a0622b164cd16ce813
   Field,
   Fieldgroup,
   Loadmore,
