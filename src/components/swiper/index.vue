@@ -1,65 +1,61 @@
 <style lang="scss">
-.swiper-wrap {
+.sq-swiper {
   overflow: hidden;
   position: relative;
   user-select: none;
-  .wrap {
+  width: 375px;
+  height: 200px;
+  &-wrap {
     width: 1500px;
-    .item {
-      width: 375px;
-      height: 200px;
-      display: inline-block;
-      &:nth-child(1) {
-        background-color: lightblue;
-      }
-      &:nth-child(2) {
-        background-color: teal;
-      }
-      &:nth-child(3) {
-        background-color: lightskyblue;
-      }
-      &:nth-child(4) {
-        background-color: #4a90e2;
-      }
+    height: 100%;
+  }
+  &-item {
+    width: 375px;
+    height: 100%;
+    display: inline-block;
+    &:nth-child(1) {
+      background-color: lightblue;
+    }
+    &:nth-child(2) {
+      background-color: teal;
+    }
+    &:nth-child(3) {
+      background-color: lightskyblue;
+    }
+    &:nth-child(4) {
+      background-color: #4a90e2;
     }
   }
-  .swiper-point-wrap {
+  &-point-wrap {
     position: absolute;
     left: 50%;
     bottom: 10px;
     transform: translateX(-50%);
     display: flex;
-    .point-item {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      border: 1px solid #fff;
-      background-color: transparent;
-      &.point-active {
-        background-color: #fff;
-      }
-      &~.point-item {
-        margin-left: 6px;
-      }
+  }
+  &-point-item {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    background-color: transparent;
+    &.sq-swiper-point-active {
+      background-color: #fff;
+    }
+    &~.sq-swiper-point-item {
+      margin-left: 6px;
     }
   }
 }
 </style>
 
 <template>
-  <div class="swiper-wrap">
-    <div
-      class="wrap"
-      ref="wrap"
-      :style="{
-        'transform': `translateX(${translateX}px)`,
-        'transition': `transform ${speedX}ms`
-      }"
-    >
+  <div class="sq-swiper">
+    <div class="sq-swiper-wrap" ref="wrap" :style="wrapStyles">
       <div
         v-for="(item, index) in list"
         :key="index"
-        class="item"
+        class="sq-swiper-item"
         :style="{
           'transform': (index === 0 && currentIndex === 4) ? `translateX(${firstWrap}px)` : '',
           'transition': `transform ${firstSpeedX}ms`
@@ -69,14 +65,12 @@
       </div>
     </div>
 
-    <div class="swiper-point-wrap" v-if="showPoint">
+    <div class="sq-swiper-point-wrap" v-if="showPoint">
       <div
         v-for="(item, index) in list"
         :key="index"
-        class="point-item"
-        :class="{
-          'point-active': index === currentIndex || index === 0 && currentIndex === count
-        }"
+        class="sq-swiper-point-item"
+        :class="{'sq-swiper-point-active': index === currentIndex || index === 0 && currentIndex === count}"
       >
       </div>
     </div>
@@ -103,6 +97,15 @@ export default {
     showPoint: {
       type: Boolean,
       default: true
+    }
+  },
+
+  computed: {
+    wrapStyles () {
+      return {
+        'transform': `translateX(${this.translateX}px)`,
+        'transition': `transform ${this.speedX}ms`
+      }
     }
   },
 
