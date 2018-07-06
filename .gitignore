@@ -2,6 +2,7 @@
 node_modules/
 /document/node_modules/
 /document/.vuepress/dist/
+lib
 /dist/
 /ignore/
 npm-debug.log*
