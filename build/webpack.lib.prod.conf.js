@@ -1,5 +1,6 @@
 const path = require('path')
-const webpack = require('webpack')
+const utils = require('./utils')
+// const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -30,11 +31,16 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: './style.css',
-      disable: false,
-      allChunks: true
+      filename: './neon.min.css'
     }),
     new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false,
+          drop_console: true,
+          pure_funcs: ['console.log']//移除console
+        }
+      },
       parallel: true,
       sourceMap: true
     }),

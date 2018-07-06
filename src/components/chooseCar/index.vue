@@ -192,7 +192,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
-    @import "../../assets/style/components/chooseCar/brandCars/index.scss";
-    @import "../../assets/style/components/chooseCar/brandCars/selectCar.scss";
+<style lang="scss">
+@import "../../assets/style/components/chooseCar/brandCars/index.scss";
+@import "../../assets/style/components/chooseCar/brandCars/selectCar.scss";
 </style>

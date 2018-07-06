@@ -30,21 +30,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: './style.css',
-      disable: false,
-      allChunks: true
+      filename: './neon.min.css'
     })
-    // ,
-    // new UglifyJsPlugin({
-    //   parallel: true,
-    //   sourceMap: true
-    // }),
-    // new CompressionPlugin({
-    //   asset: '[path].gz[query]',
-    //   algorithm: 'gzip',
-    //   test: /\.(js|css)$/,
-    //   threshold: 10240,
-    //   minRatio: 0.8
-    // })
   ]
 })

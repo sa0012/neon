@@ -6,6 +6,8 @@ import Button from '@/components/button'
 import Carlicense from '@/components/carlicense'
 import Cell from '@/components/cell'
 import CellGroup from '@/components/cellGroup'
+import Checkbox from '@/components/checkbox'
+import CheckboxGroup from '@/components/checkboxGroup'
 import ChildinsuranceCell from '@/components/childinsuranceCell'
 import CitySelector from '@/components/citySelector'
 import ChooseCar from '@/components/chooseCar'
@@ -39,6 +41,8 @@ const components = [
   Carlicense,
   Cell,
   CellGroup,
+  Checkbox,
+  CheckboxGroup,
   ChildinsuranceCell,
   CitySelector,
   ChooseCar,
@@ -81,6 +85,8 @@ export {
   Carlicense,
   Cell,
   CellGroup,
+  Checkbox,
+  CheckboxGroup,
   ChildinsuranceCell,
   CitySelector,
   ChooseCar,
