@@ -16,7 +16,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   output: {
     path: path.resolve(__dirname, '../lib'),
-    filename: '[name].min.js',
+    filename: 'index.min.js',
     library: 'neon',
     libraryTarget: 'umd',
     umdNamedDefine: true
@@ -31,7 +31,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: './neon.min.css'
+      filename: './style.min.css'
     }),
     new UglifyJsPlugin({
       uglifyOptions: {

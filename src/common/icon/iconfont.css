@@ -28,8 +28,8 @@
   }
 }
 
-.icon-loading {
-  display: inline-block;
+.icon-animation-loading {
+  /* display: inline-block; */
   animation: animationloading .8s linear infinite;
 }
 

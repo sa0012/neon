@@ -8,30 +8,30 @@ import Demo from './routers/demo'
 import DemoTitle from './routers/demoTitle'
 
 import Accordion from '@/components/accordion'
-import AccordionItem from '@/components/accordionItem'
+import AccordionItem from '@/components/accordion-item'
 import Actionsheet from '@/components/actionsheet'
 import Agree from '@/components/agree'
 import Button from '@/components/button'
 import Carlicense from '@/components/carlicense'
 import Cell from '@/components/cell'
-import CellGroup from '@/components/cellGroup'
+import CellGroup from '@/components/cell-group'
 import Checkbox from '@/components/checkbox'
-import CheckboxGroup from '@/components/checkboxGroup'
-import ChildinsuranceCell from '@/components/childinsuranceCell'
-import CitySelector from '@/components/citySelector'
-import ChooseCar from '../src/components/chooseCar'
-import DatePicker from '@/components/datePicker'
+import CheckboxGroup from '@/components/checkbox-group'
+import ChildinsuranceCell from '@/components/childinsurance-cell'
+import CitySelector from '@/components/city-selector'
+import ChooseCar from '../src/components/choose-car'
+import DatePicker from '@/components/date-picker'
 import Field from '@/components/field'
-import Fieldgroup from '@/components/fieldGroup'
+import Fieldgroup from '@/components/field-group'
 import Loadmore from '@/components/loadmore'
-import NoticeBar from '@/components/noticeBar'
+import NoticeBar from '@/components/notice-bar'
 import Picker from '@/components/picker'
 import Popup from '@/components/popup'
 import Radio from '@/components/radio'
-import RadioGroup from '@/components/radioGroup'
+import RadioGroup from '@/components/radio-group'
 import Sendcode from '@/components/sendcode'
 import Stepper from '@/components/stepper'
-import SubmitBar from '@/components/submitBar'
+import SubmitBar from '@/components/submit-bar'
 import Swiper from '@/components/swiper'
 import Switch from '@/components/switch'
 import Tabpane from '@/components/tabpane'
@@ -41,7 +41,7 @@ import Tag from '@/components/tag'
 import Toast from '@/components/toast'
 import Dialog from '@/components/dialog'
 
-import '../src/common/icon/iconfont.scss'
+import '../src/common/icon/iconfont.css'
 import Filter from './filter'
 
 Filter(Vue)
@@ -82,7 +82,6 @@ const components = [
 ]
 
 components.forEach(component => {
-  // console.log(component.name)
   Vue.component(component.name, component)
 })
 

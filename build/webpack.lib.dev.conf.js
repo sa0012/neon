@@ -15,7 +15,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   output: {
     path: path.resolve(__dirname, '../lib'),
-    filename: '[name].js',
+    filename: 'index.js',
     library: 'neon',
     libraryTarget: 'umd',
     umdNamedDefine: true
@@ -30,7 +30,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: './neon.css'
+      filename: './style.css'
     })
   ]
 })
