@@ -1,5 +1,5 @@
 <template>
-  <div class="sq-field sq-hairline">
+  <div class="sq-field">
     <div class="sq-field__label" v-if="label">
       <span>{{label}}</span>
     </div>
@@ -141,7 +141,7 @@ $theme-color:#4A90E2;
     padding: 14px 0px;
     font-size: 14px;
   }
-  &:not(:last-child)::after {
+  &::after {
     content: '';
     position: absolute;
     top: 0;

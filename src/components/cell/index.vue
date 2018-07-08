@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/style/mixins.scss';
+@import '../../common/styles/mixins.scss';
 
 .sq-cell {
   box-sizing: border-box;

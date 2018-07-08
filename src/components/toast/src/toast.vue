@@ -41,7 +41,6 @@ export default {
   computed: {
     classes () {
       return [
-        // 'sq-toast__icon',
         {
           [`sq-toast__icon iconfont icon-checkmark`]: this.type === 'success',
           [`sq-toast__icon iconfont icon-error`]: this.type === 'error',

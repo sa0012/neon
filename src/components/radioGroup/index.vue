@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/style/mixins.scss';
+@import '../../common/styles/mixins.scss';
 
 .sq-radio-group {
   &-cell,

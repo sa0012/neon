@@ -12,17 +12,15 @@ exports.assetsPath = function (_path) {
   return path.posix.join(assetsSubDirectory, _path)
 }
 
-exports.cssLoaders = function (options) {
-  options = options || {}
-
+exports.cssLoaders = function (options = {}) {
   const cssLoader = {
     loader: 'css-loader',
     options: {
       sourceMap: options.sourceMap,
-      minimize: process.env.NODE_ENV === 'production' ? true : false
+      // minimize: options.minimize ? options.minimize : false
+      minimize: process.env.MIN_ENV === 'min'
     }
   }
-
   const postcssLoader = {
     loader: 'postcss-loader',
     options: {
@@ -33,7 +31,6 @@ exports.cssLoaders = function (options) {
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
@@ -42,7 +39,6 @@ exports.cssLoaders = function (options) {
         })
       })
     }
-
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {
@@ -71,7 +67,6 @@ exports.cssLoaders = function (options) {
 exports.styleLoaders = function (options) {
   const output = []
   const loaders = exports.cssLoaders(options)
-
   for (const extension in loaders) {
     const loader = loaders[extension]
     output.push({

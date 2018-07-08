@@ -30,7 +30,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: './neon.min.css'
+      filename: './neon.css'
     })
   ]
 })

@@ -28,7 +28,7 @@ export default {
   .sq-sendcode~.sq-field {
     margin-top: 10px;
   }
-  .sq-field:not(:last-child)::after {
+  .sq-field::after {
     border: 0;
   }
 }

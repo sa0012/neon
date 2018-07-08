@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/style/components/var.scss';
+@import '../../common/styles/variable.scss';
 $success-color: #50a04f;
 $error-color: #fc7152;
 $default-color: #c9c9c9;

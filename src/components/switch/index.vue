@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/style/components/var.scss';
+@import '../../common/styles/variable.scss';
 
 .sq-switch {
   height: 1em;

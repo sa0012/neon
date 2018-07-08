@@ -41,7 +41,7 @@ import Tag from '@/components/tag'
 import Toast from '@/components/toast'
 import Dialog from '@/components/dialog'
 
-import '../src/assets/icon/iconfont.css'
+import '../src/common/icon/iconfont.scss'
 import Filter from './filter'
 
 Filter(Vue)

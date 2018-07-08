@@ -72,7 +72,7 @@ export default {
 
 </script>
 <style lang='scss'>
-@import '../../assets/style/components/var.scss';
+@import '../../common/styles/variable.scss';
 
 .sq-checkbox {
   display: inline-block;
