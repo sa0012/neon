@@ -97,7 +97,6 @@ export default {
       }
     },
     isFinishedLoad (val) {
-      console.log('isFinishedLoad', val)
       if (val) {
         this.bottomStatus = 'finished'
       }

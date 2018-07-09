@@ -1,4 +1,9 @@
 @import './variable';
 @import './normalize';
 @import './animation';
-@import '../icon/iconfont';
+@import '../icon/iconfont.css';
+
+// loading
+.icon-animation-loading {
+  animation: animationloading .8s linear infinite;
+}

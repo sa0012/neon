@@ -29,6 +29,20 @@ module.exports = merge(baseWebpackConfig, {
       amd: 'vue'
     }
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('css-loader')
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
+      }
+    ]
+  },
   plugins: [
     new ExtractTextPlugin({
       filename: './style.min.css'

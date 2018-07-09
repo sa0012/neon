@@ -1,0 +1,14 @@
+// loading
+@keyframes animationloading {
+  0% {
+    transform: rotate(0)
+  }
+
+  50% {
+    transform: rotate(180deg)
+  }
+
+  to {
+    transform: rotate(1turn)
+  }
+}

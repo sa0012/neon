@@ -1,10 +1,7 @@
 const path = require('path')
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-// const CompressionPlugin = require('compression-webpack-plugin')
 
 delete baseWebpackConfig.entry
 delete baseWebpackConfig.output
@@ -27,6 +24,20 @@ module.exports = merge(baseWebpackConfig, {
       commonjs2: 'vue',
       amd: 'vue'
     }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract('css-loader')
+      },
+      {
+        test: /\.(sacc|scss)$/,
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
+      }
+    ]
   },
   plugins: [
     new ExtractTextPlugin({

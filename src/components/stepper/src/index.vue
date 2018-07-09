@@ -108,7 +108,6 @@ export default {
     },
     $_onInput (event) {
       const val = +event.target.value
-      console.log(val)
       if (this.min !== void 0) {
         if (val <= +this.min) {
           this.currentVal = +this.min

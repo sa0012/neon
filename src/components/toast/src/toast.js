@@ -7,7 +7,7 @@ const toastPlugin = {
     const Toast = Vue.extend(ToastComponent)
     if (!instance) {
       instance = new Toast().$mount(document.createElement('div'))
-      document.body.appendChild(instance.$el)
+      document.body && document.body.appendChild(instance.$el)
     }
 
     const defaults = {}

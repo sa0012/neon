@@ -1,3 +1,5 @@
+import '@/common/styles/base.scss'
+
 import Accordion from '@/components/accordion'
 import AccordionItem from '@/components/accordion-item'
 import Actionsheet from '@/components/actionsheet'
@@ -29,8 +31,8 @@ import Tabpane from '@/components/tabpane'
 import Tabs from '@/components/tabs'
 import Tag from '@/components/tag'
 
-import Toast from '@/components/toast/index.js'
-import Dialog from '@/components/dialog/index.js'
+import Toast from '@/components/toast'
+import Dialog from '@/components/dialog'
 
 const components = [
   Accordion,
