@@ -2,10 +2,10 @@
   <transition name="sq-toast">
     <div class="sq-toast-wrapper" v-show="visible">
       <div class="sq-toast">
-        <div class="sq-toast__mark"></div>
-        <div class="sq-toast__content" :class="{'sq-toast__type':type === 'text', 'sq-toast__bottom': position === 'bottom'}">
+        <div class="sq-toast-mark"></div>
+        <div class="sq-toast-content" :class="{'sq-toast-type':type === 'text', 'sq-toast-bottom': position === 'bottom'}">
           <i :class="classes"></i>
-          <div class="sq-toast__text">{{ message }}</div>
+          <div class="sq-toast-text">{{ message }}</div>
         </div>
       </div>
     </div>
@@ -42,9 +42,9 @@ export default {
     classes () {
       return [
         {
-          [`sq-toast__icon iconfont icon-checkmark`]: this.type === 'success',
-          [`sq-toast__icon iconfont icon-error`]: this.type === 'error',
-          [`sq-toast__icon iconfont sq-toast-icon-loading icon-loading`]: this.type === 'loading'
+          [`sq-toast-icon iconfont icon-checkmark`]: this.type === 'success',
+          [`sq-toast-icon iconfont icon-error`]: this.type === 'error',
+          [`sq-toast-icon iconfont sq-toast-icon-loading icon-loading`]: this.type === 'loading'
         }
       ]
     }
@@ -88,7 +88,7 @@ export default {
 .sq-toast-wrapper {
   z-index: 11000;
 }
-.sq-toast__mark {
+.sq-toast-mark {
   position: fixed;
   top: 0;
   left: 0;
@@ -96,15 +96,15 @@ export default {
   bottom: 0;
   background-color: transparent;
 }
-.sq-toast__content.sq-toast__type {
+.sq-toast-content.sq-toast-type {
   max-width: initial;
   min-width: initial;
 }
-.sq-toast__content.sq-toast__bottom {
+.sq-toast-content.sq-toast-bottom {
   top: initial;
   bottom: 100px;
 }
-.sq-toast__content {
+.sq-toast-content {
   z-index: 11000;
   max-width: 140px;
   min-width: 120px;
@@ -135,7 +135,7 @@ export default {
   padding: 12px;
   text-align: center;
 }
-.sq-toast__icon {
+.sq-toast-icon {
   font-size: 54px !important;
   margin-bottom: 14px;
 }

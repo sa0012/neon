@@ -83,7 +83,8 @@ export default {
 </script>
 
 <style lang="scss">
-.accordion-item {
+$prefixCls: accordion-item;
+.#{$prefixCls} {
   background-color: #fff;
   font-size: 15px;
   &-title {
@@ -94,21 +95,21 @@ export default {
   &-content {
     box-sizing: border-box;
   }
-  &-content.accordion-item-content-transition {
+  &-content.#{$prefixCls}-content-transition {
     overflow: hidden;
     border-top: 0;
     transition: height .2s ease-in-out;
   }
-  &-open~.accordion-item-content-transition {
+  &-open~.#{$prefixCls}-content-transition {
     border-top: 1px solid #e6e6e6;
   }
-  &~& {
+  & ~ & {
     border-top: 1px solid #e6e6e6;
   }
   &-arrow {
     position: relative;
   }
-  &-open.accordion-item-arrow {
+  &-open.#{$prefixCls}-arrow {
     &::after {
       transform: rotate(135deg);
     }
