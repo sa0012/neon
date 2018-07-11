@@ -1,5 +1,5 @@
 <template>
-  <div class="sq-brandCars" ref="menuWrapper">
+  <div class="sq-brandCars" ref="menuWrapper" v-if="showChooseCar">
     <div class="sq-brandCars-menu-wrapper">
       <ul class="sq-brandCars-list">
         <li class="sq-brandCars-item" v-for="(item, index) in brandCategorys" :key="index">
@@ -116,7 +116,8 @@ export default {
       lastDistance: 0,
       loading: false,
       wrapperHeight: 0,
-      isFinishedLoad: false
+      isFinishedLoad: false,
+      showChooseCar: true
     }
   },
   methods: {
@@ -170,6 +171,7 @@ export default {
     closeSelectModel (detail) {
       document.querySelector('.sq-brandCars').style.overflow = 'scroll'
       this.showSelectModel = false
+      this.showChooseCar = false
       this.$emit('carDetail', detail)
     },
     callback (arr) {
