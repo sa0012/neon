@@ -346,7 +346,7 @@ $prefixCls: sq-carlicense;
       font-size: 14px;
     }
   }
-  /*---输入框 start----*/
+  // ---输入框 start----
   &-wrapper {
     box-sizing: border-box;
     font-size: 0px;
@@ -463,7 +463,7 @@ $prefixCls: sq-carlicense;
     position: absolute;
     right: 10px;
   }
-  /*---输入框 end----*/
+  // ---输入框 end----
   &-keyboard-tip {
     box-sizing: border-box;
     position: fixed;
@@ -482,7 +482,7 @@ $prefixCls: sq-carlicense;
     z-index: 999;
     top: -100px;
   }
-  /*---省份选择 start----*/
+  // ---省份选择 start----
   &-province-wrapper {
     position: fixed;
     bottom: 0;
@@ -528,8 +528,8 @@ $prefixCls: sq-carlicense;
       }
     }
   }
-  /*---省份选择 end----*/
-  /*---英文 数字 keybord start----*/
+  // ---省份选择 end----
+  // ---英文 数字 keybord start----
   &-en-num-wrapper {
     position: fixed;
     bottom: 0;
@@ -595,6 +595,6 @@ $prefixCls: sq-carlicense;
       padding-bottom: 8px;
     }
   }
-  /*---英文 数字 keybord end----*/
+  // ---英文 数字 keybord end----
 }
 </style>

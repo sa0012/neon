@@ -1,8 +1,6 @@
-/* 1px解决方案 */
+// 1px解决方案
 @mixin mix-1px ($top: 0, $right: 0, $bottom: 0, $left: 0, $color: #e5e5e5, $position-left: 0, $position-right: 0) {
   position: relative;
-
-  // $scale: 2;
 
   &:before {
     content: " ";
@@ -13,9 +11,7 @@
     border: 0 solid $color;
     color: $color;
     background-color: $color;
-    -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
-    -webkit-transform: scaleY(0.5);
     transform: scaleY(0.5);
     z-index: 0;
 
@@ -39,7 +35,7 @@
   }
 }
 
-/* 清除1px */
+// 清除1px
 @mixin mix-1px-clear () {
   &::before {
     display: none;
@@ -47,7 +43,7 @@
 }
 
 
-/* 清除浮动 */
+// 清除浮动
 @mixin mix-clearfix () {
   &::before,
   &::after {
@@ -57,39 +53,39 @@
   }
 }
 
-/* 垂直居中 */
+// 垂直居中
 @mixin mix-flex-y-center () {
   display: flex;
   align-items: center;
 }
 
-/* 水平居中 */
+// 水平居中
 @mixin mix-flex-x-center () {
   display: flex;
   justify-content: center;
 }
 
-/* 水平垂直居中 */
+// 水平垂直居中
 @mixin mix-flex-center () {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 水平垂直、两端对齐 */
+// 水平垂直、两端对齐
 @mixin mix-flex-center-space-between () {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* 超出部分出省略号 */
+// 超出部分出省略号
 @mixin mix-text-overflow () {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-/* 多行文本超出部分省略号 */
+// 多行文本超出部分省略号
 @mixin ellipsis-line($line:2) {
   display: -webkit-box;
   text-overflow: ellipsis;
