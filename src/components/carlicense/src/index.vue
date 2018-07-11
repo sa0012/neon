@@ -287,38 +287,7 @@ export default {
 </script>
 
 <style lang="scss">
-@keyframes blink {
- 0%{
-   opacity: 0;
- }
- 50% {
-   opacity: 1;
- }
- 100% {
-   opacity: 0;
- }
-}
-@keyframes ry-slide-bottom-enter {
-  from {
-    transform: translate3d(0, 100%, 0);
-  }
-}
-
-@keyframes ry-slide-bottom-leave {
-  to {
-    transform: translate3d(0, 100%, 0);
-  }
-}
-.ry-slide-bottom {
-  &-enter-active {
-    animation: ry-slide-bottom-enter .3s both ease;
-  }
-
-  &-leave-active {
-    animation: ry-slide-bottom-leave .3s both ease;
-  }
-}
-
+/*以来 base 里的动画*/
 $prefixCls: sq-carlicense;
 
 .#{$prefixCls} {
@@ -366,7 +335,6 @@ $prefixCls: sq-carlicense;
     top: 6px;
     color: #498FE2;
     line-height: 16px;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid #498FE2;
     margin-right: 10px;
@@ -420,7 +388,6 @@ $prefixCls: sq-carlicense;
     border-left: 0;
     font-size: 14px;
     color: #333333;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width: 150px;
     height: 100%;
@@ -568,7 +535,6 @@ $prefixCls: sq-carlicense;
         color: #2c3e50;
         font-size: 22px;
         background-color: transparent;
-        -webkit-box-sizing: border-box;
         box-sizing: border-box;
         width: 30px;
         &:active, &:focus {

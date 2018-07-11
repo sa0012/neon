@@ -197,16 +197,9 @@ export default {
 </script>
 
 <style lang="scss">
+/*依赖 base 里的动画*/
 $prefixCls: sq-loadmore;
 
-@keyframes quan {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .#{$prefixCls} {
   overflow: hidden;
   &-bottom {

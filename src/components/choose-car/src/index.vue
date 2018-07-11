@@ -195,6 +195,7 @@ export default {
 </script>
 
 <style lang="scss">
+/*依赖 base 里的动画 */
 @import '../../../common/styles/mixins.scss';
 .sq-brandCars {
   overflow-x: hidden;
@@ -526,36 +527,6 @@ export default {
     display: inline-block;
     vertical-align: middle;
     @include mix-1px($top: 1);
-  }
-}
-
-@keyframes fadeLeft {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(75%, 0, 0);
-    -ms-transform: translate3d(75%, 0, 0);
-    transform: translate3d(75%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    -ms-transform: none;
-    transform: none;
-  }
-}
-
-@keyframes fadeInRight {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(100%, 0, 0);
-    -ms-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    -ms-transform: none;
-    transform: none;
   }
 }
 </style>

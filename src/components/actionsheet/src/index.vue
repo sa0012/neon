@@ -59,49 +59,7 @@ export default {
 </script>
 
 <style lang="scss">
-// 内容从下往上动画
-@keyframes ry-slide-bottom-enter {
-  from {
-    transform: translate3d(0, 100%, 0);
-  }
-}
-
-@keyframes ry-slide-bottom-leave {
-  to {
-    transform: translate3d(0, 100%, 0);
-  }
-}
-.ry-slide-bottom {
-  &-enter-active {
-    animation: ry-slide-bottom-enter .3s both ease;
-  }
-
-  &-leave-active {
-    animation: ry-slide-bottom-leave .3s both ease;
-  }
-}
-// 蒙层渐变动画
-@keyframes ry-fade-enter {
-  from {
-    opacity: 0;
-  }
-}
-
-@keyframes ry-fade-leave {
-  to {
-    opacity: 0;
-  }
-}
-.ry-fade {
-  &-enter-active {
-    animation: ry-fade-enter .3s both ease;
-  }
-
-  &-leave-active {
-    animation: ry-fade-leave .3s both ease;
-  }
-}
-
+/*依赖 base 里的动画*/
 $prefixCls: sq-actionsheet;
 
 .#{$prefixCls} {
@@ -139,9 +97,7 @@ $prefixCls: sq-actionsheet;
       height: 1px;
       border-top: 1px solid #e5e5e5;
       color: #e5e5e5;
-      -webkit-transform-origin: 0 0;
       transform-origin: 0 0;
-      -webkit-transform: scaleY(0.5);
       transform: scaleY(0.5);
     }
     &:last-child {

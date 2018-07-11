@@ -45,9 +45,6 @@ export default {
 
 <style lang="scss">
 @import '../../../common/styles/variable.scss';
-$success-color: #50a04f;
-$error-color: #fc7152;
-$default-color: #c9c9c9;
 
 $prefixCls: sq-tag;
 

@@ -102,7 +102,7 @@ export default {
 }
 </script>
 <style lang="scss">
-$theme-color: #4A8FE2;
+@import '../../../common/styles/variable.scss';
 
 .sq-tabs {
   &-active {

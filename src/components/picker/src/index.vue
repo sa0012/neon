@@ -141,17 +141,9 @@ export default {
 </script>
 
 <style lang="scss">
-$theme-color: #4a90e2;
+@import '../../../common/styles/variable.scss';
 $prefixCls: sq-picker;
 
-@keyframes quan {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .#{$prefixCls} {
   text-align: center;
   background-color: #fff;
@@ -194,9 +186,7 @@ $prefixCls: sq-picker;
       height: 1px;
       border-bottom: 1px solid #E5E5E5;
       color: #E5E5E5;
-      -webkit-transform-origin: 0 100%;
       transform-origin: 0 100%;
-      -webkit-transform: scaleY(0.5);
       transform: scaleY(0.5);
     }
   }

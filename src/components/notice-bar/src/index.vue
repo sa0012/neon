@@ -117,19 +117,9 @@ export default {
 </script>
 
 <style lang="scss">
+/*依赖 base 里的动画*/
 $prefixCls: sq-notice-bar;
 
-@keyframes move {
-  to {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@keyframes move-infinite {
-  to {
-    transform: translate3d(-100%, 0, 0);
-  }
-}
 .#{$prefixCls} {
   display: flex;
   height: 30px;

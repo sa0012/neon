@@ -44,7 +44,7 @@ export default {
         {
           [`sq-toast-icon iconfont icon-checkmark`]: this.type === 'success',
           [`sq-toast-icon iconfont icon-error`]: this.type === 'error',
-          [`sq-toast-icon iconfont sq-toast-icon-loading icon-loading`]: this.type === 'loading'
+          [`sq-toast-icon iconfont icon-animation-loading icon-loading`]: this.type === 'loading'
         }
       ]
     }
@@ -61,23 +61,7 @@ export default {
 </script>
 
 <style lang="scss">
-@keyframes ani-load-loop {
-  0% {
-      transform: rotate(0)
-  }
-
-  50% {
-      transform: rotate(180deg)
-  }
-
-  to {
-      transform: rotate(1turn)
-  }
-}
-
-.sq-toast-icon-loading {
-  animation: ani-load-loop 1s linear infinite;
-}
+/*依赖 base 里的动画*/
 
 .sq-toast-enter-active, .sq-toast-leave-active {
   transition: opacity .5s;
@@ -111,23 +95,14 @@ export default {
   position: fixed;
   top: 50%;
   left: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   color: #fff;
   font-size: 15px;
   line-height: 1.2;
   border-radius: 5px;
   word-break: break-all;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
   justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
   flex-direction: column;
   box-sizing: border-box;
   transform: translate3d(-50%, -50%, 0);

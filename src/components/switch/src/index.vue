@@ -77,7 +77,6 @@ $prefixCls: sq-switch;
     z-index: 1;
     width: 1em;
     height: 1em;
-    -webkit-transition: .3s;
     transition: .3s;
     position: absolute;
     border-radius: 100%;
