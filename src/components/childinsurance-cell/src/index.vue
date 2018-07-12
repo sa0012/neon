@@ -77,9 +77,7 @@ $prefixCls: sq-childinsurance-cell;
     }
   }
   &-left {
-    position: absolute;
-    left: 15px;
-    right: 185px;
+    flex: 1;
   }
   &-middle {
     margin-left: 5px;
