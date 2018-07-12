@@ -55,8 +55,8 @@ $prefixCls: sq-agree;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1.1em;
-    height: 1.1em;
+    width: 1.2em;
+    height: 1.2em;
     border-radius: 50%;
     background: #ccc;
     transform: translateY(-2px);
@@ -64,19 +64,20 @@ $prefixCls: sq-agree;
       background-color: $theme-color;
       &.#{$prefixCls}-checkicon {
         &::before {
-          transform: rotate(45deg) scale(1) translateY(-1px) translateX(-1px);
+          transform: rotate(45deg) scale(1);
         }
       }
     }
     &::before {
       content: '';
-      width: .25em;
-      height: .5em;
+      margin-top: -1px;
+      width: .28em;
+      height: .6em;
       border: 2px solid #fff;
       border-top: 0;
       border-left: 0;
       transition: transform .2s ease-in-out;
-      transform: rotate(45deg) scale(0) translateY(-1px) translateX(-1px);
+      transform: rotate(45deg) scale(0);
     }
   }
   &-text {
