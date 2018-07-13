@@ -10,8 +10,10 @@
         v-for="(item, index) in currentColumns"
         :key="index"
         :data-list="item"
+        :format="format ? format[index] : ''"
         :list-index="index"
         :value-key="valueKey"
+        :default-value="defaultValue ? defaultValue[index] : ''"
         @on-change="$_onChange"
       />
     </div>
@@ -33,6 +35,9 @@ export default {
 
   props: {
     value: {
+      type: Array
+    },
+    format: {
       type: Array
     },
     cancelButtonText: {
@@ -60,8 +65,10 @@ export default {
       default: () => []
     },
     valueKey: {
-      type: String,
-      default: ''
+      type: String
+    },
+    defaultValue: {
+      type: Array
     }
   },
 
@@ -69,7 +76,8 @@ export default {
     return {
       isCascade: Object.prototype.toString(this.columns[0]) === '[object Object]' && Array.isArray(this.columns[0].children),
       currentColumns: this.formateColumns(this.columns),
-      currentValue: []
+      currentValue: [],
+      defVal: this.defaultValue
     }
   },
 
@@ -100,8 +108,8 @@ export default {
     $_confirm () {
       this.$emit('confirm', this.currentValue, this.index)
     },
-    updateCurrentValue (val) {
-      this.currentValue.push(this.valueKey ? val[this.valueKey] : val)
+    updateCurrentValue ({ val, isDefault }) {
+      isDefault === 1 ? (this.currentValue = val) : this.currentValue.push(this.valueKey ? val[this.valueKey] : val)
     },
     $_onChange ({ item, itemIndex, listIndex }) {
       let lenth = this.currentColumns.length
@@ -129,12 +137,16 @@ export default {
 
       this.currentValue[listIndex] = valueKey ? item[valueKey] : item
 
-      this.$emit('on-change', {
-        value: JSON.parse(JSON.stringify(this.currentValue)),
-        item: JSON.parse(JSON.stringify(item)),
-        itemIndex: itemIndex,
-        listIndex: listIndex
-      })
+      this.$emit(
+        'on-change',
+        {
+          value: JSON.parse(JSON.stringify(this.currentValue)),
+          item: JSON.parse(JSON.stringify(item)),
+          itemIndex: itemIndex,
+          listIndex: listIndex
+        },
+        this
+      )
     }
   }
 }

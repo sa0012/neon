@@ -6,7 +6,7 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        {{ valueKey ? item[valueKey] : item }}
+        {{ valueKey ? item[valueKey] : item }}{{ format }}
       </div>
     </div>
     <div class="sq-picker-item-mask"></div>
@@ -23,10 +23,16 @@ export default {
       type: Array,
       default: () => []
     },
+    dafaultValue: {
+      type: [String, Number]
+    },
     listIndex: {
       type: Number
     },
     valueKey: {
+      type: String
+    },
+    format: {
       type: String
     }
   },
@@ -61,6 +67,23 @@ export default {
   },
 
   methods: {
+    updateCol (newDayCol, selectIndex) {
+      this.list = newDayCol
+      this.index = selectIndex
+
+      const colLength = newDayCol.length
+      this.maxY = (colLength + this.offset) * this.rowHeight
+      this.minY = (this.offset - colLength + 1) * this.rowHeight
+
+      this.$_setCurrentValueByIndex(selectIndex)
+      this.$_setYByIndex(selectIndex)
+    },
+    $_setYByIndex (index) {
+      this.saveY = this.translateY = (this.offset - index) * this.rowHeight
+    },
+    $_setCurrentValueByIndex (index) {
+      this.currentValue = this.list[index]
+    },
     $_setY (val) {
       this.saveY = this.translateY = val
     },
@@ -158,6 +181,15 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
+    getIndexOfValInArr (val, arr) {
+      let index = 0
+      arr.forEach((item, i) => {
+        if (item === val) {
+          index = i
+        }
+      })
+      return index
+    },
     init () {
       this.temp.addEventListener('touchstart', this.$_start, false)
       this.temp.addEventListener('touchmove', this.$_move, false)
@@ -171,7 +203,20 @@ export default {
     list: {
       handler (val) {
         if (this.currentValue === null && val[0]) {
-          this.currentValue = val[0]
+          if (this.$parent.$data.defVal) {
+            const _uid = this._uid
+            let len = 0
+            this.$parent.$children.forEach((item, index) => {
+              if (item._uid === _uid) {
+                len = index
+              }
+            })
+            const index = this.getIndexOfValInArr(this.$parent.$data.defVal[len], val)
+            this.$_setYByIndex(index)
+            this.$_setCurrentValueByIndex(index)
+          } else {
+            this.currentValue = val[0]
+          }
         }
       },
       immediate: true
@@ -179,7 +224,11 @@ export default {
     currentValue: {
       handler (val, oldVal) {
         if (oldVal === void 0) {
-          this.$parent.updateCurrentValue(val)
+          const flag = !!this.$parent.$data.defVal
+          this.$parent.updateCurrentValue({
+            val: flag ? this.$parent.$data.defVal : val,
+            isDefault: flag ? 1 : 0
+          })
         } else if (val !== oldVal) {
           this.$emit('on-change', {
             item: this.list[this.index],
