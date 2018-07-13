@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// import { utilFormatDate, getDate } from './utils'
 import { getDate } from './utils'
 import picker from '../../picker'
 

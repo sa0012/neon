@@ -23,8 +23,8 @@ export default {
   // 操作反馈
   action: [
     { to: 'actionsheet', name: 'Actionsheet - 行动按钮' },
-    { to: 'dialog', name: 'Dialog - 对话框' },
     { to: 'datePicker', name: 'DatePicker - 日期选择' },
+    { to: 'dialog', name: 'Dialog - 对话框' },
     { to: 'picker', name: 'Picker - 选择器' },
     { to: 'toast', name: 'Toast - 轻提示' }
   ],
@@ -37,9 +37,10 @@ export default {
     { to: 'agree', name: 'Agree - 勾选按钮' },
     { to: 'carLicense', name: 'CarLicense - 车牌录入键盘' },
     { to: 'childinsuranceCell', name: 'ChildinsuranceCell - 子险列表' },
+    { to: 'chooseCar', name: 'chooseCar - 选择车型' },
     { to: 'citySelector', name: 'CitySelector - 城市选择' },
     { to: 'sendcode', name: 'Sendcode - 发送验证码' },
     { to: 'submitBar', name: 'SubmitBar - 提交订单栏' },
-    { to: 'chooseCar', name: 'chooseCar - 选择车型' }
+    { to: 'uploader', name: 'Uploader - 图片上传' }
   ]
 }

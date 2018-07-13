@@ -72,7 +72,7 @@ $prefixCls: sq-agree;
       content: '';
       margin-top: -1px;
       width: .28em;
-      height: .6em;
+      height: .5em;
       border: 2px solid #fff;
       border-top: 0;
       border-left: 0;

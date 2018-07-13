@@ -9,9 +9,9 @@ import DemoTitle from './routers/demoTitle'
 
 import Neon from '@/index.js'
 
+Vue.use(Neon)
 Vue.component(Demo.name, Demo)
 Vue.component(DemoTitle.name, DemoTitle)
-Vue.use(Neon)
 
 import Filter from './filter'
 

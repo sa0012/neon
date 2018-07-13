@@ -18,20 +18,18 @@ body {
 }
 body {
   background-color: #EDF0F4;
-  // padding: 20px;
   box-sizing: border-box;
 }
-*,
-*:before,
-*:after {
-  -webkit-tap-highlight-color: transparent;
-}
+// *,
+// *:before,
+// *:after {
+//   -webkit-tap-highlight-color: transparent;
+// }
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* margin-top: 20px; */
   height: 100%;
 }
 .demo-page-wrap {

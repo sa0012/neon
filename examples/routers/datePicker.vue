@@ -46,7 +46,7 @@ export default {
       console.log(val)
     },
     onChange1 (val) {
-      console.log(val)
+      console.log(val.value, val)
     },
     confirm2 (val) {
       console.log(val)
@@ -57,7 +57,7 @@ export default {
       this.isShow = false
     },
     onChange2 (val) {
-      console.log(val)
+      console.log(val.value, val)
     }
   }
 }
