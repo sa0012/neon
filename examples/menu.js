@@ -18,7 +18,8 @@ export default {
     { to: 'checkbox', name: 'Checkbox - 多选框' },
     { to: 'field', name: 'Field - 输入框' },
     { to: 'radio', name: 'Radio - 单选框' },
-    { to: 'switch', name: 'Switch - 开关' }
+    { to: 'switch', name: 'Switch - 开关' },
+    { to: 'uploader', name: 'Uploader - 图片上传' }
   ],
   // 操作反馈
   action: [
@@ -40,7 +41,6 @@ export default {
     { to: 'chooseCar', name: 'chooseCar - 选择车型' },
     { to: 'citySelector', name: 'CitySelector - 城市选择' },
     { to: 'sendcode', name: 'Sendcode - 发送验证码' },
-    { to: 'submitBar', name: 'SubmitBar - 提交订单栏' },
-    { to: 'uploader', name: 'Uploader - 图片上传' }
+    { to: 'submitBar', name: 'SubmitBar - 提交订单栏' }
   ]
 }

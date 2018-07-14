@@ -20,12 +20,6 @@ body {
   background-color: #EDF0F4;
   box-sizing: border-box;
 }
-// *,
-// *:before,
-// *:after {
-//   -webkit-tap-highlight-color: transparent;
-// }
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

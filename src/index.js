@@ -23,6 +23,7 @@ import Fieldgroup from '@/components/field-group'
 import Radio from '@/components/radio'
 import RadioGroup from '@/components/radio-group'
 import Switch from '@/components/switch'
+import Uploader from '@/components/uploader'
 
 // action
 import Actionsheet from '@/components/actionsheet'
@@ -39,7 +40,6 @@ import ChooseCar from '@/components/choose-car'
 import CitySelector from '@/components/city-selector'
 import Sendcode from '@/components/sendcode'
 import SubmitBar from '@/components/submit-bar'
-import Uploader from '@/components/uploader'
 
 const components = [
   // base
@@ -65,6 +65,7 @@ const components = [
   Radio,
   RadioGroup,
   Switch,
+  Uploader,
 
   // action
   Actionsheet,
@@ -78,8 +79,7 @@ const components = [
   ChooseCar,
   CitySelector,
   Sendcode,
-  SubmitBar,
-  Uploader
+  SubmitBar
 ]
 
 const install = Vue => {
@@ -120,6 +120,7 @@ export {
   Radio,
   RadioGroup,
   Switch,
+  Uploader,
 
   // action
   Actionsheet,
@@ -135,8 +136,7 @@ export {
   ChooseCar,
   CitySelector,
   Sendcode,
-  SubmitBar,
-  Uploader
+  SubmitBar
 }
 
 export default {

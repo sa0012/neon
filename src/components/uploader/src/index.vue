@@ -2,7 +2,9 @@
   <div class="sq-uploader">
     <div class="sq-uploader-mask" v-show="isShowFile" @click="isShowFile = !isShowFile">
       <span class="sq-uploader-full-item" :style="{'backgroundImage': fullFileUrl}"></span>
-      <div class="sq-uploader-full-remove">X</div>
+      <div class="sq-uploader-full-remove">
+        <i class="iconfont icon-error"></i>
+      </div>
     </div>
     <ul class="sq-uploader-files" @click="$_click"></ul>
     <div class="sq-uploader-input-wrap">
@@ -66,6 +68,7 @@ export default {
 $prefixCls: sq-uploader;
 
 .#{$prefixCls} {
+  display: inline-block;
   overflow: hidden;
   &-mask {
     background: #000;
@@ -94,8 +97,12 @@ $prefixCls: sq-uploader;
     color: #fff;
     font-size: 22px;
     transform: translateY(-60px);
+    i {
+      font-size: inherit;
+    }
   }
   &-files {
+    float: left;
     list-style: none;
   }
   &-file {
