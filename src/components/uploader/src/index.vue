@@ -11,10 +11,10 @@
       <input
         class="sq-uploader-input"
         type="file"
-        accept="image/*"
-        multiple
         v-bind="$attrs"
-        v-on="$listeners"
+        v-on="listeners"
+        :accept="accept"
+        :multiple="multiple"
         @change="$_change"
       >
     </div>
@@ -26,6 +26,25 @@ export default {
   name: 'sq-uploader',
 
   inheritAttrs: false,
+
+  props: {
+    accept: {
+      type: String,
+      default: 'image/*'
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    listeners () {
+      return {
+        ...this.$listeners
+      }
+    }
+  },
 
   data () {
     return {
@@ -57,8 +76,20 @@ export default {
         const element = document.createElement('li')
         element.classList.add('sq-uploader-file')
         element.style = `background-image:url(${src})`
+
+        const elementDelWrap = document.createElement('span')
+        elementDelWrap.classList.add('sq-uploader-file-delete-wrap')
+
+        const elementDel = document.createElement('i')
+        elementDel.classList.add('iconfont')
+        elementDel.classList.add('icon-error')
+        elementDel.classList.add('sq-uploader-file-delete')
+
+        elementDelWrap.appendChild(elementDel)
+        element.appendChild(elementDelWrap)
         e.target.parentNode.previousElementSibling.appendChild(element)
       }
+      this.$emit('file-change', files)
     }
   }
 }
@@ -69,7 +100,7 @@ $prefixCls: sq-uploader;
 
 .#{$prefixCls} {
   display: inline-block;
-  overflow: hidden;
+  // overflow: hidden;
   &-mask {
     background: #000;
     position: fixed;
@@ -102,7 +133,7 @@ $prefixCls: sq-uploader;
     }
   }
   &-files {
-    float: left;
+    display: inline;
     list-style: none;
   }
   &-file {
@@ -110,18 +141,40 @@ $prefixCls: sq-uploader;
     width: 80px;
     height: 80px;
     display: block;
+    margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
+  }
+  &-file-delete-wrap {
+    background-color: #e24a50;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: -8px;
+    margin-right: -6px;
+    padding: 2px;
+    height: 20px;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
+  &-file-delete {
+    color: #fff;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: -1px;
   }
   &-input-wrap {
     float: left;
     width: 80px;
     height: 80px;
     display: block;
+    margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
     border: 1px solid #D9D9D9;
