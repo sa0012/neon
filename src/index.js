@@ -20,6 +20,7 @@ import Checkbox from '@/components/checkbox'
 import CheckboxGroup from '@/components/checkbox-group'
 import Field from '@/components/field'
 import Fieldgroup from '@/components/field-group'
+import NumberKeyboard from '@/components/number-keyboard'
 import Radio from '@/components/radio'
 import RadioGroup from '@/components/radio-group'
 import Switch from '@/components/switch'
@@ -62,6 +63,7 @@ const components = [
   CheckboxGroup,
   Field,
   Fieldgroup,
+  NumberKeyboard,
   Radio,
   RadioGroup,
   Switch,
@@ -117,6 +119,7 @@ export {
   CheckboxGroup,
   Field,
   Fieldgroup,
+  NumberKeyboard,
   Radio,
   RadioGroup,
   Switch,

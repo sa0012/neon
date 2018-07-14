@@ -1,6 +1,7 @@
+
 @font-face {
   font-family: "iconfont";
-  src: url('./iconfont.ttf?t=1529555725258') format('truetype');
+  src: url('iconfont.ttf?t=1531542505697') format('truetype');
 }
 
 .iconfont {
@@ -10,6 +11,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-shanchu:before { content: "\e600"; }
 
 .icon-circle-left:before { content: "\e60a"; }
 
@@ -21,7 +24,11 @@
 
 .icon-jian:before { content: "\e643"; }
 
+.icon-jianpanxiangxia:before { content: "\e6b5"; }
+
 .icon-alert-empty:before { content: "\e606"; }
+
+.icon-keyboard-xiangxia:before { content: "\e609"; }
 
 .icon-circle-down:before { content: "\e612"; }
 
@@ -29,13 +36,17 @@
 
 .icon-alert-full:before { content: "\e685"; }
 
-.icon-error-empty:before { content: "\e616"; }
+.icon-shouqijianpan:before { content: "\e62d"; }
 
-.icon-loading:before { content: "\e636"; }
+.icon-error-empty:before { content: "\e616"; }
 
 .icon-checkmark-full:before { content: "\e69e"; }
 
 .icon-checkmark:before { content: "\e624"; }
+
+.icon-loading:before { content: "\e633"; }
+
+.icon-keyboard-down:before { content: "\e6fb"; }
 
 .icon-error:before { content: "\e632"; }
 
@@ -44,6 +55,12 @@
 .icon-arrow-left:before { content: "\e6fd"; }
 
 .icon-alert:before { content: "\e8ee"; }
+
+.icon-keyboard-remove:before { content: "\e627"; }
+
+.icon-keyboard-xiangshang:before { content: "\e649"; }
+
+.icon-keyboard-delete:before { content: "\e64a"; }
 
 .icon-arrow-up:before { content: "\e8ef"; }
 

@@ -17,6 +17,7 @@ export default {
   form: [
     { to: 'checkbox', name: 'Checkbox - 多选框' },
     { to: 'field', name: 'Field - 输入框' },
+    { to: 'numberKeyboard', name: 'NumberKeyboard - 数字键盘' },
     { to: 'radio', name: 'Radio - 单选框' },
     { to: 'switch', name: 'Switch - 开关' },
     { to: 'uploader', name: 'Uploader - 图片上传' }
