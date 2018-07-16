@@ -21,16 +21,33 @@ Vue.use(Cell).use(CellGroup)
 ```
 ---
 #### Props
- 名称        | 类型       | 说明     | 默认值   | 可选值         
-:----------- |:--------- |:-------- |:------- |:-------------- 
- label       | `String`  | 标题     |          |                
- placeholder | `String`  | 占位内容  |         |               
- maxlength   | `String`  | 最大值    |         |                
- value       | `*`       | 绑定值    |         |                
+- cell-group
+
+ 名称        | 类型       | 说明         | 默认值   | 可选值
+:----------- |:--------- |:--------     |:------- |:------
+ title       | `String`  | 标题         |    --   | --       
+ label       | `String`  | 标题右边文本  |    --   | --
+
+- cell
+
+ 名称        | 类型       | 说明             | 默认值   | 可选值
+:----------- |:--------- |:--------         |:------- |:-------
+ title       | `String`  | 标题              |    --   |    --
+ value       | `String`  | 右边内容文本      |    --   |    --
+ isLink      | `Boolean` | 是否显示箭头符号  |  false   |  true
 
 ---
 #### Slot
+- cell-group
+
  名称    |  描述        
 :----    | :---------- 
- control | 自定义内容   
- button  | 自定义按钮   
+ --      | 自定义内容  
+
+- cell
+
+ 名称       |  描述        
+:----      | :---------- 
+ --        | 自定义内容   
+ title     | 自定义title  
+ right-icon| 自定义右边icon

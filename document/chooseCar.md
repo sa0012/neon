@@ -1,8 +1,13 @@
 ### chooseCar
-选车组件
-
 ---
-### 例子
+#### 按需引入
+
+```js
+import { ChooseCar } from '@insaic/neon'
+Vue.use(ChooseCar)
+```
+
+#### 例子
 ```html
 <brand-cars 
   :loadMoreArr="loadMoreArr" 
@@ -21,7 +26,7 @@
 ```
 
 ---
-### API
+#### Props
 | 参数              | 类型               | 说明            | 默认值 | 可选值 |
 | :-----------      | :---------------  | :-------------- | :---- |:----  |
 |  carsData         |       `Array`     |    选车品牌     | ----   | ----  |
@@ -32,7 +37,7 @@
 |  brandCategoryCode      |       `slot`     |    车型logo     | ----   | ----  |
 |  selectModelCode        |       `slot`     |      车系logo   | ----   | ----  |
 
-### Event
+#### Event
 | 名称              | 参数        |         描述       | 调用方式 |
 | :-----------------| :---       |:----------------   | :------ |
 | brandCategoryCode | ----       | 获取(categoryCode) | ---     |

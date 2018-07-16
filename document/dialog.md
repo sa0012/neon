@@ -1,7 +1,12 @@
 ### Dialog - 对话框
-弹出式提示框，有多种交互形式。
-
 ---
+#### 按需引入
+
+```js
+import { Dialog } from '@insaic/neon'
+Vue.use(Dialog)
+```
+
 对话框dialog以插件形式调用，分为confirm、alert形式。
 * #### confirm形式例子
 ```js
@@ -27,7 +32,7 @@ this.$dialog.alert({
 })
 ```
 ---
-#### API
+#### Props
 | 参数           | 类型        | 说明                               | 默认值   |
 |:-------------- |:---------- |:---------------------------------- |:-------  |
 | title          | `String`   | 标题                                | 系统提示 |

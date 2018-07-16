@@ -19,17 +19,19 @@ export default {
         [
           { name: 'circle-left' },
           { name: 'circle-down' },
-          { name: 'circle-right' },
-          { name: 'alert-empty' }
+          { name: 'circle-right' }
         ],
         [
+          { name: 'alert-empty' },
           { name: 'alert-full' },
           { name: 'alert' },
-          { name: 'checkmark-full' },
-          { name: 'checkmark' }
         ],
         [
+          { name: 'checkmark-full' },
+          { name: 'checkmark' },
           { name: 'error-full' },
+        ],
+        [
           { name: 'error' },
           { name: 'loading' },
           { name: 'arrow-left' }
@@ -37,8 +39,7 @@ export default {
         [
           { name: 'arrow-up' },
           { name: 'arrow-right' },
-          { name: 'arrow-down' },
-          { name: '' },
+          { name: 'arrow-down' }
         ]
       ]
     }
