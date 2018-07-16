@@ -1,5 +1,5 @@
 <template>
-  <div class="neon-doc-simulator">
+  <div class="neon-doc-simulator" v-show="$page.path !== '/'">
     <div class="neon-doc-simulator__nav">
       <div class="neon-doc-simulator__navbar">
         <neon-narbar :title="title"></neon-narbar>
@@ -40,18 +40,25 @@ export default {
   watch: {
     '$route': {
       handler (to, from) {
-        this.hash = this.$page.path.replace('.html', '')
+        const docCurrentPath = this.$page.path.replace('.html', '')
 
         const oldTitle = this.title
 
-        const path = this.hash.replace('/', '')
+        const path = docCurrentPath.replace('/', '')
+        let inExampleMenu = false
         Object.values(menu).forEach(arr => {
           arr.forEach(item => {
             if (item.to === path) {
               this.title = item.name
+              inExampleMenu = true
             }
           })
         })
+        if (inExampleMenu) {
+          this.hash = docCurrentPath
+        } else {
+          this.hash = '/'
+        }
 
         if (oldTitle === this.title) {
           this.title = ''
@@ -94,7 +101,6 @@ export default {
     border 1px solid #efeff4
     box-sizing border-box
     background-color #EDF0F4
-    // box-shadow: 0 1px 4px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.2)
   iframe
     width 0
     max-width 100%
@@ -113,19 +119,26 @@ export default {
   margin 0px auto
 
 ::-webkit-scrollbar
-  width 8px
-  height 8px
+  width 6px
+  height 6px
 
 ::-webkit-scrollbar-track-piece
-  background-color rgba(0,0,0,.2)
+  background-color transparent
   border-radius 6px
   -webkit-border-radius 6px
 
+.sidebar::-webkit-scrollbar-thumb
+  background-color transparent
+  height 6px
+
+.sidebar:hover::-webkit-scrollbar-thumb
+  background-color hsla(0,0%,49%,.3)
+
 ::-webkit-scrollbar-thumb:vertical
-  height 8px
+  height 6px
 
 ::-webkit-scrollbar-thumb:horizontal,::-webkit-scrollbar-thumb:vertical
-  background-color hsla(0,0%,49%,.7)
+  background-color transparent
   border-radius 6px
   -webkit-border-radius 6px
 
@@ -134,8 +147,8 @@ export default {
 
 @media (min-width: 1440px)
   .neon-doc-simulator
-    right 50%
-    margin-right -750px
+    // right 50%
+    // margin-right -750px
 
 @media (max-width: 1120px)
   .theme-container

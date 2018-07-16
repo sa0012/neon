@@ -19,6 +19,7 @@ body {
 body {
   background-color: #EDF0F4;
   box-sizing: border-box;
+  user-select: none;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

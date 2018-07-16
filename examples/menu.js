@@ -1,4 +1,4 @@
-export default {
+const menu = {
   // 基础
   base: [
     { to: 'accordion', name: 'Accordion - 折叠面板' },
@@ -46,3 +46,4 @@ export default {
     { to: 'submitBar', name: 'SubmitBar - 提交订单栏' }
   ]
 }
+module.exports = menu
