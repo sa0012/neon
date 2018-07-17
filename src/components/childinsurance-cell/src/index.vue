@@ -37,7 +37,7 @@ export default {
       type: String
     },
     rightText: {
-      type: [Number, String]
+      type: String
     }
   },
 

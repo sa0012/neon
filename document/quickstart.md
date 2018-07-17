@@ -23,13 +23,13 @@ CDN
 
 #### 1.按需引入（推荐）
 
-使用 babel-plugin-component，该插件是一款 babel 插件，它会在编译过程中将
+使用 [babel-plugin-component](https://github.com/ElementUI/babel-plugin-component)，该插件是一款 babel 插件，它会在编译过程中将
 ```js
 import { Button } from 'components'
 ```
  的写法自动转换为按需引入的方式 
  ```js
-var button = require('components/lib/button')
+const button = require('components/lib/button')
 require('components/lib/button/style.css')
  ```
 
@@ -53,13 +53,16 @@ require('components/lib/button/style.css')
 
  安装和配置好插件后，即可使用
  ```js
- import { Button, Style } from '@insaic/neon'
- Vue.use(Button).use(Style)
+ import { Style, Button } from '@insaic/neon'
+ Vue.use(Style).use(Button)
  ```
  的方式引入需要的组件
 
 ::: warning 注意： 按需引入组件 也需引入基础样式 
-`import { Style } from '@insaic/neon'`
+```js
+import { Style } from '@insaic/neon'
+Vue.use(Style)
+```
 :::
 
 

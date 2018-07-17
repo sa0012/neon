@@ -25,7 +25,7 @@ export default {
       }
     },
     name: {
-      type: null,
+      type: String,
       required: true
     },
     disabled: {

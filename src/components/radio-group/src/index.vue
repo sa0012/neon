@@ -10,7 +10,7 @@ export default {
 
   props: {
     value: {
-      type: null,
+      type: String,
       required: true
     },
     disabled: {

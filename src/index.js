@@ -21,7 +21,7 @@ import Tag from '@/components/tag'
 import Checkbox from '@/components/checkbox'
 import CheckboxGroup from '@/components/checkbox-group'
 import Field from '@/components/field'
-import Fieldgroup from '@/components/field-group'
+import FieldGroup from '@/components/field-group'
 import NumberKeyboard from '@/components/number-keyboard'
 import Radio from '@/components/radio'
 import RadioGroup from '@/components/radio-group'
@@ -66,7 +66,7 @@ const components = [
   Checkbox,
   CheckboxGroup,
   Field,
-  Fieldgroup,
+  FieldGroup,
   NumberKeyboard,
   Radio,
   RadioGroup,
@@ -124,7 +124,7 @@ export {
   Checkbox,
   CheckboxGroup,
   Field,
-  Fieldgroup,
+  FieldGroup,
   NumberKeyboard,
   Radio,
   RadioGroup,

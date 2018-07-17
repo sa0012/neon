@@ -19,13 +19,13 @@ Vue.use(Sendcode)
 ></sq-sendcode>
 
 <!-- 嵌入fieldgroup形式 -->
-<sq-fieldgroup>
+<sq-field-group>
   <sq-field label="手机号码" placeholder="请输入手机号码" v-model="name"></sq-field>
   <sq-sendcode
     v-model="sendcode2"
     @click="send2"
   ></sq-sendcode>
-</sq-fieldgroup>
+</sq-field-group>
 ```
 #### Props
  名称                 | 类型               | 说明                    | 默认值           | 可选值

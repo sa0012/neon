@@ -10,13 +10,13 @@
     ></sq-sendcode>
 
     <demo-title left>嵌入fieldgroup形式</demo-title>
-    <sq-fieldgroup>
+    <sq-field-group>
       <sq-field label="手机号码" placeholder="请输入手机号码" v-model="name"></sq-field>
       <sq-sendcode
         v-model="sendcode2"
         @click="send2"
       ></sq-sendcode>
-    </sq-fieldgroup>
+    </sq-field-group>
   </div>
 </template>
 

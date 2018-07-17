@@ -45,7 +45,7 @@ Vue.use(Accordion).use(AccordionItem)
 
  名称      | 类型                         | 说明                                | 默认值   | 可选值      
 :--------  |:--------------------------- |:----------------------------------- |:------- |:-------
- value     | `Array`, `String`, `Number` | 展开项，对应accordion-item里的name    | false   | --             
+ value     | `Array`， `String`， `Number` | 展开项，对应accordion-item里的name    | --      | --             
  accordion | `Boolean`                   | 是否为手风琴模式                      | false   | true
 
 - accordion-item
@@ -53,19 +53,13 @@ Vue.use(Accordion).use(AccordionItem)
  名称      | 类型                         | 说明                                | 默认值   | 可选值
 :--------  |:--------------------------- |:----------------------------------- |:-------  |:-------
  title     | `String`                    | 标题                                | --       | --             
- name      | `String`, `Number`          | 标识名称                             | --       | true          
+ name      | `String`， `Number`          | 标识名称                             | --       | --          
 
 ---
 
 #### Slot
-- accordion
-
- 名称 |  描述
-:---- | :-------
- --   | 显示文本内容
-
 - accordion-item
 
  名称 |  描述
 :---- | :-------
- --   | 显示文本内容
+ --   | 自定义内容
