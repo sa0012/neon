@@ -17,8 +17,8 @@
       </div>
     </div>
     <Content custom/>
-    <div class="footer" v-if="data.footer">
-      {{ data.footer }}
+    <div class="footer" v-if="data.footer" v-html="data.footer">
+      <!-- {{ data.footer }} -->
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ export default {
   components: { NavLink },
   computed: {
     data () {
+      console.log(this.$page.frontmatter)
       return this.$page.frontmatter
     },
     actionLink () {

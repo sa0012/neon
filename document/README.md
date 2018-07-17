@@ -2,7 +2,7 @@
 home: true
 actionText: 查看文档 →
 actionLink: /quickstart
-footer: MIT Licensed | Copyright © 2018-present INSAIC
+footer: MIT Licensed | Copyright © 2018-present INSAIC | website based on <a href="https://vuepress.vuejs.org/" target="_blank">vuepress</a> by Evan You
 ---
 
 <div align=center>
