@@ -30,7 +30,6 @@ export default {
   components: { NavLink },
   computed: {
     data () {
-      console.log(this.$page.frontmatter)
       return this.$page.frontmatter
     },
     actionLink () {
