@@ -1,38 +1,99 @@
 <template>
-  <div>
-    <div class="address" @click="viewCitySelector()">
-      <sq-button class="addr-title">地址选择</sq-button>
-      <div class="addr-cont" :class="{selected: province.name, 'not-selected': !province.name}">
-        {{province.name ? `${province.name}${city.name}` : '请选择'}}
-      </div>
-      <i class="iconfont icon-youjiantou1 right-arrow"></i>
-    </div>
-    <sq-city-selector :visible.sync="showCitySelector" :current-city="currentCity" :callback="citySelectorCallback"  />
+  <div class="demo-page-wrap">
+    <sq-button type="primary" size="small" @click="onShow">地址选择</sq-button>
+    <p>{{ val }}</p>
+    <sq-popup v-model="isShow" position="bottom">
+      <sq-city-selector
+        :province="province"
+        province-key="name"
+        :city="city"
+        city-key="name"
+        :county="county"
+        county-key="fullname"
+        :loading="isLoading"
+        @set-province="onSetProvince"
+        @set-city="onSetCity"
+        @set-county="onSetCounty"
+        @close="isShow = !isShow"
+      />
+    </sq-popup>
   </div>
 </template>
 
 <script>
+const data = require('../city.json').result
+
 export default {
   name: '',
 
   data () {
     return {
-      showCitySelector: false,
-      province: {},
-      city: {},
-      currentCity: ''
+      isShow: false,
+      isLoading: false,
+      province: [],
+      city: [],
+      county: [],
+      val: []
     }
   },
 
   methods: {
-    viewCitySelector () {
-      this.showCitySelector = true
+    onShow () {
+      this.isShow = !this.isShow
+      this.isLoading = true
+      this.province = data[0]
+      this.isLoading = false
+      // axios.post('/h5-api/basic/data/provinces')
+      //   .then(response => {
+      //     this.province = response.data.result
+      //     this.isLoading = false
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
     },
-    citySelectorCallback (data) {
-      console.log(data)
-      this.province = data.province
-      this.city = data.city
-      this.currentCity = data.currentCity
+    onSetProvince ({ item, index }) {
+      console.log(item)
+      console.log(index)
+      // this.isLoading = true
+      this.city = data[1].filter(element => {
+        return element.id.slice(0, 2) + '0000' === item.id
+      })
+      // this.isLoading = false
+      // axios.post(`/h5-api/basic/data/cities/${item.code}`)
+      //   .then(response => {
+      //     console.log(response)
+      //     this.city = response.data.result
+      //     this.isLoading = false
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
+    },
+    onSetCity ({ item, index }) {
+      console.log(item)
+      console.log(index)
+      // this.isLoading = true
+      this.county = data[2].filter(element => {
+        return element.id.slice(0, 4) + '00' === item.id
+      })
+      // this.isLoading = false
+      // axios.post(`/h5-api/basic/data/counties/${item.code}`)
+      //   .then(response => {
+      //     console.log(response)
+      //     this.county = response.data.result
+      //     this.isLoading = false
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
+    },
+    onSetCounty ({ item, index, value }) {
+      console.log(item)
+      console.log(index)
+      console.log(value)
+      this.val = [value.province, value.city, value.county]
+      this.isShow = !this.isShow
     }
   }
 }
