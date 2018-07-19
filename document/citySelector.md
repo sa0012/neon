@@ -31,13 +31,14 @@ Vue.use(CitySelector)
 #### Props
  名称          | 类型      | 说明                | 默认值 | 可选值
 :------       |:--------- |:---------------     |:------|:-----
+ title        | `String`  | 标题                | 选择地址|  --
  province     | `Array`   | 省份列表数据         |   --  |  --
  city         | `Array`   | 城市列表数据         | --    |  --
  county       | `Array`   | 乡镇列表数据         | --    |  --
- province-key | `String`  | 省份项对应显示的key  |  --   |  --
- city-key     | `String`  | 城市项对应显示的key  |  --   |  --
- county-key   | `String`  | 乡镇项对应显示的key  |  --   |  --
- loading      | `Boolean` | 是否显示loading状态  |  --   |  --
+ province-key | `String`  | 省份项对应显示的key  |  name   |  --
+ city-key     | `String`  | 城市项对应显示的key  |  name   |  --
+ county-key   | `String`  | 乡镇项对应显示的key  |  name   |  --
+ loading      | `Boolean` | 是否显示loading状态  |  false   |  true
 
 ---
 
