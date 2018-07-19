@@ -1,23 +1,24 @@
 <template>
   <div class="demo-page-wrap">
-    <h4>['']数据形式</h4>
+    <demo-title>单列形式 -- ['']数据结构</demo-title>
     <sq-picker
       :columns="list1"
       @on-change="onChange"
     />
-    <h4>[[''],['']]数据形式</h4>
+
+    <demo-title>多列形式 -- [[''],['']]数据结构</demo-title>
     <sq-picker
       :columns="list2"
       @on-change="onChange"
     />
-    <h4>[{},{}]数据形式</h4>
+    <demo-title>多列形式 -- [{},{}]数据结构</demo-title>
     <sq-picker
       :columns="list3"
       @on-change="onChange"
       value-key="label"
     />
 
-    <h4>联动形式</h4>
+    <demo-title>联动形式</demo-title>
     <sq-picker
       show-toolbar
       :columns="list4"
@@ -27,14 +28,14 @@
       @on-change="handleChange"
     />
     
-    <h4>异步请求loading</h4>
+    <demo-title>loading状态</demo-title>
     <sq-picker
       :columns="list0"
       :loading="true"
     />
 
-    <h4>搭配popup使用</h4>
-    <sq-button type="primary" @click="isShow = !isShow">show</sq-button>
+    <demo-title>搭配popup使用</demo-title>
+    <sq-button type="primary" size="small" @click="isShow = !isShow">show</sq-button>
     <sq-popup v-model="isShow" position="bottom">
       <sq-picker
         show-toolbar
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+import mock from './pickCityMock.js'
+
 export default {
   name: '',
 
@@ -79,218 +82,7 @@ export default {
           { value: 17, label: 'Gg' }
         ]
       ],
-      list4: [
-        {
-          value: 1,
-          label: '浙江',
-          children: [
-            {
-              value: '101',
-              label: '杭州',
-              children: [
-                {
-                  value: 10001,
-                  label: '上城区',
-                  children: []
-                },
-                {
-                  value: 10002,
-                  label: '下城区',
-                  children: []
-                },
-                {
-                  value: 10003,
-                  label: '江干区',
-                  children: []
-                },
-                {
-                  value: 10004,
-                  label: '滨江区',
-                  children: []
-                },
-                {
-                  value: 10005,
-                  label: '下沙区',
-                  children: []
-                }
-              ]
-            },
-            {
-              value: '102',
-              label: '宁波',
-              children: [
-                {
-                  value: 20001,
-                  label: '宁波11',
-                  children: []
-                },
-                {
-                  value: 20002,
-                  label: '宁波12',
-                  children: []
-                },
-                {
-                  value: 20003,
-                  label: '宁波13',
-                  children: []
-                },
-                {
-                  value: 20004,
-                  label: '宁波14',
-                  children: []
-                },
-                {
-                  value: 20005,
-                  label: '宁波15',
-                  children: []
-                }
-              ]
-            },
-            {
-              value: '103',
-              label: '温州',
-              children: [
-                {
-                  value: 30001,
-                  label: '温州11',
-                  children: []
-                },
-                {
-                  value: 30002,
-                  label: '温州12',
-                  children: []
-                },
-                {
-                  value: 30003,
-                  label: '温州13',
-                  children: []
-                },
-                {
-                  value: 30004,
-                  label: '温州14',
-                  children: []
-                },
-                {
-                  value: 30005,
-                  label: '温州15',
-                  children: []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: 2,
-          label: '上海',
-          children: [
-            {
-              value: '201',
-              label: '黄浦区',
-              children: [
-                {
-                  value: 1,
-                  label: '黄浦街道1',
-                  children: []
-                },
-                {
-                  value: 2,
-                  label: '黄浦街道2',
-                  children: []
-                },
-                {
-                  value: 3,
-                  label: '黄浦街道3',
-                  children: []
-                }
-              ]
-            },
-            {
-              value: '202',
-              label: '静安区',
-              children: [
-                {
-                  value: 1,
-                  label: '静安街道1',
-                  children: []
-                },
-                {
-                  value: 2,
-                  label: '静安街道2',
-                  children: []
-                },
-                {
-                  value: 3,
-                  label: '静安街道3',
-                  children: []
-                }
-              ]
-            },
-            {
-              value: '203',
-              label: '长宁区',
-              children: [
-                {
-                  value: 1,
-                  label: '长宁街道1',
-                  children: []
-                },
-                {
-                  value: 2,
-                  label: '长宁街道2',
-                  children: []
-                },
-                {
-                  value: 3,
-                  label: '长宁街道3',
-                  children: []
-                }
-              ]
-            },
-            {
-              value: '204',
-              label: '徐汇区',
-              children: [
-                {
-                  value: 1,
-                  label: '徐汇街道1',
-                  children: []
-                },
-                {
-                  value: 2,
-                  label: '徐汇街道2',
-                  children: []
-                },
-                {
-                  value: 3,
-                  label: '徐汇街道3',
-                  children: []
-                }
-              ]
-            },
-            {
-              value: '205',
-              label: '闵行区',
-              children: [
-                {
-                  value: 1,
-                  label: '闵行街道1',
-                  children: []
-                },
-                {
-                  value: 2,
-                  label: '闵行街道2',
-                  children: []
-                },
-                {
-                  value: 3,
-                  label: '闵行街道3',
-                  children: []
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      list4: mock,
       isShow: false
     }
   },
@@ -340,5 +132,5 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 </style>

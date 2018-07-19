@@ -1,5 +1,6 @@
 const path = require('path')
-const webpack = require('webpack')
+const utils = require('./utils')
+// const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -11,12 +12,12 @@ delete baseWebpackConfig.output
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    'isc-mui': path.resolve(__dirname, '../src/index.js')
+    'neon': path.resolve(__dirname, '../src/index.js')
   },
   output: {
     path: path.resolve(__dirname, '../lib'),
-    filename: '[name].min.js',
-    library: 'isc-mui',
+    filename: 'index.min.js',
+    library: 'neon',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
@@ -28,13 +29,32 @@ module.exports = merge(baseWebpackConfig, {
       amd: 'vue'
     }
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('css-loader')
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
+      }
+    ]
+  },
   plugins: [
     new ExtractTextPlugin({
-      filename: './style.css',
-      disable: false,
-      allChunks: true
+      filename: './style.min.css'
     }),
     new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false,
+          drop_console: true,
+          pure_funcs: ['console.log']//移除console
+        }
+      },
       parallel: true,
       sourceMap: true
     }),

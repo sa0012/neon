@@ -1,9 +1,10 @@
 <template>
   <div>
-    <sq-notice-bar
-      text="为了确保您的资金安全，请设置支付密码"
-      mode="close"
-    />
+    <demo-title left>基础用法</demo-title>
+    <sq-notice-bar text="为了确保您的资金安全，请设置支付密码"/>
+
+    <demo-title left>通知模式</demo-title>
+    <sq-notice-bar text="为了确保您的资金安全，请设置支付密码" mode="close"/>
     <br>
     <sq-notice-bar
       text="为了确保您的资金安全，请设置支付密码。。。为了确保您的资金安全，请设置支付密码。。。为了确保您的资金安全，请设置支付密码"
@@ -25,5 +26,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

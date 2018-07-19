@@ -4,76 +4,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import Demo from '@/components/demo'
+import Demo from './routers/demo'
+import DemoTitle from './routers/demoTitle'
 
-import Accordion from '../src/components/accordion'
-import AccordionItem from '../src/components/accordionItem'
-import Actionsheet from '../src/components/actionsheet'
-import Agree from '../src/components/agree'
-import Button from '../src/components/button'
-import Carlicense from '../src/components/carlicense'
-import Cell from '../src/components/cell'
-import CellGroup from '../src/components/cellGroup'
-import ChildinsuranceCell from '../src/components/childinsuranceCell'
-import CitySelector from '../src/components/citySelector'
-import Datepicker from '../src/components/datepicker'
-import Field from '../src/components/field'
-import Fieldgroup from '../src/components/fieldGroup'
-import Loadmore from '../src/components/loadmore'
-import NoticeBar from '../src/components/noticeBar'
-import Picker from '../src/components/picker'
-import Popup from '../src/components/popup'
-import Radio from '../src/components/radio'
-import RadioGroup from '../src/components/radioGroup'
-import Stepper from '../src/components/stepper'
-import SubmitBar from '../src/components/submitBar'
-import Swiper from '../src/components/swiper'
-import Switch from '../src/components/switch'
-import Tabpane from '../src/components/tabpane'
-import Tabs from '../src/components/tabs'
-import Tag from '../src/components/tag'
+import Neon from '@/index.js'
 
-import Toast from '../src/components/toast'
-import Dialog from '../src/components/dialog'
+Vue.use(Neon)
+Vue.component(Demo.name, Demo)
+Vue.component(DemoTitle.name, DemoTitle)
 
-import '../src/assets/icon/iconfont.css'
+import Filter from './filter'
 
-const components = [
-  Accordion,
-  AccordionItem,
-  Actionsheet,
-  Agree,
-  Button,
-  Carlicense,
-  Cell,
-  CellGroup,
-  ChildinsuranceCell,
-  CitySelector,
-  Datepicker,
-  Demo,
-  Field,
-  Fieldgroup,
-  Loadmore,
-  NoticeBar,
-  Picker,
-  Popup,
-  Radio,
-  RadioGroup,
-  Stepper,
-  SubmitBar,
-  Swiper,
-  Switch,
-  Tabpane,
-  Tabs,
-  Tag 
-]
-
-components.forEach(component => {
-  Vue.component(component.name, component)
-})
-
-Vue.use(Toast)
-Vue.use(Dialog)
+Filter(Vue)
 
 Vue.config.productionTip = false
 
@@ -81,7 +23,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { 
+  components: {
     App
   },
   template: '<App/>'

@@ -1,18 +1,24 @@
 {
-  "name": "neon",
+  "name": "@insaic/neon",
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "A Mobile UI Components built on Vue",
   "author": "insaicFE",
   "main": "lib/index.js",
+  "style": "lib/style.css",
   "scripts": {
+    "dev:doc": "cd document && npm run dev",
+    "build:doc": "npm run build:demo && cd document && npm run build",
     "dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js",
-    "build:exam": "node build/build.exam.js",
+    "build:demo": "node build/build.demo.js",
     "build:dev": "cross-env NODE_ENV=production webpack --config ./build/webpack.lib.dev.conf.js",
-    "build:prod": "cross-env NODE_ENV=production webpack --config ./build/webpack.lib.prod.conf.js",
-    "build:lib": "npm run build:dev && npm run build:prod"
+    "build:prod": "cross-env NODE_ENV=production MIN_ENV=min webpack --config ./build/webpack.lib.prod.conf.js",
+    "build:src": "cross-env NODE_ENV=production webpack --config ./build/webpack.src.conf.js",
+    "build:lib": "rm -rf lib && npm run build:dev && npm run build:prod && npm run build:src"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -56,7 +62,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
-    "rimraf": "^2.6.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.7",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
@@ -67,6 +73,7 @@
     "vue-router": "^3.0.1",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
+    "vuepress": "^0.10.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
@@ -89,7 +96,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com/insaic/neon"
+    "url": "git+ssh://git@github.com/insaic/neon.git"
   },
   "bugs": {
     "url": "https://github.com/insaic/neon/issues"
@@ -110,5 +117,10 @@
     "android >= 4.1",
     "bb >= 10",
     "and_uc 9.9"
-  ]
+  ],
+  "homepage": "https://github.com/insaic/neon#readme",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  }
 }

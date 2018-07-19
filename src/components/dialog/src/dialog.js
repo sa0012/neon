@@ -7,7 +7,7 @@ const dialogPlugin = {
     const Dialog = Vue.extend(DialogComponent)
     if (!instance) {
       instance = new Dialog().$mount(document.createElement('div'))
-      document.body.appendChild(instance.$el)
+      document.body && document.body.appendChild(instance.$el)
     }
 
     const defaults = {}
@@ -30,7 +30,6 @@ const dialogPlugin = {
         callback && callback()
       },
       alert (option) {
-        console.log(option)
         this.show(Object.assign({}, option, { type: 'alert' }))
       },
       confirm (option) {

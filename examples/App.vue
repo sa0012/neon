@@ -6,12 +6,6 @@
 
 <script>
 export default {
-  name: 'App',
-  data () {
-    return {
-      show: false
-    }
-  }
 }
 </script>
 
@@ -23,27 +17,20 @@ body {
   padding: 0;
 }
 body {
-  background-color: #f8f8f8;
-  // padding: 20px;
+  background-color: #EDF0F4;
   box-sizing: border-box;
+  user-select: none;
 }
-*,
-*:before,
-*:after {
-  -webkit-tap-highlight-color: transparent;
-}
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* margin-top: 20px; */
   height: 100%;
 }
 .demo-page-wrap {
   padding: 20px;
   min-height: 100%;
   box-sizing: border-box;
-  background-color: #ECEFF9;
+  background-color: #EDF0F4;
 }
 </style>

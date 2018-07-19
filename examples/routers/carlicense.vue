@@ -1,12 +1,19 @@
 <template>
   <div class="demo-page-wrap">
+    <demo-title>基础用法  {{ provName1 }}{{ carNumber1 }}</demo-title>
     <sq-carlicense
-      :province-name.sync="provName"
-      :car-number.sync="carNumber"
+      :province-name.sync="provName1"
+      :car-number.sync="carNumber1"
       placeholder="请输入车牌号"
-    >
-    </sq-carlicense>
-    {{ provName }}{{ carNumber }}
+    />
+
+    <demo-title>新能源标识</demo-title>
+    <sq-carlicense
+      :province-name.sync="provName2"
+      :car-number.sync="carNumber2"
+      placeholder="请输入车牌号"
+    />
+    
   </div>
 </template>
 
@@ -16,8 +23,10 @@ export default {
 
   data () {
     return {
-      provName: '沪',
-      carNumber: ''
+      provName1: '沪',
+      carNumber1: '',
+      provName2: '沪',
+      carNumber2: 'AF12345',
     }
   },
 
@@ -25,6 +34,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

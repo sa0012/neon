@@ -1,22 +1,19 @@
 const path = require('path')
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-// const CompressionPlugin = require('compression-webpack-plugin')
 
 delete baseWebpackConfig.entry
 delete baseWebpackConfig.output
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    'isc-mui': path.resolve(__dirname, '../src/index.js')
+    'neon': path.resolve(__dirname, '../src/index.js')
   },
   output: {
     path: path.resolve(__dirname, '../lib'),
-    filename: '[name].js',
-    library: 'isc-mui',
+    filename: 'index.js',
+    library: 'neon',
     libraryTarget: 'umd',
     umdNamedDefine: true
   },
@@ -28,23 +25,23 @@ module.exports = merge(baseWebpackConfig, {
       amd: 'vue'
     }
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract('css-loader')
+      },
+      {
+        test: /\.(sacc|scss)$/,
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
+      }
+    ]
+  },
   plugins: [
     new ExtractTextPlugin({
-      filename: './style.css',
-      disable: false,
-      allChunks: true
+      filename: './style.css'
     })
-    // ,
-    // new UglifyJsPlugin({
-    //   parallel: true,
-    //   sourceMap: true
-    // }),
-    // new CompressionPlugin({
-    //   asset: '[path].gz[query]',
-    //   algorithm: 'gzip',
-    //   test: /\.(js|css)$/,
-    //   threshold: 10240,
-    //   minRatio: 0.8
-    // })
   ]
 })
