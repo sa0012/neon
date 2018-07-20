@@ -32,7 +32,8 @@ module.exports = {
         collapsable: false,
         children: [
           ['/carLicense', 'carLicense 车牌录入键盘'],
-          ['/agree', 'agree 勾选按钮']
+          ['/agree', 'agree 勾选按钮'],
+          ['/chooseCar', 'chooseCar 选车组件']
         ]
       }
     ],
