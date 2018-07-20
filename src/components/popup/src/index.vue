@@ -1,7 +1,7 @@
 <template>
   <div class="sq-popup">
     <transition name="ry-fade">
-      <div class="sq-popup-mask" v-show="value || hideMask"  @click="$_cancel"></div>
+      <div class="sq-popup-mask" v-show="value && !hideMask"  @click="$_cancel"></div>
     </transition>
     <transition :name="transitionSlideType">
       <div
