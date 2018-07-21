@@ -1,4 +1,4 @@
-import imgConfig from '../imgConfig'
+import imgConfig from './imgConfig'
 
 export default (Vue) => {
   Vue.filter('imgUrl', url => {

@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <div class="address">
-      <brand-cars 
-        :code="code" 
-        :loadMoreArr="loadMoreArr" 
-        :carsData="carsData" 
-        :selectCar="selectCar" 
-        :selectModel="selectModel" 
-        @brandCategoryCode="getBrandCategoryCode" 
-        @brandModelId="getBrandModelId" 
-        @loadMore="getLoadMore"
-        @carDetail="getCarDetail"
-        >
-        <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
-        <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
-        <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
-      </brand-cars>
-    </div>
+  <div class="address">
+    <brand-cars 
+      :code="code" 
+      :loadMoreArr="loadMoreArr" 
+      :carsData="carsData" 
+      :selectCar="selectCar" 
+      :selectModel="selectModel" 
+      @brandCategoryCode="getBrandCategoryCode" 
+      @brandModelId="getBrandModelId" 
+      @loadMore="getLoadMore"
+      @carDetail="getCarDetail"
+      >
+      <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
+      <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
+      <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
+    </brand-cars>
   </div>
 </template>
 
 <script>
-import carsData from '../chooseCar.json';
-import selectCar from '../selectCar.json';
-import selectModel from '../selectModel.json';
+import carsData from '../mock/chooseCar.json'
+import selectCar from '../mock/selectCar.json'
+import selectModel from '../mock/selectModel.json'
 
 console.log(selectModel.result.content, 233444)
 export default {
@@ -43,7 +41,7 @@ export default {
 
   methods: {
     chooseCar() {
-      this.carsData = carsData.result;
+      this.carsData = carsData.result
       this.showChooseCar = true
     },
     test (code) {
