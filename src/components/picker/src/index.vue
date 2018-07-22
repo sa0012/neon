@@ -13,7 +13,6 @@
         :format="format ? format[index] : ''"
         :list-index="index"
         :value-key="valueKey"
-        :default-value="defaultValue ? defaultValue[index] : ''"
         @on-change="$_onChange"
       />
     </div>
@@ -34,9 +33,6 @@ export default {
   },
 
   props: {
-    value: {
-      type: Array
-    },
     format: {
       type: Array
     },
@@ -82,6 +78,18 @@ export default {
   },
 
   methods: {
+    updateColumnAndValue ({columnIndex = 0, newCol, newValueIndex = 0}) {
+      const col = this.getChildrens()[columnIndex]
+      col.list = newCol
+      col.index = newValueIndex
+
+      const colLength = newCol.length
+      col.maxY = (colLength + col.offset) * col.rowHeight
+      col.minY = (col.offset - colLength + 1) * col.rowHeight
+
+      col.$_setCurrentValueByIndex(newValueIndex)
+      col.$_setYByIndex(newValueIndex)
+    },
     formateColumns (columns) {
       if (columns.length && Array.isArray(columns[0])) {
         return columns

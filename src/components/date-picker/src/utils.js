@@ -36,3 +36,14 @@ export const getDate = (date) => {
 
   return new Date(date.toString().replace('-', '/'))
 }
+
+export const getArrByLength = ({ length, startByZero = false, min, max }) => {
+  let arr = []
+  const start = startByZero ? 0 : 1
+  for (let i = 0; i < length; i++) {
+    if (min !== void 0 && i + start < min) continue
+    if (max !== void 0 && i + start > max) continue
+    arr.push(i + start)
+  }
+  return arr
+}
