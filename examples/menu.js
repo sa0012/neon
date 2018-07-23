@@ -1,4 +1,4 @@
-export default {
+const menu = {
   // 基础
   base: [
     { to: 'accordion', name: 'Accordion - 折叠面板' },
@@ -9,6 +9,7 @@ export default {
     { to: 'noticeBar', name: 'NoticeBar - 通告栏' },
     { to: 'popup', name: 'Popup - 弹出层' },
     { to: 'stepper', name: 'Stepper - 步进器' },
+    { to: 'steps', name: 'Steps - 步骤条' },
     { to: 'swiper', name: 'Swiper - 轮播' },
     { to: 'tabs', name: 'Tabs - 标签页' },
     { to: 'tag', name: 'Tag - 标记' }
@@ -39,9 +40,10 @@ export default {
     { to: 'agree', name: 'Agree - 勾选按钮' },
     { to: 'carLicense', name: 'CarLicense - 车牌录入键盘' },
     { to: 'childinsuranceCell', name: 'ChildinsuranceCell - 子险列表' },
-    { to: 'chooseCar', name: 'chooseCar - 选择车型' },
+    { to: 'chooseCar', name: 'ChooseCar - 选择车型' },
     { to: 'citySelector', name: 'CitySelector - 城市选择' },
     { to: 'sendcode', name: 'Sendcode - 发送验证码' },
     { to: 'submitBar', name: 'SubmitBar - 提交订单栏' }
   ]
 }
+module.exports = menu

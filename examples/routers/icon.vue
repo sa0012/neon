@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="demo-icon-page">
     <div class="demo-icon-row" v-for="(item, index) in iconArray" :key="index">
       <div class="demo-icon-item" v-for="(icon, index) in item" :key="index">
         <i class="demo-icon iconfont" :class="`icon-${icon.name}`"></i>
@@ -19,17 +19,19 @@ export default {
         [
           { name: 'circle-left' },
           { name: 'circle-down' },
-          { name: 'circle-right' },
-          { name: 'alert-empty' }
+          { name: 'circle-right' }
         ],
         [
+          { name: 'alert-empty' },
           { name: 'alert-full' },
           { name: 'alert' },
-          { name: 'checkmark-full' },
-          { name: 'checkmark' }
         ],
         [
+          { name: 'checkmark-full' },
+          { name: 'checkmark' },
           { name: 'error-full' },
+        ],
+        [
           { name: 'error' },
           { name: 'loading' },
           { name: 'arrow-left' }
@@ -37,8 +39,7 @@ export default {
         [
           { name: 'arrow-up' },
           { name: 'arrow-right' },
-          { name: 'arrow-down' },
-          { name: '' },
+          { name: 'arrow-down' }
         ]
       ]
     }
@@ -51,6 +52,9 @@ export default {
 <style lang="scss">
 $theme-color: #4a90e2;
 
+.demo-icon-page {
+  user-select: text;
+}
 .demo-icon-row {
   display: flex;
   .demo-icon-item {

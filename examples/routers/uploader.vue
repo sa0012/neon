@@ -1,7 +1,7 @@
 <template>
   <div class="demo-page-wrap">
-    <sq-uploader/>
-    <sq-uploader/>
+    <sq-uploader accept="image/png" @file-change="change"/>
+    <sq-uploader multiple @file-change="change"/>
   </div>
 </template>
 
@@ -30,7 +30,11 @@ export default {
 
   destroyed () {},
 
-  methods: {}
+  methods: {
+    change (files) {
+      console.log(files)
+    }
+  }
 }
 </script>
 

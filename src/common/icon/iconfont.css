@@ -1,7 +1,7 @@
 
 @font-face {
   font-family: "iconfont";
-  src: url('iconfont.ttf?t=1531542505697') format('truetype');
+  src: url('iconfont.ttf?t=1531661980595') format('truetype');
 }
 
 .iconfont {
@@ -30,9 +30,13 @@
 
 .icon-keyboard-xiangxia:before { content: "\e609"; }
 
+.icon-yuandian:before { content: "\e82f"; }
+
 .icon-circle-down:before { content: "\e612"; }
 
 .icon-circle-right:before { content: "\e614"; }
+
+.icon-yuandianxiao:before { content: "\e630"; }
 
 .icon-alert-full:before { content: "\e685"; }
 

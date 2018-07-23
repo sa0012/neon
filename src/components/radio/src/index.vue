@@ -18,7 +18,7 @@ export default {
 
   props: {
     name: {
-      type: null,
+      type: String,
       required: true
     },
     disabled: {

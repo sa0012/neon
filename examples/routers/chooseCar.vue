@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="address">
+    <div @click="chooseCar" class="button">选车组件</div>
+    <div class="address" v-if="showChooseCar">
       <brand-cars 
         :code="code" 
         :loadMoreArr="loadMoreArr" 
@@ -37,7 +38,8 @@ export default {
       selectModel: [],
       brandCategoryCode: '',
       code: '',
-      loadMoreArr: []
+      loadMoreArr: [],
+      showChooseCar: false
     }
   },
 
@@ -66,6 +68,9 @@ export default {
     },
     getCarDetail (detail) {
       console.log(detail)
+    },
+    chooseCar () {
+      this.showChooseCar = !this.showChooseCar
     }
   }
 }
@@ -90,6 +95,15 @@ export default {
   vertical-align: middle;
   padding-right: 3px;
   margin-bottom: 4px;
+}
+
+.button {
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  line-height: 40px;
+  text-align: center;
+  background: #fff;
 }
 </style>
 

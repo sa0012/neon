@@ -18,7 +18,7 @@
       </ul>
     </div>
     <div class="sq-brandCars-category-rightbar">
-      <ul class="sq-brandCars-category-rightbar-list">
+      <ul class="sq-brandCars-category-rightbar-list" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
         <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item" @click.stop="jumpTitle(item)">{{ item }}</li>
       </ul>
     </div>
@@ -121,6 +121,22 @@ export default {
     }
   },
   methods: {
+    touchStart (e) {
+      this.start = e.changedTouches[0].pageY - 30
+      console.log(this.start, 11111)
+    },
+    touchMove (e) {
+      const curDistance = (document.body.clientHeight || document.documentElement.clientHeight) - 30
+      // console.log(curDistance)
+      if (e.changedTouches[0].pageY - curDistance < 30) {
+        let curMove = e.changedTouches[0].pageY - this.start
+        console.log(curMove, 22222)
+      }
+    },
+    touchEnd (e) {
+      let curMove = e.changedTouches[0].pageY - this.start
+      console.log(curMove, 333333)
+    },
     getBrandCategoryArr () {
       this.brandCategorys = Object.keys(this.carsData)
       this.$nextTick(() => {
@@ -255,16 +271,22 @@ export default {
   }
   &-category-rightbar {
     position: fixed;
-    top: 20px;
+    top: 0;
     right: 0px;
     width: 50px;
     text-align: right;
     z-index: 444;
+    height: 100%;
+    padding: 30px 0;
+    box-sizing: border-box;
   }
   &-category-rightbar-list {
     list-style: none;
     margin: 0;
     padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   &-category-rightbar-item {
     list-style: none;
@@ -273,59 +295,10 @@ export default {
     text-align: center;
     color: #007EFF;
     box-sizing: border-box;
-  }
-}
-
-@media screen and (max-height: 480px) {
-  .sq-brandCars {
-    &-category-rightbar-item {
-      height: 20px;
-    }
-  }
-}
-
-@media screen and (min-height: 560px) {
-  .sq-brandCars {
-    &-category-rightbar-item {
-      height: 22px;
-      line-height: 22px;
-    }
-  }
-}
-
-@media screen and (min-height: 640px) {
-  .sq-brandCars {
-    &-category-rightbar-item {
-      height: 27px;
-      line-height: 27px;
-    }
-  }
-}
-
-@media screen and (min-height: 667px) {
-  .sq-brandCars {
-    &-category-rightbar-item {
-      height: 28px;
-      line-height: 28px;
-    }
-  }
-}
-
-@media screen and (min-height: 736px) {
-  .sq-brandCars {
-    &-category-rightbar-item {
-      height: 31px;
-      line-height: 31px;
-    }
-  }
-}
-
-@media screen and (min-height: 812px) {
-  .sq-brandCars {
-    &-category-rightbar-item {
-      height: 35px;
-      line-height: 35px;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
   }
 }
 

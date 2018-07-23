@@ -1,9 +1,12 @@
-### toast
-简短的消息提示框，支持自定义位置、持续时间。
-
+### Toast - 轻提示
 ---
+#### 按需引入
 
-操作提示toast以插件形式调用，类型分为text[纯文字]、success[含成功icon]、error[含失败icon]、loading[含loading icon]。
+```js
+import { Toast } from '@insaic/neon'
+Vue.use(Toast)
+```
+
 #### 例子
 ```js
 // text形式使用

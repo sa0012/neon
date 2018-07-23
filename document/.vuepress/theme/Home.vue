@@ -17,8 +17,8 @@
       </div>
     </div>
     <Content custom/>
-    <div class="footer" v-if="data.footer">
-      {{ data.footer }}
+    <div class="footer" v-if="data.footer" v-html="data.footer">
+      <!-- {{ data.footer }} -->
     </div>
   </div>
 </template>

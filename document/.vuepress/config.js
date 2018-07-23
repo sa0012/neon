@@ -1,42 +1,71 @@
+const menu = require('../../examples/menu.js')
+
+const formatMenu = list => {
+  let arr = []
+  list.forEach(item => {
+    arr.push([`/${item.to}`, item.name.replace('- ', '')])
+  })
+  return arr
+}
+
 module.exports = {
-  title: 'neon文档',
-  description: '上汽保险移动端Vue组件文档',
+  title: 'Neon',
+  description: '上汽保险移动端Vue组件库',
   base: '/neon/',
+  head: [
+    ['link', { rel: 'icon', href: `/favicon.ico` }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }]
+  ],
   themeConfig: {
     nav: [
-      { text: '快速上手', link: '/dialog' },
       { text: 'Github', link: 'https://github.com/insaic/neon' }
     ],
     sidebar: [
       {
-        title: '插件式组件',
+        title: '开发指南',
         collapsable: false,
         children: [
-          ['/dialog', 'dialog 对话框'],
-          ['/toast', 'toast 消息提示']
+          ['/quickstart', '快速上手'],
+          ['/changelog', '更新日志'],
         ]
       },
       {
-        title: '普通组件',
+        title: '基础组件',
         collapsable: false,
-        children: [
-          ['/button', 'button 按钮'],
-          ['/cell', 'cell 单元格'],
-          ['/tabs', 'tabs 选项卡'],
-          ['/actionsheet', 'actionsheet 弹出式菜单'],
-          ['/picker', 'picker 滚动选择器'],
-        ]
+        children: formatMenu(menu.base)
+      },
+      {
+        title: '表单组件',
+        collapsable: false,
+        children: formatMenu(menu.form)
+      },
+      {
+        title: '操作反馈',
+        collapsable: false,
+        children: formatMenu(menu.action)
       },
       {
         title: '业务组件',
         collapsable: false,
-        children: [
-          ['/carLicense', 'carLicense 车牌录入键盘'],
-          ['/agree', 'agree 勾选按钮'],
-          ['/chooseCar', 'chooseCar 选车组件']
-        ]
+        children: formatMenu(menu.business)
       }
     ],
-    lastUpdated: '上次更新：', // string | boolean
+    lastUpdated: '上次更新', // string | boolean
+    // 假定是 GitHub. 同时也可以是一个完整的 GitLab URL
+    // repo: 'insaic/neon',
+    // 自定义仓库链接文字。默认从 `themeConfig.repo` 中自动推断为
+    // "GitHub"/"GitLab"/"Bitbucket" 其中之一，或是 "Source"。
+    // repoLabel: '查看源码',
+
+    // 以下为可选的编辑链接选项
+
+    // 假如你的文档仓库和项目本身不在一个仓库：
+    // docsRepo: 'vuejs/vuepress',
+    // 假如文档不是放在仓库的根目录下：
+    docsDir: 'document',
+    // 默认是 false, 设置为 true 来启用
+    editLinks: true,
+    // 默认为 "Edit this page"
+    editLinkText: '在 GitHub 上编辑此页'
   }
 }

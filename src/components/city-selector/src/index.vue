@@ -1,45 +1,66 @@
 <template>
-  <div class="citySelector" v-show="currentVisible">
-    <div class="main">
-      <div class="close-bar">
-        <i class="iconfont icon-error" @click="close()"></i>
+  <div class="sq-city-selector">
+    <div class="sq-city-selector-close-bar">
+      <span class="sq-city-selector-title">{{ title }}</span>
+      <i class="iconfont icon-error" @click="$_close"></i>
+    </div>
+    <div class="sq-city-selector-column-title-wrap">
+      <h4
+        class="sq-city-selector-column-title"
+        :class="{current: currentTab === index}"
+        v-for="(item, index) in 3"
+        :key="index"
+        @click="toggleCurrentTab(index)"
+        v-show="currentTab >= index"
+      >
+        <span v-show="index === 0">{{ currentProvince ? currentProvince : '请选择' }}</span>
+        <span v-show="index === 1">{{ currentCity ? currentCity : '请选择' }}</span>
+        <span v-show="index === 2">{{ currentCounty ? currentCounty : '请选择' }}</span>
+      </h4>
+    </div>
+    <div class="sq-city-selector-content">
+      <div class="sq-city-selector-loading" v-show="loading">
+        <span class="sq-city-selector-loading-icon"></span>
       </div>
-      <div>
-        <div class="ulWrap">
-          <h2 class="title" @click="toggleCurrentTab(0)" :class="{current: currentTab === 0}">
-            {{currentProvince.name ? currentProvince.name : '请选择'}}
-          </h2>
-          <h2 class="title" @click="toggleCurrentTab(1)" :class="{current: currentTab === 1}">
-            {{currentProvince.id ? city.name ? city.name : '请选择' : ''}}
-          </h2>
-          <div>
-            <!-- <loading v-show="loading" /> -->
-            <span v-show="loading">加载中。。。</span>
-          </div>
-          <ul class="ul provinceList" v-if="currentTab === 0">
-            <li
-              class="li"
-              v-for="(item, index) in provinceList"
-              @click="selectProvince(item)"
-              :class="{current: currentProvince.id === item.id}"
-              :key="index"
-            >
-              {{item.name}}
-            </li>
-          </ul>
-          <ul class="ul cityList" v-if="currentProvince.id && currentTab === 1">
-            <li
-              class="li"
-              v-for="(item, index) in cityList"
-              :key="index"
-              @click="selectCity(item)"
-              :class="{current: city.id === item.id}"
-            >
-              {{item.name}}
-            </li>
-          </ul>
-        </div>
-      </div>
+      <transition name="sq-slide-right">
+        <ul class="sq-city-selector-column" v-show="currentTab === 0" ref="citySelectorColumnRef0">
+          <li
+            class="sq-city-selector-column-item"
+            :class="{current: currentProvince === item[provinceKey]}"
+            v-for="(item, index) in province"
+            :key="index"
+            @click="$_setValue({ item, index, type: 'Province' })"
+          >
+            {{ item[provinceKey] }}
+          </li>
+        </ul>
+      </transition>
+      <transition name="sq-slide-right">
+        <ul class="sq-city-selector-column" v-show="currentTab === 1" ref="citySelectorColumnRef1" id="test">
+          <li
+            class="sq-city-selector-column-item"
+            :class="{current: currentCity === item[cityKey]}"
+            v-for="(item, index) in city"
+            :key="index"
+            @click="$_setValue({ item, index, type: 'City' })"
+          >
+            {{ item[cityKey] }}
+          </li>
+        </ul>
+      </transition>
+      <transition name="sq-slide-right">
+        <ul class="sq-city-selector-column" v-show="currentTab === 2" ref="citySelectorColumnRef2">
+          <li
+            class="sq-city-selector-column-item"
+            :class="{current: currentCounty === item[countyKey]}"
+            v-for="(item, index) in county"
+            :key="index"
+            @click="$_setValue({ item, index, type: 'County' })"
+          >
+            {{ item[countyKey] }}
+          </li>
+        </ul>
+      </transition>
     </div>
   </div>
 </template>
@@ -48,161 +69,183 @@
 export default {
   name: 'sq-city-selector',
 
-  computed: {},
-
-  props: ['visible', 'callback', 'currentCity'],
+  props: {
+    title: {
+      type: String,
+      default: '选择地址'
+    },
+    province: {
+      type: Array
+    },
+    provinceKey: {
+      type: String,
+      default: 'name'
+    },
+    city: {
+      type: Array
+    },
+    cityKey: {
+      type: String,
+      default: 'name'
+    },
+    county: {
+      type: Array
+    },
+    countyKey: {
+      type: String,
+      default: 'name'
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
 
   data () {
     return {
-      currentVisible: this.visible,
-      provinceList: [{id: '110000', name: '北京'}, {id: '120000', name: '天津'}, {id: '130000', name: '河北'}, {id: '140000', name: '山西'}],
-      cityList: [{id: '210000', name: '北x京'}, {id: '220000', name: '天x津'}],
-      currentProvince: {},
-      city: {},
       currentTab: 0,
-      tempCity: {},
-      loading: false
+      currentProvince: '',
+      currentCity: '',
+      currentCounty: ''
     }
   },
   methods: {
-    close () {
-      this.toggle()
-      this.currentValue = this.oldValue
+    $_close () {
+      this.$emit('close')
     },
-    finished () {
-      this.close()
-      this.callback({
-        province: this.currentProvince,
-        city: this.city
+    $_setValue ({ item, index, type }) {
+      const map = new Map([ ['province', 0], ['city', 1], ['county', 2] ])
+
+      const lowerCaseType = type.toLocaleLowerCase()
+      if (lowerCaseType === 'province' || lowerCaseType === 'city') {
+        this.currentTab = map.get(lowerCaseType) + 1
+        // 初始化列表位置
+        this.$nextTick(() => {
+          this.$refs[`citySelectorColumnRef${this.currentTab}`].scrollTop = 0
+        })
+      }
+      this[`current${type}`] = item[this[`${lowerCaseType}Key`]]
+      this.$emit(`set-${lowerCaseType}`, {
+        item,
+        index,
+        value: type === 'County'
+          ? {
+            province: this.currentProvince,
+            city: this.currentCity,
+            county: this.currentCounty
+          }
+          : {}
       })
     },
-    selectProvince (p) {
-      this.currentProvince = p
-      this.currentTab = 1
-      this.cityList = []
-      if (this.tempCity[p.id]) {
-        this.cityList = this.tempCity[p.id]
-      } else {
-        this.loading = true
-        this.cityList = require('../../../mockdata/mock1.json').result[0]
-        this.loading = false
-        // utils.get('/ws/district/v1/getchildren', {id: p.id, key: 'ZIVBZ-C2BR5-3QAI3-QENXF-SUMUF-NSFSN'}).then(response => {
-        //   this.loading = false
-        //   this.cityList = response.result[0]
-        // })
-      }
-    },
-    selectCity (item) {
-      this.city = item
-      this.finished()
-    },
     toggleCurrentTab (index) {
-      this.currentTab = index
-    },
-    toggle () {
-      if (this.disabled) {
-        return
+      if (index === 0) {
+        this.currentCity = ''
+        this.currentCounty = ''
+      } else if (index === 1) {
+        this.currentCounty = ''
       }
-      this.currentVisible = !this.currentVisible
-      this.$emit('update:visible', this.currentVisible)
-    }
-  },
-  mounted () {
-    if (this.currentCity) {
-      this.currentProvince = this.currentCity.province
-      this.city = this.currentCity.city
-    }
-  },
-  watch: {
-    visible: function (val, oldVal) {
-      if (this.currentVisible === val) return
-      const response = require('../../../mockdata/city1.json')
-      this.provinceList = response
-      this.currentVisible = val
-      // utils.get('/ws/district/v1/list', {key: 'ZIVBZ-C2BR5-3QAI3-QENXF-SUMUF-NSFSN'}).then(response => {
-      //   this.provinceList = response.result[0]
-      //   this.currentVisible = val
-      // })
+      this.currentTab = index
     }
   }
 }
 </script>
 
 <style lang="scss">
-.citySelector {
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+@import '../../../common/styles/variable.scss';
+
+.sq-slide-left-enter,
+.sq-slide-right-leave-active {
+  opacity: 0;
+  transform: translate(-100%, 0);
 }
 
-.main {
-  background: #fff;
-  width: 100%;
-  height: 60%;
-  top: 40%;
-  position: fixed;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
+.sq-slide-left-leave-active,
+.sq-slide-right-enter {
+  opacity: 0;
+  transform: translate(100% 0);
+}
 
-  .close-bar {
-    text-align: right;
-
-    i {
-      display: inline-block;
-      height: 48px;
-      line-height: 48px;
-      border: 0;
-      margin: 0;
-      padding: 0 15px;
-      background: transparent;
-    }
-  }
-
-  .ulWrap {
-    width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-
-    .title {
-      float: left;
-      padding: 0 25px;
-      font-weight: normal;
-      height: 48px;
-      line-height: 48px;
-      box-sizing: border-box;
-      margin: 0;
-      &.current {
-        border-bottom: 2px solid #358ED7;
-      }
-    }
-  }
-
-  .ul {
-    list-style: none;
+.sq-city-selector {
+  background: #ffffff;
+  position: relative;
+  color: #777777;
+  &-loading {
     position: absolute;
-    width: 100%;
-    overflow: auto;
-    top: 98px;
-    right: 0;
-    bottom: 0;
     left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #ffffff, $alpha: .8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &-loading-icon {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 1em;
+    height: 1em;
+    font-size: 36px;
+    border: 3px solid transparent;
+    border-top-color: $theme-color;
+    border-left-color: $theme-color;
+    border-bottom-color: $theme-color;
+    border-radius: 50%;
+    animation: quan .8s infinite linear
+  }
+  &-column {
+    list-style: none;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    .li {
-      height: 48px;
-      line-height: 48px;
-      padding: 0 15px;
-      color: #777;
-
-      &.current {
-        color: #358ED7;
-      }
+    height: 308px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: all .3s linear;
+    &:not(:first-of-type) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+  &-column-item {
+    height: 44px;
+    line-height: 44px;
+    padding: 0px 26px;
+    &.current {
+      color: $theme-color;
+    }
+  }
+  &-close-bar {
+    text-align: center;
+    padding: 15px 10px 22px 10px;
+    .iconfont {
+      font-size: 24px;
+      position: absolute;
+      right: 15px;
+      top: 12px;
+    }
+  }
+  &-content {
+    position: relative;
+    height: 308px;
+  }
+  &-column-title-wrap {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+  &-column-title {
+    display: inline-block;
+    font-weight: normal;
+    margin: 0 0 0 20px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    &.current {
+      color:  $theme-color;
+      border-bottom: 1px solid $theme-color;
     }
   }
 }

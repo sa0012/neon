@@ -1,11 +1,13 @@
-### 适用于移动端、基于vue 2.0构建。
+---
+home: true
+actionText: 查看文档 →
+actionLink: /quickstart
+footer: MIT Licensed | Copyright © 2018-present INSAIC | website based on <a href="https://vuepress.vuejs.org/" target="_blank">vuepress</a> by Evan You
+---
 
-  - <input type="checkbox" name="checkbox" checked="checked" /> dialog 对话框
-  - <input type="checkbox" name="checkbox" checked="checked" /> toast 消息提示
-  - <input type="checkbox" name="checkbox" checked="checked" /> button 按钮
-  - <input type="checkbox" name="checkbox" checked="checked" /> cell 单元格
-  - <input type="checkbox" name="checkbox" checked="checked" /> tabs 选项卡
-  - <input type="checkbox" name="checkbox" checked="checked" /> actionsheet 弹出式菜单
-  - <input type="checkbox" name="checkbox" checked="checked" /> picker 滚动选择器
-  - <input type="checkbox" name="checkbox" checked="checked" /> carLicense 车牌录入键盘
-  - <input type="checkbox" name="checkbox" checked="checked" /> agree 勾选按钮
+<div align=center>
+
+![示例](./qrcode.png)
+
+<h3>扫码查看示例</h3>
+</div>

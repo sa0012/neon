@@ -50,7 +50,7 @@ export default {
       }
     },
     zIndex: {
-      type: [Number],
+      type: Number,
       default: 100
     },
     confirmText: {

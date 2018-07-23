@@ -1,8 +1,12 @@
-### button
-按钮，提供几种基础样式和尺寸。
-<!-- ，可自定义图标。 -->
-
+### Button - 按钮
 ---
+#### 按需引入
+
+```js
+import { Button } from '@insaic/neon'
+Vue.use(Button)
+```
+
 #### 例子
 ```html
 <!-- 改变样式 -->
@@ -17,17 +21,17 @@
 <sq-button @click="handleClick">click</sq-button>
 ```
 ---
-#### API
-| 名称     | 类型       | 说明     | 默认值   | 可选值         |
-|:-------- |:--------- |:-------- |:------- |:-------------- |
-| type     | `String`  | 类型     | default | primary、ghost |
-| size     | `String`  | 大小     | default | large、small   |
-| disabled | `Boolean` | 禁用状态  | false   | true           |
+#### Props
+ 名称     | 类型       | 说明     | 默认值   | 可选值         
+:-------- |:--------- |:-------- |:------- |:-------------- 
+ type     | `String`  | 类型     | default | primary、ghost 
+ size     | `String`  | 大小     | default | large、small   
+ disabled | `Boolean` | 禁用状态  | false   | true          
 
 ---
 
-#### slot
-| 名称 |  描述        |
-|:---- | :---------- |
-| --   | 显示文本内容 |
-| icon | 自定义图标   |
+#### Slot
+ 名称 |  描述        
+:---- | :---------- 
+ --   | 显示文本内容 
+ icon | 自定义图标   

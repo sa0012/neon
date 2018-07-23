@@ -10,6 +10,8 @@ import Loadmore from '@/components/loadmore'
 import NoticeBar from '@/components/notice-bar'
 import Popup from '@/components/popup'
 import Stepper from '@/components/stepper'
+import Steps from '@/components/steps'
+import StepItem from '@/components/step-item'
 import Swiper from '@/components/swiper'
 import Tabpane from '@/components/tabpane'
 import Tabs from '@/components/tabs'
@@ -19,7 +21,7 @@ import Tag from '@/components/tag'
 import Checkbox from '@/components/checkbox'
 import CheckboxGroup from '@/components/checkbox-group'
 import Field from '@/components/field'
-import Fieldgroup from '@/components/field-group'
+import FieldGroup from '@/components/field-group'
 import NumberKeyboard from '@/components/number-keyboard'
 import Radio from '@/components/radio'
 import RadioGroup from '@/components/radio-group'
@@ -53,6 +55,8 @@ const components = [
   NoticeBar,
   Popup,
   Stepper,
+  Steps,
+  StepItem,
   Swiper,
   Tabpane,
   Tabs,
@@ -62,7 +66,7 @@ const components = [
   Checkbox,
   CheckboxGroup,
   Field,
-  Fieldgroup,
+  FieldGroup,
   NumberKeyboard,
   Radio,
   RadioGroup,
@@ -109,6 +113,8 @@ export {
   NoticeBar,
   Popup,
   Stepper,
+  Steps,
+  StepItem,
   Swiper,
   Tabpane,
   Tabs,
@@ -118,7 +124,7 @@ export {
   Checkbox,
   CheckboxGroup,
   Field,
-  Fieldgroup,
+  FieldGroup,
   NumberKeyboard,
   Radio,
   RadioGroup,
