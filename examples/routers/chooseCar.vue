@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import carsData from '../chooseCar.json';
-import selectCar from '../selectCar.json';
-import selectModel from '../selectModel.json';
+import carsData from '../mock/chooseCar.json'
+import selectCar from '../mock/selectCar.json'
+import selectModel from '../mock/selectModel.json'
 
 console.log(selectModel.result.content, 233444)
 export default {
@@ -45,7 +45,7 @@ export default {
 
   methods: {
     chooseCar() {
-      this.carsData = carsData.result;
+      this.carsData = carsData.result
       this.showChooseCar = true
     },
     test (code) {

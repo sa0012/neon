@@ -15,6 +15,7 @@
         v-on="listeners"
         :accept="accept"
         :multiple="multiple"
+        @click="$_inputDefaultClick"
         @change="$_change"
       >
     </div>
@@ -33,6 +34,13 @@ export default {
       default: 'image/*'
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    onBeforeUploader: {
+      type: Function
+    },
+    disabled: {
       type: Boolean,
       default: false
     }
@@ -54,9 +62,20 @@ export default {
   },
 
   methods: {
+    $_inputDefaultClick (e) {
+      console.log(e)
+      /**
+       * fix: 第二次选择为同一图片，不触发change事件
+       */
+      e.target.value = null
+
+      if ((this.onBeforeUploader && this.onBeforeUploader(e) === false) || this.disabled) {
+        e.preventDefault()
+      }
+    },
     $_click (e) {
-      if (e.target.nodeName.toLocaleLowerCase() === 'li') {
-        this.fullFileUrl = e.target.style.backgroundImage
+      if (e.target.nodeName.toLocaleLowerCase() === 'img') {
+        this.fullFileUrl = `url(${e.target.src})`
         this.isShowFile = true
       }
     },
@@ -69,13 +88,19 @@ export default {
 
         if (url) {
           src = url.createObjectURL(file)
-          url.revokeObjectURL(file)
         } else {
           src = e.target.result
         }
         const element = document.createElement('li')
         element.classList.add('sq-uploader-file')
-        element.style = `background-image:url(${src})`
+
+        const elementImg = document.createElement('img')
+        // elementImg.classList.add('sq-uploader-file')
+        elementImg.src = src
+        elementImg.style = `width:100%;height:100%;`
+        // elementImg.onload = () => {
+        //   url && url.revokeObjectURL(src)
+        // }
 
         const elementDelWrap = document.createElement('span')
         elementDelWrap.classList.add('sq-uploader-file-delete-wrap')
@@ -87,6 +112,7 @@ export default {
 
         elementDelWrap.appendChild(elementDel)
         element.appendChild(elementDelWrap)
+        element.appendChild(elementImg)
         e.target.parentNode.previousElementSibling.appendChild(element)
       }
       this.$emit('file-change', files)

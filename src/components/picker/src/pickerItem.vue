@@ -23,9 +23,6 @@ export default {
       type: Array,
       default: () => []
     },
-    dafaultValue: {
-      type: [String, Number]
-    },
     listIndex: {
       type: Number
     },
@@ -181,15 +178,6 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
-    getIndexOfValInArr (val, arr) {
-      let index = 0
-      arr.forEach((item, i) => {
-        if (item === val) {
-          index = i
-        }
-      })
-      return index
-    },
     init () {
       this.temp.addEventListener('touchstart', this.$_start, false)
       this.temp.addEventListener('touchmove', this.$_move, false)
@@ -202,16 +190,19 @@ export default {
   watch: {
     list: {
       handler (val) {
-        if (this.currentValue === null && val[0]) {
-          if (this.$parent.$data.defVal) {
+        if (this.currentValue === null && val[0] !== void 0) {
+          const parent = this.$parent
+          const parentDefVal = parent.$data.defVal
+
+          if (parentDefVal) {
             const _uid = this._uid
             let len = 0
-            this.$parent.$children.forEach((item, index) => {
+            parent.$children.forEach((item, index) => {
               if (item._uid === _uid) {
                 len = index
               }
             })
-            const index = this.getIndexOfValInArr(this.$parent.$data.defVal[len], val)
+            const index = val.indexOf(parentDefVal[len])
             this.$_setYByIndex(index)
             this.$_setCurrentValueByIndex(index)
           } else {

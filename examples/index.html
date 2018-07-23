@@ -9,8 +9,19 @@
     <meta http-Equiv="Pragma" Content="no-cache" />
     <meta http-Equiv="Expires" Content="0" />
     <title>Neon-上汽保险移动端Vue组件库</title>
+    <script src="https://unpkg.com/babel-polyfill@6.26.0/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/vue@2.5.16/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.min.js"></script>
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script>
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function () {
+          FastClick.attach(document.body);
+        }, false);
+      }
+    </script>
   </head>
-  <body>
+  <body ontouchstart>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

@@ -65,7 +65,7 @@ $theme-color: #4a90e2;
 .demo-icon {
   display: block;
   margin-bottom: 15px;
-  font-size: 45px;
+  font-size: 45px !important;
   color: $theme-color;
 }
 .icon-name {

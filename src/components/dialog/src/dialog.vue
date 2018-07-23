@@ -107,6 +107,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../../common/styles/variable.scss';
 $prefixCls: sq-dialog;
 
 .#{$prefixCls} {
@@ -182,7 +183,7 @@ $prefixCls: sq-dialog;
     padding: 12px 0;
     box-sizing: border-box;
     height: 100%;
-    color:#4a90e2;
+    color: $theme-color;
     text-align: center;
   }
   &-icon-status {

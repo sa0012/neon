@@ -1,7 +1,10 @@
 <template>
   <div class="demo-page-wrap">
+    <sq-button size="small" type="primary" @click="set1">改变数据源</sq-button>
+    <sq-button size="small" type="primary" @click="set2">改变数据源并设置新值</sq-button>
     <demo-title>单列形式 -- ['']数据结构</demo-title>
     <sq-picker
+      ref="picker"
       :columns="list1"
       @on-change="onChange"
     />
@@ -88,6 +91,17 @@ export default {
   },
 
   methods: {
+    set1 () {
+      this.$refs.picker.updateColumnAndValue({
+        newCol: ['苹果', '香蕉']
+      })
+    },
+    set2 () {
+      this.$refs.picker.updateColumnAndValue({
+        newCol: ['A', 'B', 'C'],
+        newValueIndex: 2
+      })
+    },
     onChange (result) {
       console.log(result)
       console.log(result.value)
