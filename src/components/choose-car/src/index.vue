@@ -18,7 +18,7 @@
       </ul>
     </div>
     <div class="sq-brandCars-category-rightbar">
-      <ul class="sq-brandCars-category-rightbar-list" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
+      <ul class="sq-brandCars-category-rightbar-list" :class="{'start': showStartColor}" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
         <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item" @click.stop="jumpTitle(item)">{{ item }}</li>
       </ul>
     </div>
@@ -83,6 +83,7 @@
       </div>
     </div>
     <div class="sq-selectmodel-model-modal" v-if="showSelectModel"></div>
+    <div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>
   </div>
 </template>
 
@@ -117,25 +118,48 @@ export default {
       loading: false,
       wrapperHeight: 0,
       isFinishedLoad: false,
-      showChooseCar: true
+      showChooseCar: true,
+      carIndex: 0,
+      showStartColor: false,
+      curDistance: document.body.clientHeight || document.documentElement.clientHeight,
+      carNum: ''
     }
   },
   methods: {
     touchStart (e) {
-      this.start = e.changedTouches[0].pageY - 30
-      console.log(this.start, 11111)
+      this.showStartColor = true
+      this.$refs.menuWrapper.style.overflow = 'hidden'
     },
     touchMove (e) {
-      const curDistance = (document.body.clientHeight || document.documentElement.clientHeight) - 30
-      // console.log(curDistance)
-      if (e.changedTouches[0].pageY - curDistance < 30) {
-        let curMove = e.changedTouches[0].pageY - this.start
-        console.log(curMove, 22222)
-      }
+      // 计算每个区间的距离
+      const everyDistance = this.curDistance / this.brandCategorys.length
+      let curMove = e.changedTouches[0].pageY
+      this.carIndex = Math.floor(curMove / everyDistance)
+      this.$nextTick(() => {
+        let menuWrapper = this.$refs.menuWrapper
+        if (curMove < 0) {
+          this.carNum = 'A'
+        } else if (curMove > this.curDistance) {
+          this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
+        } else {
+          menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
+        }
+      })
     },
     touchEnd (e) {
-      let curMove = e.changedTouches[0].pageY - this.start
-      console.log(curMove, 333333)
+      this.showStartColor = false
+      this.$refs.menuWrapper.style.overflow = 'auto'
+      let curMove = e.changedTouches[0].pageY
+      this.$nextTick(() => {
+        let menuWrapper = this.$refs.menuWrapper
+        if (curMove < 0) {
+          this.carNum = 'A'
+        } else if (curMove > this.curDistance) {
+          this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
+        } else {
+          menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
+        }
+      })
     },
     getBrandCategoryArr () {
       this.brandCategorys = Object.keys(this.carsData)
@@ -202,10 +226,14 @@ export default {
     loadMore () {
       this.loading = true
       this.$emit('loadMore', this.callback)
+    },
+    forbidBack () {
+      return history.pushState(null, null, document.URL)
     }
   },
   mounted () {
     this.getBrandCategoryArr()
+    // this.forbidBack()
   }
 }
 </script>
@@ -277,7 +305,7 @@ export default {
     text-align: right;
     z-index: 444;
     height: 100%;
-    padding: 30px 0;
+    // padding: 30px 0;
     box-sizing: border-box;
   }
   &-category-rightbar-list {
@@ -287,6 +315,9 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
+    &.start {
+      background: rgba(0, 0, 0, 0.5);
+    }
   }
   &-category-rightbar-item {
     list-style: none;
@@ -501,5 +532,22 @@ export default {
     vertical-align: middle;
     @include mix-1px($top: 1);
   }
+}
+
+.car-index {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+  text-align: center;
+  line-height: 80px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
 }
 </style>

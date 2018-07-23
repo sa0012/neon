@@ -1,23 +1,17 @@
 <template>
   <div>
-    <div @click="chooseCar" class="button">选车组件</div>
+    <!--<div @click="chooseCar" class="button">选车组件</div>-->
+    <sq-cell-group title="选车组件">
+      <sq-cell title="选车组件" is-link :value="modelName" @click.native="chooseCar"></sq-cell>
+    </sq-cell-group>
     <div class="address" v-if="showChooseCar">
-      <brand-cars 
-        :code="code" 
-        :loadMoreArr="loadMoreArr" 
-        :carsData="carsData" 
-        :selectCar="selectCar" 
-        :selectModel="selectModel" 
-        @brandCategoryCode="getBrandCategoryCode" 
-        @brandModelId="getBrandModelId" 
-        @loadMore="getLoadMore"
-        @carDetail="getCarDetail"
-        >
+      <brand-cars :code="code" :loadMoreArr="loadMoreArr" :carsData="carsData" :selectCar="selectCar" :selectModel="selectModel" @brandCategoryCode="getBrandCategoryCode" @brandModelId="getBrandModelId" @loadMore="getLoadMore" @carDetail="getCarDetail">
         <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
       </brand-cars>
     </div>
+
   </div>
 </template>
 
@@ -30,7 +24,7 @@ console.log(selectModel.result.content, 233444)
 export default {
   name: 'chooseCar',
 
-  data () {
+  data() {
     return {
       showChooseCar: false,
       carsData: carsData.result,
@@ -39,7 +33,8 @@ export default {
       brandCategoryCode: '',
       code: '',
       loadMoreArr: [],
-      showChooseCar: false
+      showChooseCar: false,
+      modelName: ''
     }
   },
 
@@ -48,28 +43,29 @@ export default {
       this.carsData = carsData.result
       this.showChooseCar = true
     },
-    test (code) {
+    test(code) {
       this.selectCar = selectCar.result
     },
-    test1 (brandId, familyId) {
+    test1(brandId, familyId) {
       this.selectModel = selectModel.result.content
     },
-    getBrandCategoryCode (code) {
+    getBrandCategoryCode(code) {
       this.brandCategoryCode = code
       this.test(code)
     },
-    getBrandModelId ({ brandId, familyId }) {
+    getBrandModelId({ brandId, familyId }) {
       this.test1(brandId, familyId)
     },
-    getLoadMore (callback) {
+    getLoadMore(callback) {
       console.log('this is a loadmore function')
       this.loadMoreArr = selectModel.result.content
       callback(this.loadMoreArr)
     },
-    getCarDetail (detail) {
+    getCarDetail(detail) {
       console.log(detail)
+      this.modelName = detail.modelName
     },
-    chooseCar () {
+    chooseCar() {
       this.showChooseCar = !this.showChooseCar
     }
   }
