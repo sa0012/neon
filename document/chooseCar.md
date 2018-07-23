@@ -30,6 +30,7 @@ Vue.use(ChooseCar)
 | 参数              | 类型               | 说明            | 默认值 | 可选值 |
 | :-----------      | :---------------  | :-------------- | :---- |:----  |
 |  carsData         |       `Array`     |    选车品牌     | ----   | ----  |
+|  brandCategorys   |       `Array`     |    品牌索引     | ----   | ----  |
 |  selectCar        |       `Array`     |    选择车型     | ----   | ----  |
 |  selectModel      |       `Array`     |    选择车系     | ----   | ----  |
 |  loadMoreArr      |       `Array`     |    选择车系分页数据     | ----   | ----  |

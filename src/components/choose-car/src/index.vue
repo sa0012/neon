@@ -316,7 +316,7 @@ export default {
     display: flex;
     flex-direction: column;
     &.start {
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.3);
     }
   }
   &-category-rightbar-item {
@@ -542,7 +542,7 @@ export default {
   width: 80px;
   height: 80px;
   border-radius: 3px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   z-index: 99999;
   text-align: center;
   line-height: 80px;
