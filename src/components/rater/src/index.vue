@@ -2,9 +2,7 @@
   <div class="sq-rater">
     <input v-model="currentValue" style="display:none">
     <a class="sq-rater-box" v-for="(i, index) in max" @click="handleClick(i-1)" :key="index">
-      <!--<img :src="require('../assets/images/other/g_star.png')" alt="" v-if="!(currentValue > i-1)">
-      <img :src="require('../assets/images/other/y_star.png')" alt="" v-if="currentValue > i-1">-->
-      <i class="iconfont" :style="{fontSize: fontSize + 'px'}" :class="[(currentValue > i-1) ? 'icon-xingzhuang60kaobei2' : 'icon-xingzhuang60kaobei21']"></i>
+      <i class="iconfont" :style="{fontSize: fontSize + 'px', color: (currentValue > i-1) ? activeColor : defaultColor}" :class="[(currentValue > i-1) ? 'icon-xingzhuang60kaobei2' : 'icon-xingzhuang60kaobei21']"></i>
     </a>
   </div>
 </template>
@@ -33,6 +31,14 @@ export default {
     fontSize: {
       type: String,
       default: '16'
+    },
+    activeColor: {
+      type: String,
+      default: 'rgb(255, 137, 42)'
+    },
+    defaultColor: {
+      type: String,
+      default: 'rgb(219, 219, 219)'
     },
     disabled: Boolean
   },
@@ -73,13 +79,5 @@ export default {
 .sq-rater-box img {
   width: 20px;
   margin-right: 12px;
-}
-
-.icon-xingzhuang60kaobei2 {
-  color: rgb(255, 137, 42);
-}
-
-.icon-xingzhuang60kaobei21 {
-  color: rgb(219, 219, 219);
 }
 </style>

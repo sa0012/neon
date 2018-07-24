@@ -1,3 +1,14 @@
+### Rater - 评分
+---
+#### 按需引入
+
+```js
+import { Rater } from '@insaic/neon'
+Vue.use(Rater)
+```
+
+#### 例子
+```html
 <template>
   <div class="wrap">
     <div class="rater-wrap">
@@ -37,7 +48,7 @@
       </rater>
     </div>
     <div class="rater-wrap">
-      <div class="title">set activeColor</div>
+      <div class="title">set defaultColor</div>
       <rater 
       :fontSize="fontSize" 
       :defaultColor="defaultColor"
@@ -57,8 +68,6 @@ export default {
       max: 10,
       fontSize: '40',
       disabled: true,
-      activeColor: 'green',
-      defaultColor: '#666',
       value: 2,
       score1: 0,
       score2: 0,
@@ -99,3 +108,22 @@ export default {
   margin-bottom: 15px;
 }
 </style>
+```
+---
+#### Props
+| 名称        | 类型       | 说明                | 默认值   | 可选值         |
+|:----------- |:--------- |:------------------- |:------- |:-------------- |
+| min       | `Number` | 设置最小值   |     0    |               |
+| max        | `Number`   | 设置最大值             |   5      |               |
+| value        | `Number`   | 设置默认值             |   --      |               |
+| fontSize        | `Number`   | 设置字体大小             |   16      |               |
+| disabled        | `Number`   | 是否禁用             |   false      |               |
+| activeColor        | `String`   | 设置选中时的字体颜色             |   --      |               |
+| defaultColor        | `String`   | 设置未选中时的字体颜色             |   --      |               |
+
+---
+
+#### Event
+| 名称       | 参数  | 描述                             |
+|:---------- |:---- |:-------------------------------- |
+| getScore    | score | 返回对应所选的分数 |
