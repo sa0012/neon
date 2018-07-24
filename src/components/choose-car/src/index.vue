@@ -127,8 +127,19 @@ export default {
   },
   methods: {
     touchStart (e) {
+      let menuWrapper = this.$refs.menuWrapper
       this.showStartColor = true
       this.$refs.menuWrapper.style.overflow = 'hidden'
+      this.start = e.changedTouches[0].pageY
+      const everyDistance = this.curDistance / this.brandCategorys.length
+      this.carIndex = Math.floor(this.start / everyDistance)
+      if (this.start < 0) {
+        this.carNum = 'A'
+      } else if (this.start > this.curDistance) {
+        this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
+      } else {
+        menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
+      }
     },
     touchMove (e) {
       // 计算每个区间的距离
@@ -150,6 +161,8 @@ export default {
       this.showStartColor = false
       this.$refs.menuWrapper.style.overflow = 'auto'
       let curMove = e.changedTouches[0].pageY
+      const everyDistance = this.curDistance / this.brandCategorys.length
+      this.carIndex = Math.floor(curMove / everyDistance)
       this.$nextTick(() => {
         let menuWrapper = this.$refs.menuWrapper
         if (curMove < 0) {
@@ -305,7 +318,7 @@ export default {
     text-align: right;
     z-index: 444;
     height: 100%;
-    // padding: 30px 0;
+    // padding: 80px 0;
     box-sizing: border-box;
   }
   &-category-rightbar-list {
@@ -324,7 +337,8 @@ export default {
     margin: 0;
     padding: 0;
     text-align: center;
-    color: #007EFF;
+    color: #000;
+    // font-size: 12px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
