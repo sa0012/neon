@@ -14,8 +14,8 @@ Vue.use(DatePicker)
 <sq-popup v-model="isShow" position="bottom">
   <sq-date-picker
     title="请选择时间"
-    min="2008-10-25"
-    max="2028-1-1"
+    min-date="2008-10-25"
+    max-date="2028-1-1"
     :format="['年', '月', '日']"
     :default-value="[new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()]"
     @confirm="confirm"
@@ -26,15 +26,16 @@ Vue.use(DatePicker)
 ```
 ---
 #### Props
- 名称                 | 类型      | 说明                      | 默认值  | 可选值
-:------              |:--------- |:---------------           |:------ |:-----
- title               | `String`  | 标题                       | ''    |  --
- confirm-button-text | `String`  | 确认按钮文本                | '确认' |  --
- cancel-button-text  | `String`  | 取消按钮文本                | '取消' |  --
- min                 | `String`  | yyyy-mm-dd或yyyy/mm/dd形式 |   --   |  --
- max                 | `String`  | yyyy-mm-dd或yyyy/mm/dd形式 | --     |  --
- defaultValue        | `Array`   | 默认日期                   | --     |  --
- format              | `Array`   | 添加自定义文本              |  --    |  --
+ 名称                 | 类型      | 说明                                           | 默认值  | 可选值
+:------              |:--------- |:---------------                                |:------ |:-----
+ type                | `String`  | 组件类型                                        | date(年月日) | datetime(年月日时分)，<br>time(时分)，<br>year-month(年月)
+ title               | `String`  | 标题                                            | ''    |  --
+ confirm-button-text | `String`  | 确认按钮文本                                     | '确认' |  --
+ cancel-button-text  | `String`  | 取消按钮文本                                     | '取消' |  --
+ min-date            | `String`  | 例：'2008-10-25'，<br>type为date，datetime下有效 |   --   |  --
+ max-date            | `String`  | 例：'2028-1-1'，<br>type为date，datetime下有效   | --     |  --
+ defaultValue        | `Array`   | 默认日期，例：[2018,7,23]                        | 当前年月日0时0分     |  --
+ format              | `Array`   | 添加自定义文本                                   |  --    |  --
 
 ---
 
