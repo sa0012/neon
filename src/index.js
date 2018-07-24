@@ -16,6 +16,7 @@ import Swiper from '@/components/swiper'
 import Tabpane from '@/components/tabpane'
 import Tabs from '@/components/tabs'
 import Tag from '@/components/tag'
+import Rater from '@/components/rater'
 
 // form
 import Checkbox from '@/components/checkbox'
@@ -61,6 +62,7 @@ const components = [
   Tabpane,
   Tabs,
   Tag,
+  Rater,
 
   // form
   Checkbox,
@@ -119,6 +121,7 @@ export {
   Tabpane,
   Tabs,
   Tag,
+  Rater,
 
   // form
   Checkbox,
