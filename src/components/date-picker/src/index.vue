@@ -25,9 +25,6 @@ export default {
   },
 
   props: {
-    value: {
-      type: null
-    },
     type: {
       type: String,
       default: 'date',
