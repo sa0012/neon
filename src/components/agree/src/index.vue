@@ -39,7 +39,7 @@ export default {
 
 </script>
 <style lang="scss">
-@import '../../../common/styles/variable.scss';
+@import '~@/common/styles/_variable.scss';
 $prefixCls: sq-agree;
 
 .#{$prefixCls} {

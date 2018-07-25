@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../../common/styles/variable.scss';
+@import '~@/common/styles/variable';
 $prefixCls: sq-cell-group;
 
 .#{$prefixCls}-wrap {
