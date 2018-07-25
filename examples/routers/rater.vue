@@ -1,48 +1,48 @@
 <template>
-  <div class="wrap">
+  <div class="demo-page-wrap">
     <div class="rater-wrap">
-      <div class="title">set min</div>
-      <rater :min="min" @getScore="getScore1">
-      </rater>
+      <demo-title>set min</demo-title>
+      <sq-rater :min="min" @getScore="getScore1">
+      </sq-rater>
       <p>评分： {{ score1 }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set max</div>
-      <rater :max="max" @getScore="getScore2">
-      </rater>
+      <demo-title>set max</demo-title>
+      <sq-rater :max="max" @getScore="getScore2">
+      </sq-rater>
       <p>评分： {{ score2 }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set value</div>
-      <rater :value="value" @getScore="getScore3">
-      </rater>
+      <demo-title>set value</demo-title>
+      <sq-rater :value="value" @getScore="getScore3">
+      </sq-rater>
       <p>评分： {{ score3 || value }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set fontSize</div>
-      <rater :fontSize="fontSize" @getScore="getScore4">
-      </rater>
+      <demo-title>set fontSize</demo-title>
+      <sq-rater :fontSize="fontSize" @getScore="getScore4">
+      </sq-rater>
       <p>评分： {{ score4 }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set disabled = true</div>
-      <rater :disabled="disabled" :fontSize="fontSize">
-      </rater>
+      <demo-title>set disabled = true</demo-title>
+      <sq-rater :disabled="disabled" :fontSize="fontSize">
+      </sq-rater>
     </div>
     <div class="rater-wrap">
-      <div class="title">set activeColor</div>
-      <rater 
-      :fontSize="fontSize" 
-      :activeColor="activeColor">
-      </rater>
+      <demo-title>set activeColor</demo-title>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :activeColor="activeColor">
+      </sq-rater>
     </div>
     <div class="rater-wrap">
-      <div class="title">set defaultColor</div>
-      <rater 
-      :fontSize="fontSize" 
-      :defaultColor="defaultColor"
-      :activeColor="activeColor">
-      </rater>
+      <demo-title>set defaultColor</demo-title>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor">
+      </sq-rater>
     </div>
   </div>
 </template>

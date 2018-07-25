@@ -40,6 +40,31 @@ export default {
           { name: 'arrow-up' },
           { name: 'arrow-right' },
           { name: 'arrow-down' }
+        ],
+        [
+          { name: 'error-empty' },
+          { name: 'checkmark-empty' },
+          { name: 'jia' }
+        ],
+        [
+          { name: 'jian' },
+          { name: 'shanchu' },
+          { name: 'keyboard-down' }
+        ],
+        [
+          { name: 'keyboard-xiangxia' },
+          { name: 'keyboard-xiangshang' },
+          { name: 'keyboard-delete' }
+        ],
+        [
+          { name: 'keyboard-remove' },
+          { name: 'yuandian' },
+          { name: 'error-gap' }
+        ],
+        [
+          { name: 'pentagram' },
+          { name: '' },
+          { name: '' }
         ]
       ]
     }
@@ -50,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss">
-$theme-color: #4a90e2;
+@import '~@/common/styles/variable';
 
 .demo-icon-page {
   user-select: text;
@@ -74,7 +99,7 @@ $theme-color: #4a90e2;
 }
 .demo-icon {
   display: inline-block;
-  font-size: 44px !important;
+  font-size: 30px !important;
   color: $theme-color;
 }
 .icon-name {

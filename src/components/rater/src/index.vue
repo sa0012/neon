@@ -2,14 +2,17 @@
   <div class="sq-rater">
     <input v-model="currentValue" style="display:none">
     <a class="sq-rater-box" v-for="(i, index) in max" @click="handleClick(i-1)" :key="index">
-      <i class="sq-icon" :style="{fontSize: fontSize + 'px', color: (currentValue > i-1) ? activeColor : defaultColor}" :class="[(currentValue > i-1) ? 'sq-icon-xingzhuang60kaobei2' : 'sq-icon-xingzhuang60kaobei21']"></i>
+      <i
+        class="sq-icon sq-icon-pentagram"
+        :style="{fontSize: fontSize + 'px', color: (currentValue > i-1) ? activeColor : defaultColor}"
+      ></i>
     </a>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'rater',
+  name: 'sq-rater',
   created () {
     this.currentValue = this.value
   },
