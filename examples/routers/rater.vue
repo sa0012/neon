@@ -37,7 +37,7 @@
       </rater>
     </div>
     <div class="rater-wrap">
-      <div class="title">set activeColor</div>
+      <div class="title">set defaultColor</div>
       <rater 
       :fontSize="fontSize" 
       :defaultColor="defaultColor"
