@@ -3,7 +3,7 @@
     <div class="sq-uploader-mask" v-show="isShowFile" @click="isShowFile = !isShowFile">
       <span class="sq-uploader-full-item" :style="{'backgroundImage': fullFileUrl}"></span>
       <div class="sq-uploader-full-remove">
-        <i class="iconfont icon-error"></i>
+        <i class="sq-icon sq-icon-error"></i>
       </div>
     </div>
     <ul class="sq-uploader-files" @click="$_click"></ul>
@@ -106,8 +106,8 @@ export default {
         elementDelWrap.classList.add('sq-uploader-file-delete-wrap')
 
         const elementDel = document.createElement('i')
-        elementDel.classList.add('iconfont')
-        elementDel.classList.add('icon-error')
+        elementDel.classList.add('sq-icon')
+        elementDel.classList.add('sq-icon-error')
         elementDel.classList.add('sq-uploader-file-delete')
 
         elementDelWrap.appendChild(elementDel)

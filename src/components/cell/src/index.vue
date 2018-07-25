@@ -69,13 +69,20 @@ $prefixCls: sq-cell;
   height: 48px;
   line-height: 48px;
   background-color: #fff;
-  padding: 13px 16px;
+  padding: 14px 16px;
+  font-size: 15px;
   & ~ & {
     @include mix-1px($top: 1);
   }
+  &-head {
+    margin-right: 4px;
+  }
   &-bd {
+    @include mix-text-overflow;
     flex: 1;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    flex-flow: row-reverse;
   }
   &-ft {
     padding-left: 10px;

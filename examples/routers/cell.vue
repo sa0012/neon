@@ -9,6 +9,10 @@
       <sq-cell title="交强险" is-link value="投保"></sq-cell>
       <sq-cell title="起保时间" is-link></sq-cell>
     </sq-cell-group>
+    <br>
+    <sq-cell title="起保时间">
+      <sq-switch v-model="isSwitch"></sq-switch>
+    </sq-cell>
   </div>
 </template>
 
@@ -18,6 +22,7 @@ export default {
 
   data () {
     return {
+      isSwitch: false
     }
   },
 

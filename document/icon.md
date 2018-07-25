@@ -8,5 +8,5 @@ icon 依赖于iconfont
 
 #### 例子
 ```html
-<i class="iconfont icon-alert"></i>
+<i class="sq-icon sq-icon-alert"></i>
 ```

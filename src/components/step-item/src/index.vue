@@ -1,8 +1,8 @@
 <template>
   <div class="sq-step-item">
     <div class="sq-step-item-icon">
-      <i v-if="isChecked" class="iconfont icon-checkmark-full"></i>
-      <i v-else class="iconfont icon-yuandian" style="color: #999;"></i>
+      <i v-if="isChecked" class="sq-icon sq-icon-checkmark-full"></i>
+      <i v-else class="sq-icon sq-icon-yuandian" style="color: #999;"></i>
     </div>
     <div class="sq-step-item-text">
       <slot></slot>
@@ -36,7 +36,7 @@ $prefixCls: sq-step-item;
   width: 2em;
   flex: 0 0 2em;
   &-icon {
-    .iconfont {
+    .sq-icon {
       font-size: 2em;
       color: $theme-color;
     }

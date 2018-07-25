@@ -18,14 +18,14 @@
           </span>
           <span v-else-if="index + 1 === 11" data-key="0" class="sq-number-keyboard-key-item sq-number-keyboard-key-active">0</span>
           <span v-else-if="index + 1 === 12" data-key="keyboard-down" class="sq-number-keyboard-key-item">
-            <i class="iconfont icon-keyboard-down" data-key="keyboard-down"></i>
+            <i class="sq-icon sq-icon-keyboard-down" data-key="keyboard-down"></i>
           </span>
           <span v-else :data-key="index + 1" class="sq-number-keyboard-key-item sq-number-keyboard-key-active">{{ index + 1 }}</span>
         </div>
       </div>
       <div class="sq-number-keyboard-button">
         <div class="sq-number-keyboard-delate sq-number-keyboard-key-active" @click="delateKey">
-          <i class="iconfont icon-keyboard-remove"></i>
+          <i class="sq-icon sq-icon-keyboard-remove"></i>
         </div>
         <div class="sq-number-keyboard-confirm" @click="confirm">{{ confirmText }}</div>
       </div>
@@ -159,8 +159,8 @@ $prefixCls: sq-number-keyboard;
       border-top-width: 0;
     }
 
-    .iconfont {
-      font-size: 34px;
+    .sq-icon {
+      font-size: 30px;
     }
   }
   &-key-active {
@@ -188,7 +188,7 @@ $prefixCls: sq-number-keyboard;
     flex: 1;
   }
   &-delate {
-    .iconfont {
+    .sq-icon {
       font-size: 36px;
     }
   }

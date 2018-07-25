@@ -2,10 +2,10 @@
   <transition name="sq-toast">
     <div class="sq-toast-wrapper" v-show="visible">
       <div class="sq-toast">
-        <div class="sq-toast-mark"></div>
-        <div class="sq-toast-content" :class="{'sq-toast-type':type === 'text', 'sq-toast-bottom': position === 'bottom'}">
+        <div class="sq-toast-mark" v-show="isShowMark"></div>
+        <div class="sq-toast-content" :class="contentClasses">
           <i :class="classes"></i>
-          <div class="sq-toast-text">{{ message }}</div>
+          <div class="sq-toast-text" v-show="message">{{ message }}</div>
         </div>
       </div>
     </div>
@@ -21,11 +21,11 @@ export default {
       type: String,
       default: 'text',
       validator (value) {
-        return ['text', 'success', 'error'].indexOf(value) > -1
+        return ['text', 'success', 'error', 'loading'].indexOf(value) > -1
       }
     },
     message: {
-      type: [String, Number],
+      type: String,
       default: ''
     },
     duration: {
@@ -39,14 +39,24 @@ export default {
   },
 
   computed: {
+    isShowMark () {
+      return this.type === 'loading'
+    },
     classes () {
       return [
         {
-          [`sq-toast-icon iconfont icon-checkmark`]: this.type === 'success',
-          [`sq-toast-icon iconfont icon-error`]: this.type === 'error',
-          [`sq-toast-icon iconfont icon-animation-loading icon-loading`]: this.type === 'loading'
+          [`sq-toast-icon sq-icon sq-icon-checkmark`]: this.type === 'success',
+          [`sq-toast-icon sq-icon sq-icon-error`]: this.type === 'error',
+          [`sq-toast-icon sq-icon sq-icon-animation-loading sq-icon-loading`]: this.type === 'loading'
         }
       ]
+    },
+    contentClasses () {
+      return {
+        'sq-toast-type': this.type === 'text',
+        'sq-toast-bottom': this.position === 'bottom',
+        'sq-toast-min-width': this.message !== void 0 && this.message !== ''
+      }
     }
   },
 
@@ -88,10 +98,12 @@ export default {
   top: initial;
   bottom: 100px;
 }
+.sq-toast-min-width {
+  min-width: 120px;
+}
 .sq-toast-content {
   z-index: 11000;
   max-width: 140px;
-  min-width: 120px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -109,9 +121,15 @@ export default {
   background-color: rgba(0, 0, 0, .7);
   padding: 12px;
   text-align: center;
+  .sq-toast-icon {
+    font-size: 44px;
+    line-height: 1;
+    &.sq-icon-loading {
+      font-size: 32px;
+    }
+  }
 }
-.sq-toast-icon {
-  font-size: 54px !important;
-  margin-bottom: 14px;
+.sq-toast-icon ~ .sq-toast-text {
+  margin-top: 12px;
 }
 </style>

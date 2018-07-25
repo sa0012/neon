@@ -4,21 +4,21 @@ let instance = null
 
 const toastPlugin = {
   install (Vue, initOptions = {}) {
-    const Toast = Vue.extend(ToastComponent)
-    if (!instance) {
-      instance = new Toast().$mount(document.createElement('div'))
-      document.body && document.body.appendChild(instance.$el)
-    }
-
-    const defaults = {}
-    for (let i in instance.$options.props) {
-      if (i !== 'value') {
-        defaults[i] = instance.$options.props[i].default
-      }
-    }
-
     const toast = {
       show (options = {}) {
+        const Toast = Vue.extend(ToastComponent)
+        if (!instance) {
+          instance = new Toast().$mount(document.createElement('div'))
+          document.body && document.body.appendChild(instance.$el)
+        }
+
+        const defaults = {}
+        for (let i in instance.$options.props) {
+          if (i !== 'value') {
+            defaults[i] = instance.$options.props[i].default
+          }
+        }
+
         const opt = Object.assign({}, defaults, options)
         for (let key in opt) {
           instance[key] = opt[key]
