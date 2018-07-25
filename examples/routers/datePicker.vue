@@ -1,11 +1,35 @@
 <template>
   <div class="demo-page-wrap">
-    <demo-title>年月日形式</demo-title>
+    <demo-title>yyyy-MM-dd hh:mm形式</demo-title>
     <sq-date-picker
       title="请选择时间"
-      min="1917-10-25"
-      max="2030-10-25"
-      :default-value="[new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()]"
+      type="datetime"
+      :format="['年', '月', '日', '时', '分']"
+      @confirm="confirm1"
+      @cancel="cancel1"
+      @on-change="onChange2"
+    />
+    <demo-title>yyyy-MM-dd形式</demo-title>
+    <sq-date-picker
+      min-date="2016-5-5"
+      max-date="2021-8-13"
+      title="请选择时间"
+      @confirm="confirm1"
+      @cancel="cancel1"
+      @on-change="onChange2"
+    />
+    <demo-title>yyyy-MM形式</demo-title>
+    <sq-date-picker
+      title="请选择时间"
+      type="year-month"
+      @confirm="confirm1"
+      @cancel="cancel1"
+      @on-change="onChange2"
+    />
+    <demo-title>hh-mm形式</demo-title>
+    <sq-date-picker
+      title="请选择时间"
+      type="time"
       @confirm="confirm1"
       @cancel="cancel1"
       @on-change="onChange2"
@@ -16,10 +40,7 @@
     <sq-popup v-model="isShow" position="bottom">
       <sq-date-picker
         title="请选择时间"
-        min="2008-10-25"
-        max="2028-1-1"
         :format="['年', '月', '日']"
-        :default-value="[new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()]"
         @confirm="confirm2"
         @cancel="cancel2"
         @on-change="onChange2"

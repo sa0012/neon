@@ -7,11 +7,16 @@
     <demo-title>弹出位置</demo-title>
     <sq-button type="primary" size="small" @click="isShowLeft = !isShowLeft">左侧</sq-button>
     <sq-button type="primary" size="small" @click="isShowRight = !isShowRight">右侧</sq-button>
-    <sq-button type="primary" size="small" @click="isShowTop = !isShowTop">上方</sq-button>
+    <sq-button type="primary" size="small" @click="onShowTop">上方</sq-button>
     <sq-button type="primary" size="small" @click="isShowBottom = !isShowBottom">底部</sq-button>
-    <sq-popup v-model="isShowLeft" position="left">左侧弹出</sq-popup>
+
+    <sq-popup v-model="isShowLeft" :close-on-click-overlay="false" position="left">
+      <sq-button type="primary" size="small" @click="isShowLeft = !isShowLeft">关闭</sq-button>
+    </sq-popup>
     <sq-popup v-model="isShowRight" position="right">右侧弹出</sq-popup>
-    <sq-popup v-model="isShowTop" position="top">上方弹出</sq-popup>
+    <sq-popup v-model="isShowTop" :hide-mask="true" position="top">
+      <sq-notice-bar text="为了确保您的资金安全，请设置支付密码"/>
+    </sq-popup>
     <sq-popup v-model="isShowBottom" position="bottom">底部弹出</sq-popup>
   </div>
 </template>
@@ -30,7 +35,14 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    onShowTop () {
+      this.isShowTop = !this.isShowTop
+      setTimeout(() => {
+        this.isShowTop = !this.isShowTop
+      }, 3000)
+    }
+  }
 }
 </script>
 

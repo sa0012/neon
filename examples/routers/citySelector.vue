@@ -21,7 +21,7 @@
 </template>
 
 <script>
-const data = require('../city.json').result
+const data = require('../mock/city.json').result
 
 export default {
   name: '',

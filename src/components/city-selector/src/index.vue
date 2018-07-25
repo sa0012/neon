@@ -2,7 +2,7 @@
   <div class="sq-city-selector">
     <div class="sq-city-selector-close-bar">
       <span class="sq-city-selector-title">{{ title }}</span>
-      <i class="iconfont icon-error" @click="$_close"></i>
+      <i class="sq-icon sq-icon-error" @click="$_close"></i>
     </div>
     <div class="sq-city-selector-column-title-wrap">
       <h4
@@ -151,7 +151,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../../common/styles/variable.scss';
+@import '~@/common/styles/variable';
 
 .sq-slide-left-enter,
 .sq-slide-right-leave-active {
@@ -221,7 +221,7 @@ export default {
   &-close-bar {
     text-align: center;
     padding: 15px 10px 22px 10px;
-    .iconfont {
+    .sq-icon {
       font-size: 24px;
       position: absolute;
       right: 15px;

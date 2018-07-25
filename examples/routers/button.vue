@@ -16,6 +16,7 @@
     <sq-button type="primary" size="large">large</sq-button>
 
     <demo-title>带 icon 或 img</demo-title>
+    <sq-button type="ghost">默认</sq-button>
     <sq-button type="ghost" icon="loading">较小</sq-button>
     <sq-button type="ghost"><img src="../assets/logo.png" alt="" slot="icon" width="14px" height="14px">取消</sq-button>
   </div>

@@ -12,7 +12,8 @@ const menu = {
     { to: 'steps', name: 'Steps - 步骤条' },
     { to: 'swiper', name: 'Swiper - 轮播' },
     { to: 'tabs', name: 'Tabs - 标签页' },
-    { to: 'tag', name: 'Tag - 标记' }
+    { to: 'tag', name: 'Tag - 标记' },
+    { to: 'rater', name: 'Rater - 评分' },
   ],
   // 表单
   form: [

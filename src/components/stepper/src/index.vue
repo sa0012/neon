@@ -2,7 +2,7 @@
   <div class="sq-stepper">
     <div class="sq-stepper-wrap">
       <span class="sq-stepper-left" :class="cutClasses" @click="$_cut">
-        <i class="iconfont icon-jian"></i>
+        <i class="sq-icon sq-icon-jian"></i>
       </span>
       <input
         type="text"
@@ -15,7 +15,7 @@
         :class="inputClasses"
       >
       <span class="sq-stepper-right" :class="addClasses" @click="$_add">
-        <i class="iconfont icon-jia"></i>
+        <i class="sq-icon sq-icon-jia"></i>
       </span>
     </div>
   </div>
@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../../common/styles/variable.scss';
+@import '~@/common/styles/variable';
 $prefixCls: sq-stepper;
 
 .#{$prefixCls} {

@@ -11,7 +11,7 @@
     <div class="sq-btn-wrap">
       <span class="sq-btn-icon" v-if="icon || $slots.icon">
         <slot name="icon">
-          <i v-if="icon" class="iconfont" :class="'icon-' + icon"></i>
+          <i v-if="icon" class="sq-icon" :class="'sq-icon-' + icon"></i>
         </slot>
       </span>
       <span class="sq-btn-text"><slot></slot></span>
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../../common/styles/variable';
+@import '~@/common/styles/variable';
 
 $prefixCls: sq-btn;
 
@@ -138,7 +138,7 @@ $prefixCls: sq-btn;
   }
   // icon
   &-icon {
-    .iconfont {
+    .sq-icon {
       font-size: inherit;
     }
     img {

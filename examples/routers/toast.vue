@@ -9,6 +9,7 @@
 
     <demo-title>加载提示</demo-title>
     <sq-button type="primary" size="small" @click="showLoading">加载提示</sq-button>
+    <sq-button type="primary" size="small" @click="showLoading2">加载提示无文字</sq-button>
   </div>
 </template>
 
@@ -38,6 +39,9 @@ export default {
     },
     showLoading () {
       this.$toast.loading('加载中..')
+    },
+    showLoading2 () {
+      this.$toast.loading('')
     }
   }
 }

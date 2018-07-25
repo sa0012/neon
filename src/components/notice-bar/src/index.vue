@@ -2,7 +2,7 @@
   <div class="sq-notice-bar" v-show="isShowNoticeBar">
     <div class="sq-notice-bar-icon">
       <slot name="left-icon">
-        <i class="iconfont icon-alert-full"></i>
+        <i class="sq-icon sq-icon-alert-full"></i>
       </slot>
     </div>
     <div class="sq-notice-bar-content" ref="content">
@@ -19,7 +19,7 @@
     </div>
     <div class="sq-notice-bar-close" @click="$_close">
       <slot name="right-icon">
-        <i class="iconfont" :class="rightIconClasses"></i>
+        <i class="sq-icon" :class="rightIconClasses"></i>
       </slot>
     </div>
   </div>
@@ -53,8 +53,8 @@ export default {
     rightIconClasses () {
       return [
         {
-          'icon-error': this.mode === 'close',
-          'icon-arrow-right': this.mode === 'link'
+          'sq-icon-error': this.mode === 'close',
+          'sq-icon-arrow-right': this.mode === 'link'
         }
       ]
     },

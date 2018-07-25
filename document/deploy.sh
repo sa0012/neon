@@ -6,7 +6,7 @@ set -e
 # npm run build
 
 cd .vuepress/dist
-
+rm -rf .git
 git init
 git add -A
 git commit -m '更新文档'

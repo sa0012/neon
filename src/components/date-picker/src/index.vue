@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { getDate } from './utils'
+import { getDate, getArrByLength } from './utils'
 import picker from '../../picker'
 
 export default {
@@ -25,21 +25,18 @@ export default {
   },
 
   props: {
-    value: {
-      type: null
-    },
-    defaultValue: {
-      type: Array
-    },
-    format: {
-      type: Array
-    },
     type: {
       type: String,
       default: 'date',
       validator (value) {
         return ['date', 'datetime', 'time', 'year-month'].indexOf(value) > -1
       }
+    },
+    defaultValue: {
+      type: Array
+    },
+    format: {
+      type: Array
     },
     cancelButtonText: {
       type: String,
@@ -53,76 +50,139 @@ export default {
       type: String,
       default: ''
     },
-    max: {
-      type: String
+    minDate: {
+      type: String,
+      default: `${new Date().getFullYear() - 10}-1-1`
     },
-    min: {
-      type: String
+    maxDate: {
+      type: String,
+      default: `${new Date().getFullYear() + 10}-12-31`
     }
   },
 
-  computed: {
-  },
-
   data () {
+    const startDate = getDate(this.minDate)
+    const endDate = getDate(this.maxDate)
     return {
+      startDateArr: [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()],
+      endDateArr: [endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()],
       columns: this.getColumns()
     }
   },
 
   methods: {
+    setDefaultValue () {
+      const now = new Date()
+      const [year, month, day, hour, minute] = [now.getFullYear(), now.getMonth() + 1, now.getDate(), 0, 0]
+      const type = {
+        'date': [year, month, day],
+        'datetime': [year, month, day, hour, minute],
+        'time': [hour, minute],
+        'year-month': [year, month]
+      }
+      return type[this.type]
+    },
     getColumns () {
-      const maxDate = getDate(this.max)
-      const minDate = getDate(this.min)
+      if (!this.defaultValue) {
+        this.defaultValue = this.setDefaultValue()
+      }
 
-      const maxYear = maxDate.getFullYear()
-      const minYear = minDate.getFullYear()
+      const maxYear = getDate(this.maxDate).getFullYear()
+      const minYear = getDate(this.minDate).getFullYear()
 
+      let columns = []
+      switch (this.type) {
+        case 'datetime':
+          columns = [
+            this.getYearCol(maxYear, minYear),
+            this.getMonthCol(),
+            this.getColByYearMonth({year: this.defaultValue[0], month: this.defaultValue[1]}),
+            this.getHourCol(),
+            this.getMinuteCol()
+          ]
+          break
+        case 'date':
+          columns = [
+            this.getYearCol(maxYear, minYear),
+            this.getMonthCol(),
+            this.getColByYearMonth({year: this.defaultValue[0], month: this.defaultValue[1]})
+          ]
+          break
+        case 'time':
+          columns = [
+            this.getHourCol(),
+            this.getMinuteCol()
+          ]
+          break
+        default:
+          columns = [
+            this.getYearCol(maxYear, minYear),
+            this.getMonthCol()
+          ]
+          break
+      }
+      return columns
+    },
+    getYearCol (maxYear, minYear) {
       let yearCol = []
-
       for (let i = 0, len = maxYear - minYear; i <= len; i++) {
         yearCol.push(minYear + i)
       }
-      return [yearCol, this.getMonthCol(), this.getDayCol()]
+      return yearCol
     },
     getMonthCol () {
-      let monthCol = []
-      for (let i = 0, len = 12; i < len; i++) {
-        monthCol.push(i + 1)
-      }
-      return monthCol
+      return getArrByLength({length: 12})
     },
-    getDayCol () {
-      let dayCol = []
-      for (let i = 0, len = 31; i < len; i++) {
-        dayCol.push(i + 1)
-      }
-      return dayCol
+    getColByYearMonth ({year, month, min, max}) {
+      return getArrByLength({length: 32 - new Date(year, month, 32).getDate(), min, max})
     },
-    getIndexOfValInArr (val, arr) {
-      let index = 0
-      arr.forEach((item, i) => {
-        if (item === val) {
-          index = i
-        }
-      })
-      return index
+    getHourCol () {
+      return getArrByLength({length: 24, startByZero: true})
     },
-    getColByYearMonth (year, month) {
-      let newDayCol = []
-      const sumDay = 32 - new Date(year, month, 32).getDate()
-      for (let i = 0; i < sumDay; i++) {
-        newDayCol.push(i + 1)
-      }
-      return newDayCol
+    getMinuteCol () {
+      return getArrByLength({length: 60, startByZero: true})
     },
-    $_change (val) {
+    $_change ({item, itemIndex, listIndex, value}) {
       // 根据年月  切换日
-      if (this.type === 'date' && val.listIndex < 2) {
-        const dayCol = this.getColByYearMonth(val.value[0], val.value[1] - 1)
-        this.$children[0].$children[2].updateCol(dayCol, dayCol.includes(val.value[2]) ? this.getIndexOfValInArr(val.value[2], dayCol) : parseInt(dayCol.length / 2))
+      const { type, startDateArr, endDateArr } = this
+      if ((type === 'date' || type === 'datetime') && listIndex < 2) {
+        const colInstances = this.$children[0].$children
+        if (listIndex === 0) {
+          if (value[0] === startDateArr[0]) {
+            const monthCol = getArrByLength({length: 12, min: startDateArr[1]})
+            colInstances[1].updateCol(monthCol, monthCol.includes(value[1]) ? monthCol.indexOf(value[1]) : 0)
+
+            const dayCol = this.getColByYearMonth({year: value[0], month: monthCol.includes(value[1]) ? value[1] - 1 : 0})
+            colInstances[2].updateCol(dayCol, dayCol.includes(value[2]) ? dayCol.indexOf(value[2]) : parseInt(dayCol.length / 2))
+          } else if (value[0] === endDateArr[0]) {
+            const monthCol = getArrByLength({length: 12, max: endDateArr[1]})
+            colInstances[1].updateCol(monthCol, monthCol.includes(value[1]) ? monthCol.indexOf(value[1]) : 0)
+
+            const dayCol = this.getColByYearMonth({year: value[0], month: monthCol.includes(value[1]) ? value[1] - 1 : 0})
+            colInstances[2].updateCol(dayCol, dayCol.includes(value[2]) ? dayCol.indexOf(value[2]) : parseInt(dayCol.length / 2))
+          } else {
+            if (colInstances[1].list.length !== 12) {
+              const monthCol = getArrByLength({length: 12})
+              colInstances[1].updateCol(monthCol, monthCol.includes(value[1]) ? monthCol.indexOf(value[1]) : 0)
+            }
+
+            const dayCol = this.getColByYearMonth({year: value[0], month: value[1] - 1})
+            colInstances[2].updateCol(dayCol, dayCol.includes(value[2]) ? dayCol.indexOf(value[2]) : parseInt(dayCol.length / 2))
+          }
+        } else {
+          if (value[0] === startDateArr[0] && value[1] === startDateArr[1]) {
+            const dayCol = this.getColByYearMonth({year: value[0], month: value[1] - 1, min: startDateArr[2]})
+            colInstances[2].updateCol(dayCol, dayCol.includes(value[2]) ? dayCol.indexOf(value[2]) : 0)
+          } else if (value[0] === endDateArr[0] && value[1] === endDateArr[1]) {
+            const dayCol = this.getColByYearMonth({year: value[0], month: value[1] - 1, max: startDateArr[2]})
+            colInstances[2].updateCol(dayCol, dayCol.includes(value[2]) ? dayCol.indexOf(value[2]) : 0)
+          } else {
+            const dayCol = this.getColByYearMonth({year: value[0], month: value[1] - 1})
+            colInstances[2].updateCol(dayCol, dayCol.includes(value[2]) ? dayCol.indexOf(value[2]) : parseInt(dayCol.length / 2))
+          }
+        }
       }
-      this.$emit('on-change', JSON.parse(JSON.stringify(val)))
+      this.$emit('on-change', JSON.parse(JSON.stringify({item, itemIndex, listIndex, value})))
     },
     $_cancel (val) {
       this.$emit('cancel', JSON.parse(JSON.stringify(val)))
@@ -135,5 +195,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>
