@@ -37,6 +37,7 @@ export default new Router({
     { path: '/tabs', meta: { name: '标签页' }, component: () => import('../routers/tabs.vue') },
     { path: '/carlicense', meta: { name: '车牌录入键盘' }, component: () => import('../routers/carlicense.vue') },
     { path: '/chooseCar', meta: { name: '选择车型' }, component: () => import('../routers/chooseCar.vue') },
+    { path: '/chooseCity', meta: { name: '选择城市' }, component: () => import('../routers/chooseCity.vue') },
     { path: '/button', meta: { name: '按钮' }, component: () => import('../routers/button.vue') },
     { path: '/rater', meta: { name: '评分' }, component: () => import('../routers/rater.vue') },
     { path: '/index', meta: { name: '首页' }, component: () => import('../routers/index.vue') },

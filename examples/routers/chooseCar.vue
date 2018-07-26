@@ -4,7 +4,7 @@
     <sq-cell-group title="选车组件">
       <sq-cell title="选车组件" is-link :value="modelName" @click.native="chooseCar"></sq-cell>
     </sq-cell-group>
-    <div class="address" v-if="showChooseCar">
+    <div v-if="showChooseCar">
       <brand-cars :code="code" :loadMoreArr="loadMoreArr" :carsData="carsData" :selectCar="selectCar" :selectModel="selectModel" @brandCategoryCode="getBrandCategoryCode" @brandModelId="getBrandModelId" @loadMore="getLoadMore" @carDetail="getCarDetail">
         <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
