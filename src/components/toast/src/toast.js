@@ -31,7 +31,7 @@ const toastPlugin = {
         instance.visible = true
       },
       hide (callback) {
-        instance.visible = false
+        instance && (instance.visible = false)
         callback && callback()
       },
       text (...option) {

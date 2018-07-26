@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../../common/styles/mixins.scss';
+@import '~@/common/styles/mixins';
 $prefixCls: sq-radio-group;
 
 .#{$prefixCls} {

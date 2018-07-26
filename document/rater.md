@@ -13,47 +13,47 @@ Vue.use(Rater)
   <div class="wrap">
     <div class="rater-wrap">
       <div class="title">set min</div>
-      <rater :min="min" @getScore="getScore1">
-      </rater>
+      <sq-rater :min="min" @getScore="getScore1">
+      </sq-rater>
       <p>评分： {{ score1 }}</p>
     </div>
     <div class="rater-wrap">
       <div class="title">set max</div>
-      <rater :max="max" @getScore="getScore2">
-      </rater>
+      <sq-rater :max="max" @getScore="getScore2">
+      </sq-rater>
       <p>评分： {{ score2 }}</p>
     </div>
     <div class="rater-wrap">
       <div class="title">set value</div>
-      <rater :value="value" @getScore="getScore3">
-      </rater>
+      <sq-rater :value="value" @getScore="getScore3">
+      </sq-rater>
       <p>评分： {{ score3 || value }}</p>
     </div>
     <div class="rater-wrap">
       <div class="title">set fontSize</div>
-      <rater :fontSize="fontSize" @getScore="getScore4">
-      </rater>
+      <sq-rater :fontSize="fontSize" @getScore="getScore4">
+      </sq-rater>
       <p>评分： {{ score4 }}</p>
     </div>
     <div class="rater-wrap">
       <div class="title">set disabled = true</div>
-      <rater :disabled="disabled" :fontSize="fontSize">
-      </rater>
+      <sq-rater :disabled="disabled" :fontSize="fontSize">
+      </sq-rater>
     </div>
     <div class="rater-wrap">
       <div class="title">set activeColor</div>
-      <rater 
+      <sq-rater 
       :fontSize="fontSize" 
       :activeColor="activeColor">
-      </rater>
+      </sq-rater>
     </div>
     <div class="rater-wrap">
       <div class="title">set defaultColor</div>
-      <rater 
+      <sq-rater 
       :fontSize="fontSize" 
       :defaultColor="defaultColor"
       :activeColor="activeColor">
-      </rater>
+      </sq-rater>
     </div>
   </div>
 </template>
