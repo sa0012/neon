@@ -17,8 +17,8 @@
         </li>
       </ul>
     </div>
-    <div class="sq-brandCars-category-rightbar">
-      <ul class="sq-brandCars-category-rightbar-list" :class="{'start': showStartColor}" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
+    <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}">
+      <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
         <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item" @click.stop="jumpTitle(item)">{{ item }}</li>
       </ul>
     </div>
@@ -130,8 +130,8 @@ export default {
       let menuWrapper = this.$refs.menuWrapper
       this.showStartColor = true
       this.$refs.menuWrapper.style.overflow = 'hidden'
-      this.start = e.changedTouches[0].pageY
-      const everyDistance = this.curDistance / this.brandCategorys.length
+      this.start = e.changedTouches[0].pageY - this.curDistance / 4
+      const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(this.start / everyDistance)
       if (this.start < 0) {
         this.carNum = 'A'
@@ -143,14 +143,15 @@ export default {
     },
     touchMove (e) {
       // 计算每个区间的距离
-      const everyDistance = this.curDistance / this.brandCategorys.length
-      let curMove = e.changedTouches[0].pageY
+      let curMove = e.changedTouches[0].pageY - this.curDistance / 4
+      const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
+      let maxHeight = (this.curDistance - 0) / 2
       this.$nextTick(() => {
         let menuWrapper = this.$refs.menuWrapper
         if (curMove < 0) {
           this.carNum = 'A'
-        } else if (curMove > this.curDistance) {
+        } else if (curMove > maxHeight) {
           this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
         } else {
           menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
@@ -160,14 +161,15 @@ export default {
     touchEnd (e) {
       this.showStartColor = false
       this.$refs.menuWrapper.style.overflow = 'auto'
-      let curMove = e.changedTouches[0].pageY
-      const everyDistance = this.curDistance / this.brandCategorys.length
+      let curMove = e.changedTouches[0].pageY - this.curDistance / 4
+      const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
+      let maxHeight = (this.curDistance - 0) / 2
       this.$nextTick(() => {
         let menuWrapper = this.$refs.menuWrapper
         if (curMove < 0) {
           this.carNum = 'A'
-        } else if (curMove > this.curDistance) {
+        } else if (curMove > maxHeight) {
           this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
         } else {
           menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
@@ -314,31 +316,36 @@ export default {
     position: fixed;
     top: 0;
     right: 0px;
-    width: 50px;
+    width: 30px;
     text-align: right;
     z-index: 444;
     height: 100%;
-    // padding: 80px 0;
     box-sizing: border-box;
-  }
-  &-category-rightbar-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     &.start {
       background: rgba(0, 0, 0, 0.3);
     }
+  }
+  &-category-rightbar-list {
+    position: fixed;
+    top: 0;
+    right: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 30px;
+    height: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
   }
   &-category-rightbar-item {
     list-style: none;
     margin: 0;
     padding: 0;
     text-align: center;
-    color: #000;
-    // font-size: 12px;
+    color: #007AFF;
+    font-size: 12px;
     box-sizing: border-box;
     display: flex;
     align-items: center;

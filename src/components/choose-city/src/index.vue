@@ -106,7 +106,7 @@ export default {
         let menuWrapper = this.$refs.menuWrapper
         if (curMove < 0) {
           this.carNum = 'A'
-        } else if (curMove > 0 && curMove < maxHeight) {
+        } else if (curMove > maxHeight) {
           this.carNum = this.cityIndex[this.cityIndex.length - 1]
         } else {
           menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
