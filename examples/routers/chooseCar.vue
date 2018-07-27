@@ -5,7 +5,16 @@
       <sq-cell title="选车组件" is-link :value="modelName" @click.native="chooseCar"></sq-cell>
     </sq-cell-group>
     <div v-if="showChooseCar">
-      <brand-cars :code="code" :loadMoreArr="loadMoreArr" :carsData="carsData" :selectCar="selectCar" :selectModel="selectModel" @brandCategoryCode="getBrandCategoryCode" @brandModelId="getBrandModelId" @loadMore="getLoadMore" @carDetail="getCarDetail">
+      <brand-cars 
+        :loadMoreArr="loadMoreArr" 
+        :carsData="carsData" 
+        :selectCar="selectCar" 
+        :selectModel="selectModel" 
+        @brandCategoryCode="getBrandCategoryCode" 
+        @brandModelId="getBrandModelId" 
+        @loadMore="getLoadMore" 
+        @carDetail="getCarDetail"
+        @searchOption="getSearchOption">
         <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
@@ -67,6 +76,13 @@ export default {
     },
     chooseCar() {
       this.showChooseCar = !this.showChooseCar
+    },
+    searchCar(option) {
+
+    },
+    getSearchOption(option) {
+      console.log(option, 1234)
+      this.searchCar(option)
     }
   }
 }

@@ -8,7 +8,7 @@
       <div class="sq-choose-city-city-wrap">
         <ul class="sq-choose-city-city-list">
           <li class="sq-choose-city-city-item" v-for="(item, index) in cityIndex" :key="index">
-            <h3 class="sq-choose-city-menu-title" :class="item" ref="+ item +">{{ item }}</h3>
+            <h3 class="sq-choose-city-menu-title" :class="item">{{ item }}</h3>
             <ul class="sq-choose-city-item-list">
               <li class="sq-choose-city-item-list-item" v-for="(city, i) in chooseCityData[item]" :key="i" @click="closeCity(city)">{{ city.name }}</li>
             </ul>

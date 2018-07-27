@@ -1,9 +1,13 @@
 <template>
   <div class="sq-brandCars" ref="menuWrapper" v-if="showChooseCar">
+    <div class="sq-brandCars-search-wrap">
+      <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索">
+      <i class="sq-icon sq-icon-circle-right sq-brandCars-search-icon" @click="searchCarModels"></i>
+    </div>
     <div class="sq-brandCars-menu-wrapper">
       <ul class="sq-brandCars-list">
         <li class="sq-brandCars-item" v-for="(item, index) in brandCategorys" :key="index">
-          <h3 class="sq-brandCars-menu-title" :class="item" ref="+ item +">{{item}}</h3>
+          <h3 class="sq-brandCars-menu-title" :class="item">{{item}}</h3>
           <ul class="sq-brandCars-menu-list">
             <li v-for="(car, inx) in carsData[item]" :key="inx" class="sq-brandCars-menu-item" @click="showModel(car.brandCategoryCode, car.brandCategoryName, item)">
               <div class="sq-brandCars-menu-list-item">
@@ -122,7 +126,8 @@ export default {
       carIndex: 0,
       showStartColor: false,
       curDistance: document.body.clientHeight || document.documentElement.clientHeight,
-      carNum: ''
+      carNum: '',
+      search: ''
     }
   },
   methods: {
@@ -242,6 +247,23 @@ export default {
       this.loading = true
       this.$emit('loadMore', this.callback)
     },
+    searchCarModels () {
+      console.log(this)
+      if (this.search.trim().length < 4) {
+        this.$toast.text('搜索字符不能少于4位', 3000)
+        return
+      }
+      this.$emit('searchOption', this.search)
+    },
+    getKeyCode (e) {
+      if (e.keyCode === 13) {
+        if (this.search.trim().length < 4) {
+          this.$toast.text('搜索字符不能少于4位', 3000)
+          return
+        }
+        this.$emit('searchOption', this.search)
+      }
+    },
     forbidBack () {
       return history.pushState(null, null, document.URL)
     }
@@ -266,6 +288,27 @@ export default {
   background: #fff;
   z-index: 333;
   -webkit-overflow-scrolling: touch;
+  &-search-wrap {
+    background: #F5F5F5;
+    padding: 10px 15px;
+    position: relative;
+  }
+  &-search-input {
+    width: 100%;
+    height: 38px;
+    border-radius: 1000px;
+    border: 0;
+    border: 1px solid #666;
+    padding-left: 15px;
+    box-sizing: border-box;
+  }
+  &-search-icon {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
   &-menu-wrapper {
     width: 100%;
     overflow-x: hidden;
