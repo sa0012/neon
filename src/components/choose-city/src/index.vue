@@ -2,8 +2,8 @@
   <div class="sq-choose-city" ref="menuWrapper" v-if="showCity">
     <div class="sq-choose-city-inner">
       <div class="sq-choose-city-current-city">
-        <span>当前城市：</span>
-        <span>{{ '上海市' }}</span>
+        <span class="sq-choose-city-current-city-title">当前城市：</span>
+        <span>{{ currentCity }}</span>
       </div>
       <div class="sq-choose-city-city-wrap">
         <ul class="sq-choose-city-city-list">
@@ -34,7 +34,8 @@ export default {
       default: function () {
         return {}
       }
-    }
+    },
+    currentCity: ''
   },
   data () {
     return {
@@ -141,6 +142,9 @@ export default {
       height: 52px;
       line-height: 52px;
     }
+    &-current-city-title {
+      color: #666;
+    }
     &-city-wrap {
       height: auto;
     }
@@ -185,6 +189,7 @@ export default {
       box-sizing: border-box;
     }
     &-index-title {
+      color: #007AFF;
       flex: 1;
       display: flex;
       align-items: center;

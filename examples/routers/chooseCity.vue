@@ -4,7 +4,7 @@
       <sq-cell title="选择城市" is-link :value="cityData.name" @click.native="chooseCity"></sq-cell>
     </sq-cell-group>
     <div class="address" v-if="showChooseCity">
-      <choose-city :chooseCityData="chooseCityData" @cityNameCode="getCityData"></choose-city>
+      <choose-city :chooseCityData="chooseCityData" @cityNameCode="getCityData" :currentCity="currentCity"></choose-city>
     </div>
   </div>
 </template>
@@ -161,7 +161,8 @@ export default {
           { "code": "13000", "name": "镇江市" },
         ],
       },
-      cityData: {}
+      cityData: {},
+      currentCity: '上海'
     }
   },
   methods: {
