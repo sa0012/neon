@@ -67,10 +67,10 @@ $prefixCls: sq-cell;
   display: flex;
   align-items: center;
   height: 48px;
-  line-height: 48px;
+  line-height: 24px;
   background-color: #fff;
-  padding: 14px 16px;
-  font-size: 15px;
+  padding: 12px 16px;
+  font-size: 14px;
   & ~ & {
     @include mix-1px($top: 1);
   }
