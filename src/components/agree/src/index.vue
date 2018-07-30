@@ -78,6 +78,7 @@ $prefixCls: sq-agree;
       border-left: 0;
       transition: transform .2s ease-in-out;
       transform: rotate(45deg) scale(0);
+      box-sizing: content-box;
     }
   }
   &-text {
