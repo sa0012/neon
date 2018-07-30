@@ -3,7 +3,7 @@
     <div class="sq-brandCars-menu-wrapper" ref="brandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
       <div class="sq-brandCars-search-wrap">
         <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索">
-        <i class="sq-icon sq-icon-circle-right sq-brandCars-search-icon" @click="searchCarModels"></i>
+        <i class="sq-icon sq-icon-search sq-brandCars-search-icon" @click="searchCarModels"></i>
       </div>
       <ul class="sq-brandCars-list">
         <li class="sq-brandCars-item" v-for="(item, index) in brandCategorys" :key="index">
