@@ -20,11 +20,11 @@
           </ul>
         </li>
       </ul>
-       <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}">
-        <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-          <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item" @click.stop="jumpTitle(item)">{{ item }}</li>
-        </ul>
-      </div>
+    </div>
+    <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}">
+      <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
+        <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item" @click.stop="jumpTitle(item)">{{ item }}</li>
+      </ul>
     </div>
     <!--<select-car v-if="showSelectCar" :brandCategoryData="brandCategoryData" :brandFamilies="selectCar"></select-car>-->
     <!-- +++++++++++++++++++++++++++选车系+++++++++++++++++++++++++++ -->
@@ -108,6 +108,10 @@ export default {
     },
     loadMoreArr: {
       type: Array
+    },
+    showChooseCar: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -124,7 +128,6 @@ export default {
       loading: false,
       wrapperHeight: 0,
       isFinishedLoad: false,
-      showChooseCar: true,
       carIndex: 0,
       showStartColor: false,
       curDistance: document.body.clientHeight || document.documentElement.clientHeight,
@@ -192,9 +195,8 @@ export default {
     selectCarMove (e) {
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this.selectCarStart
-      // let selectCarWidth = this.$refs.selectCar.clientWidth
       if (currentDis < this.selectCarStart) {
-        // return
+        return false
       } else {
         this.$refs.selectCar.style.transform = 'translateX(' + lastDistance + 'px)'
         this.$refs.selectCar.style.transition = 'transform 0.1s'
@@ -204,10 +206,8 @@ export default {
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this.selectCarStart
       if (currentDis < this.selectCarStart) {
-        // return
+        return false
       } else if (currentDis === this.selectCarStart) {
-        // this.showSelectCar = false
-        // this.showSelectModel = true
       } else if (currentDis > this.selectCarStart && lastDistance < 100) {
         this.$refs.selectCar.style.transform = 'translateX(0)'
         this.$refs.selectCar.style.transition = 'transform 0.1s'
@@ -229,12 +229,14 @@ export default {
       let selectModelWidth = this.$refs[refs].clientWidth
       if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3))) {
         this.$refs[refs].style.transform = 'translateX(0)'
-        // this.showSelectModel = false
       } else if (lastDistance === 0) {
         return false
       } else {
         this.$refs[refs].style.transform = 'translateX(100%)'
         this[showModal] = false
+        if (showModal === 'showChooseCar') {
+          this.$emit('update:showChooseCar', this.showChooseCar)
+        }
         document.querySelector('.sq-brandCars').style.overflow = 'auto'
       }
     },
@@ -245,7 +247,7 @@ export default {
       this.touchMoveLogic(e, 'brandCars', 'brandCarStart')
     },
     brandCarsEnd (e) {
-      this.touchEndLogic(e, 'brandCars', 'showSelectModel', 'brandCarStart')
+      this.touchEndLogic(e, 'brandCars', 'showChooseCar', 'brandCarStart')
     },
     modelStart (e) {
       this.modelsStart = e.changedTouches[0].clientX
@@ -308,6 +310,7 @@ export default {
       this.showSelectModel = false
       this.showChooseCar = false
       this.showSelectCar = false
+      this.$emit('update:showChooseCar', this.showChooseCar)
       this.$emit('carDetail', detail)
     },
     callback (arr) {

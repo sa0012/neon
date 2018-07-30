@@ -9,7 +9,8 @@
         :loadMoreArr="loadMoreArr" 
         :carsData="carsData" 
         :selectCar="selectCar" 
-        :selectModel="selectModel" 
+        :selectModel="selectModel"
+        :showChooseCar.sync="showChooseCar"
         @brandCategoryCode="getBrandCategoryCode" 
         @brandModelId="getBrandModelId" 
         @loadMore="getLoadMore" 
@@ -43,7 +44,8 @@ export default {
       code: '',
       loadMoreArr: [],
       showChooseCar: false,
-      modelName: ''
+      modelName: '',
+      showChooseCar: true
     }
   },
 
