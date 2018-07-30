@@ -14,6 +14,7 @@ Vue.use(ChooseCar)
   :carsData="carsData" 
   :selectCar="selectCar" 
   :selectModel="selectModel" 
+  :showChooseCar.sync="showChooseCar"
   @brandCategoryCode="getBrandCategoryCode" 
   @brandModelId="getBrandModelId" 
   @loadMore="getLoadMore"
@@ -33,6 +34,7 @@ Vue.use(ChooseCar)
 |  selectCar        |       `Array`     |    选择车型     | ----   | ----  |
 |  selectModel      |       `Array`     |    选择车系     | ----   | ----  |
 |  loadMoreArr      |       `Array`     |    选择车系分页数据     | ----   | ----  |
+|  showChooseCar.sync      |       `Boolean`     |    组件的显示隐藏     | ----   | ----  |
 |  slot-scope       |       --          |    作用于插槽（品牌logo）     | ----   | ----  |
 |  brandCategoryCode      |       `slot`     |    车型logo     | ----   | ----  |
 |  selectModelCode        |       `slot`     |      车系logo   | ----   | ----  |

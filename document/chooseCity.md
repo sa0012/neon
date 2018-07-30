@@ -16,6 +16,7 @@ Vue.use(ChooseCity)
     </sq-cell-group>
     <div class="address" v-if="showChooseCity">
       <choose-city 
+      :showCity.sync="showCity"
       :chooseCityData="chooseCityData" 
       @cityNameCode="getCityData" 
       :currentCity="currentCity"></choose-city>
@@ -52,6 +53,7 @@ export default {
 | :-----------      | :---------------  | :-------------- | :---- |:----  |
 |  chooseCityData   |       `Object`     |    城市分类     | ----   | ----  |
 |  currentCity      |       `String`    |    当前城市     | ----   | ----  |
+|  showCity.sync      |       `Boolean`    |    组件的显示隐藏     | ----   | ----  |
 
 #### Event
 | 名称              | 参数        |         描述       | 调用方式 |
