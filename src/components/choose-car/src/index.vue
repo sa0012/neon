@@ -629,6 +629,7 @@ export default {
     left: 0;
     background: #fff;
     z-index: 999;
+    box-sizing: border-box;
   }
   &-ul {
     margin: 0;

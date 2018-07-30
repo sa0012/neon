@@ -1,6 +1,7 @@
 <template>
-  <div class="sq-choose-city" ref="menuWrapper" v-if="showCity">
-    <div class="sq-choose-city-inner">
+  <div class="sq-choose-city" ref="menuWrapper" v-show="showCity">
+    <div class="sq-choose-city-wrapper" ref="cityWrapper" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
+      <div class="sq-choose-city-inner">
       <div class="sq-choose-city-current-city">
         <span class="sq-choose-city-current-city-title">当前城市：</span>
         <span>{{ currentCity }}</span>
@@ -22,6 +23,7 @@
       </div>
     </div>
     <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
+    </div>
   </div>
 </template>
 
@@ -35,7 +37,14 @@ export default {
         return {}
       }
     },
-    currentCity: ''
+    currentCity: {
+      type: String,
+      default: ''
+    },
+    showCity: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
@@ -45,8 +54,8 @@ export default {
       titlePos: {},
       carNum: '',
       showStartColor: false,
-      showCity: true,
-      curDistance: document.body.clientHeight || document.documentElement.clientHeight
+      curDistance: document.body.clientHeight || document.documentElement.clientHeight,
+      selectCityStart: 0
     }
   },
   methods: {
@@ -62,6 +71,7 @@ export default {
     closeCity (city) {
       this.showCity = false
       this.$emit('cityNameCode', city)
+      this.$emit('update:showCity', this.showCity)
     },
     touchStart (e) {
       let menuWrapper = this.$refs.menuWrapper
@@ -112,6 +122,37 @@ export default {
           menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
         }
       })
+    },
+    touchMoveLogic (e, refs, touchStart) {
+      let currentDis = e.changedTouches[0].clientX
+      let lastDistance = currentDis - this[touchStart]
+      this.$refs[refs].style.transform = 'translateX(' + lastDistance + 'px)'
+    },
+    touchEndLogic (e, refs, showModal, touchStart) {
+      let currentDis = e.changedTouches[0].clientX
+      let lastDistance = currentDis - this[touchStart]
+      let selectModelWidth = this.$refs[refs].clientWidth
+      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3))) {
+        this.$refs[refs].style.transform = 'translateX(0)'
+      } else if (lastDistance === 0) {
+        return false
+      } else {
+        this.$refs[refs].style.transform = 'translateX(100%)'
+        this[showModal] = false
+        if (showModal === 'showCity') {
+          this.$emit('update:showCity', this.showCity)
+        }
+        document.querySelector('.sq-choose-city').style.overflow = 'auto'
+      }
+    },
+    cityStart (e) {
+      this.selectCityStart = e.changedTouches[0].clientX
+    },
+    cityMove (e) {
+      this.touchMoveLogic(e, 'cityWrapper', 'selectCityStart')
+    },
+    cityEnd (e) {
+      this.touchEndLogic(e, 'cityWrapper', 'showCity', 'selectCityStart')
     }
   },
   mounted () {
@@ -129,9 +170,14 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background: #fff;
     z-index: 333;
     font-size: 14px;
+    &-wrapper {
+      background: #fff;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
     &-inner {
       width: 100%;
       padding-left: 15px;
