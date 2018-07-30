@@ -90,6 +90,23 @@
     </div>
     <div class="sq-selectmodel-model-modal" v-if="showSelectModel"></div>
     <div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>
+
+    <!-- +++++++++++++++++++++++++++++++++搜索车型+++++++++++++++++++++++++++++++++ -->
+    <div class="sq-search" v-if="showSearchModal" >
+      <div class="sq-search-inner" ref="searchWapper" :style="{ height: searchWapperHeight + 'px' }" @touchstart="searchStart" @touchmove="searchMove" @touchend="searchEnd">
+        <sq-loadmore :loading="searchLoading" :bottom-fun="searchCarLoadMore" :is-finished-load="searchIsFinishedLoad">
+          <ul class="sq-search-list">
+            <li class="sq-search-list-item" v-for="(item, index) in searchCarArr" :key="index" @click.stop="closeSelectModel(item)">{{ item.displayName }}</li>
+          </ul>
+        </sq-loadmore>
+
+        <div class="sq-selectmodel-footer" v-if="showSearchLoadText">
+          <span class="sq-selectmodel-line-left"></span>
+          <span class="sq-selectmodel-line-text">不好意思， 没有数据了</span>
+          <span class="sq-selectmodel-line-left"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -122,6 +139,7 @@ export default {
       showSelectCar: false,
       showSelectModel: false,
       isShowText: false,
+      showSearchLoadText: false,
       slideHeight: 0,
       start: null,
       lastDistance: 0,
@@ -135,7 +153,13 @@ export default {
       search: '',
       selectCarStart: 0,
       modelsStart: 0,
-      brandCarStart: 0
+      brandCarStart: 0,
+      searchCarStart: 0,
+      searchCarArr: [],
+      showSearchModal: false,
+      searchWapperHeight: 0,
+      searchLoading: false,
+      searchIsFinishedLoad: false
     }
   },
   methods: {
@@ -258,6 +282,15 @@ export default {
     modelEnd (e) {
       this.touchEndLogic(e, 'selectModel', 'showSelectModel', 'modelsStart')
     },
+    searchStart (e) {
+      this.searchCarStart = e.changedTouches[0].clientX
+    },
+    searchMove (e) {
+      this.touchMoveLogic(e, 'searchWapper', 'searchCarStart')
+    },
+    searchEnd (e) {
+      this.touchEndLogic(e, 'searchWapper', 'showSearchModal', 'searchCarStart')
+    },
     getBrandCategoryArr () {
       this.brandCategorys = Object.keys(this.carsData)
       this.$nextTick(() => {
@@ -314,17 +347,34 @@ export default {
       this.$emit('carDetail', detail)
     },
     callback (arr) {
+      this.$refs.selectModel.style.transform = 'translateX(100%)'
       setTimeout(() => {
         this.selectModel.push(...arr)
         this.loading = false
         if (arr.length <= 0) {
+          this.isShowText = true
           this.isFinishedLoad = true
         }
       }, 2000)
     },
-    loadMore () {
+    loadMore (e) {
+      console.log(e)
       this.loading = true
       this.$emit('loadMore', this.callback)
+    },
+    getSearchCar (searchCar) {
+      this.searchCarArr = searchCar
+      if (this.searchCarArr.length > 0) {
+        this.showSearchModal = true
+        setTimeout(() => {
+          if (this.$refs.searchWapper) {
+            this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWapper.getBoundingClientRect().top
+          }
+        }, 30)
+      } else {
+        this.$toast.error('没有查询到相关数据', 3000)
+      }
+      console.log(searchCar, 'this is a search')
     },
     searchCarModels () {
       console.log(this)
@@ -332,7 +382,7 @@ export default {
         this.$toast.text('搜索字符不能少于4位', 3000)
         return
       }
-      this.$emit('searchOption', this.search)
+      this.$emit('searchOption', this.search, this.getSearchCar)
     },
     getKeyCode (e) {
       if (e.keyCode === 13) {
@@ -340,16 +390,26 @@ export default {
           this.$toast.text('搜索字符不能少于4位', 3000)
           return
         }
-        this.$emit('searchOption', this.search)
+        this.$emit('searchOption', this.search, this.getSearchCar)
       }
     },
-    forbidBack () {
-      return history.pushState(null, null, document.URL)
+    searchCallBack (arr) {
+      setTimeout(() => {
+        this.searchCarArr.push(...arr)
+        this.searchLoading = false
+        if (arr.length <= 0) {
+          this.showSearchLoadText = true
+          this.searchIsFinishedLoad = true
+        }
+      }, 2000)
+    },
+    searchCarLoadMore () {
+      this.searchLoading = true
+      this.$emit('searchLoadMore', this.searchCallBack)
     }
   },
   mounted () {
     this.getBrandCategoryArr()
-    // this.forbidBack()
   }
 }
 </script>
@@ -699,5 +759,36 @@ export default {
   color: #fff;
   font-size: 24px;
   font-weight: bold;
+}
+
+.sq-search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // background: #fff;
+  z-index: 555;
+  &-inner {
+    width: 100%;
+    overflow: scroll;
+    background: #fff;
+  }
+  &-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+  &-list-item {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    box-sizing: border-box;
+    @include mix-1px($top: 1);
+  }
 }
 </style>
