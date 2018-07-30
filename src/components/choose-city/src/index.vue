@@ -55,7 +55,9 @@ export default {
       carNum: '',
       showStartColor: false,
       curDistance: document.body.clientHeight || document.documentElement.clientHeight,
-      selectCityStart: 0
+      selectCityStartX: 0,
+      selectCityStartY: 0,
+      firstMove: true
     }
   },
   methods: {
@@ -123,16 +125,27 @@ export default {
         }
       })
     },
-    touchMoveLogic (e, refs, touchStart) {
-      let currentDis = e.changedTouches[0].clientX
-      let lastDistance = currentDis - this[touchStart]
-      this.$refs[refs].style.transform = 'translateX(' + lastDistance + 'px)'
+    touchMoveLogic (e, refs, touchStartX, touchStartY) {
+      let currentDisX = e.changedTouches[0].clientX
+      let currentDisY = e.changedTouches[0].clientY
+      let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
+      let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
+      let currentMoveDisX = currentDisX - this[touchStartX]
+      if (this.firstMove) {
+        if (lastDistanceY > lastDistanceX) {
+          this.firstMove = false
+          return false
+        } else {
+          this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
+        }
+      }
     },
     touchEndLogic (e, refs, showModal, touchStart) {
+      this.firstMove = true
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
-      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3))) {
+      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 2)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3 * 2))) {
         this.$refs[refs].style.transform = 'translateX(0)'
       } else if (lastDistance === 0) {
         return false
@@ -146,13 +159,14 @@ export default {
       }
     },
     cityStart (e) {
-      this.selectCityStart = e.changedTouches[0].clientX
+      this.selectCityStartX = e.changedTouches[0].clientX
+      this.selectCityStartY = e.changedTouches[0].clientY
     },
     cityMove (e) {
-      this.touchMoveLogic(e, 'cityWrapper', 'selectCityStart')
+      this.touchMoveLogic(e, 'cityWrapper', 'selectCityStartX', 'selectCityStartY')
     },
     cityEnd (e) {
-      this.touchEndLogic(e, 'cityWrapper', 'showCity', 'selectCityStart')
+      this.touchEndLogic(e, 'cityWrapper', 'showCity', 'selectCityStartX')
     }
   },
   mounted () {
@@ -172,6 +186,7 @@ export default {
     left: 0;
     z-index: 333;
     font-size: 14px;
+    background: rgba(0, 0, 0, 0.7);
     &-wrapper {
       background: #fff;
       width: 100%;

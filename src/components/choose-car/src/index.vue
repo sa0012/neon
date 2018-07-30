@@ -152,10 +152,15 @@ export default {
       curDistance: document.body.clientHeight || document.documentElement.clientHeight,
       carNum: '',
       search: '',
-      selectCarStart: 0,
-      modelsStart: 0,
-      brandCarStart: 0,
-      searchCarStart: 0,
+      selectCarStartX: 0,
+      selectCarStartY: 0,
+      modelsStartX: 0,
+      modelsStartY: 0,
+      brandCarStartX: 0,
+      brandCarStartY: 0,
+      firstMove: true,
+      searchCarStartX: 0,
+      searchCarStartY: 0,
       searchCarArr: [],
       showSearchModal: false,
       searchWapperHeight: 0,
@@ -215,44 +220,36 @@ export default {
       })
     },
     selectCarStarts (e) {
-      this.selectCarStart = e.changedTouches[0].clientX
+      this.selectCarStartX = e.changedTouches[0].clientX
+      this.selectCarStartY = e.changedTouches[0].clientY
     },
     selectCarMove (e) {
-      let currentDis = e.changedTouches[0].clientX
-      let lastDistance = currentDis - this.selectCarStart
-      if (currentDis < this.selectCarStart) {
-        return false
-      } else {
-        this.$refs.selectCar.style.transform = 'translateX(' + lastDistance + 'px)'
-        this.$refs.selectCar.style.transition = 'transform 0.1s'
-      }
+      this.touchMoveLogic(e, 'selectCar', 'selectCarStartX', 'selectCarStartY')
     },
     selectCarEnd (e) {
-      let currentDis = e.changedTouches[0].clientX
-      let lastDistance = currentDis - this.selectCarStart
-      if (currentDis < this.selectCarStart) {
-        return false
-      } else if (currentDis === this.selectCarStart) {
-      } else if (currentDis > this.selectCarStart && lastDistance < 100) {
-        this.$refs.selectCar.style.transform = 'translateX(0)'
-        this.$refs.selectCar.style.transition = 'transform 0.1s'
-      } else {
-        this.$refs.selectCar.style.transform = 'translateX(100%)'
-        this.showSelectCar = false
-        document.querySelector('.sq-brandCars').style.overflow = 'auto'
-        this.$refs.selectCar.style.transition = 'transform 0s'
+      this.touchEndLogic(e, 'selectCar', 'showSelectCar', 'selectCarStartX')
+    },
+    touchMoveLogic (e, refs, touchStartX, touchStartY) {
+      let currentDisX = e.changedTouches[0].clientX
+      let currentDisY = e.changedTouches[0].clientY
+      let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
+      let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
+      let currentMoveDisX = currentDisX - this[touchStartX]
+      if (this.firstMove) {
+        if (lastDistanceY > lastDistanceX) {
+          this.firstMove = false
+          return false
+        } else {
+          this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
+        }
       }
     },
-    touchMoveLogic (e, refs, touchStart) {
-      let currentDis = e.changedTouches[0].clientX
-      let lastDistance = currentDis - this[touchStart]
-      this.$refs[refs].style.transform = 'translateX(' + lastDistance + 'px)'
-    },
     touchEndLogic (e, refs, showModal, touchStart) {
+      this.firstMove = true
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
-      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3))) {
+      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 2)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3 * 2))) {
         this.$refs[refs].style.transform = 'translateX(0)'
       } else if (lastDistance === 0) {
         return false
@@ -266,31 +263,34 @@ export default {
       }
     },
     brandCarsStart (e) {
-      this.brandCarStart = e.changedTouches[0].clientX
+      this.brandCarStartX = e.changedTouches[0].clientX
+      this.brandCarStartY = e.changedTouches[0].clientY
     },
     brandCarsMove (e) {
-      this.touchMoveLogic(e, 'brandCars', 'brandCarStart')
+      this.touchMoveLogic(e, 'brandCars', 'brandCarStartX', 'brandCarStartY')
     },
     brandCarsEnd (e) {
-      this.touchEndLogic(e, 'brandCars', 'showChooseCar', 'brandCarStart')
+      this.touchEndLogic(e, 'brandCars', 'showChooseCar', 'brandCarStartX')
     },
     modelStart (e) {
-      this.modelsStart = e.changedTouches[0].clientX
+      this.modelsStartX = e.changedTouches[0].clientX
+      this.modelsStartY = e.changedTouches[0].clientY
     },
     modelMove (e) {
-      this.touchMoveLogic(e, 'selectModel', 'modelsStart')
+      this.touchMoveLogic(e, 'selectModel', 'modelsStartX', 'modelsStartY')
     },
     modelEnd (e) {
-      this.touchEndLogic(e, 'selectModel', 'showSelectModel', 'modelsStart')
+      this.touchEndLogic(e, 'selectModel', 'showSelectModel', 'modelsStartX')
     },
     searchStart (e) {
-      this.searchCarStart = e.changedTouches[0].clientX
+      this.searchCarStartX = e.changedTouches[0].clientX
+      this.searchCarStartY = e.changedTouches[0].clientY
     },
     searchMove (e) {
-      this.touchMoveLogic(e, 'searchWapper', 'searchCarStart')
+      this.touchMoveLogic(e, 'searchWapper', 'searchCarStartX', 'searchCarStartY')
     },
     searchEnd (e) {
-      this.touchEndLogic(e, 'searchWapper', 'showSearchModal', 'searchCarStart')
+      this.touchEndLogic(e, 'searchWapper', 'showSearchModal', 'searchCarStartX')
     },
     getBrandCategoryArr () {
       this.brandCategorys = Object.keys(this.carsData)
