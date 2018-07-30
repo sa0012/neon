@@ -1,7 +1,6 @@
 
-@font-face {
-  font-family: "sq-icon";
-  src: url('iconfont.ttf?t=1532501127929') format('truetype');
+@font-face {font-family: "sq-icon";
+  src: url('iconfont.ttf?t=1532924099376') format('truetype');
 }
 
 .sq-icon {
@@ -69,6 +68,8 @@
 .sq-icon-pentagram:before { content: "\e601"; }
 
 .sq-icon-emoji:before { content: "\e604"; }
+
+.sq-icon-search:before { content: "\e602"; }
 
 .sq-icon-keyboard-xiangshang:before { content: "\e649"; }
 
