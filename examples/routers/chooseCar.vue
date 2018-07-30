@@ -88,13 +88,12 @@ export default {
       this.showChooseCar = !this.showChooseCar
     },
     searchCar(option, callback) {
-      alert(option)
-      if (option === 'aaaa') {
-        callback([])
-      } else {
-        callback(this.searchCarArr)
-      }
-      // callback(this.searchCarArr)
+      // if (option === 'aaaa') {
+      //   callback([])
+      // } else {
+      //   callback(this.searchCarArr)
+      // }
+      callback(this.searchCarArr)
     },
     getSearchOption(option, callback) {
       console.log(option, 1234)

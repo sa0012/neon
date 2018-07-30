@@ -19,6 +19,8 @@ Vue.use(ChooseCar)
   @brandModelId="getBrandModelId" 
   @loadMore="getLoadMore"
   @carDetail="getCarDetail"
+  @searchOption="getSearchOption"
+  @searchLoadMore="getSearchLoadMore"
   >
   <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
   <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
@@ -46,6 +48,8 @@ Vue.use(ChooseCar)
 | brandModelId      | ----       | 获取(modelCode)    | ---     |
 | loadMore          | `callback` | 执行上拉加载回调    | ---     |
 | carDetail         | ----       | 获取选择车系详情    | ---     |
+| searchOption      | `option callback`       | 接受两个返回参数，option(搜索字符)，callback(回调函数， 将请求回来的数据传入即可)    | ---     |
+| searchLoadMore    | `callback`       | 搜索分页函数， 接受一个返回参数， 将分页数据传入即可    | ---     |
 
 ### 品牌车型车系参数要求
 #### 品牌参数

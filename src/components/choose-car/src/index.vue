@@ -107,6 +107,7 @@
         </div>
       </div>
     </div>
+    <div class="sq-selectmodel-model-modal" v-if="showSearchModal"></div>
   </div>
 </template>
 
@@ -767,8 +768,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  // background: #fff;
-  z-index: 555;
+  z-index: 888;
   &-inner {
     width: 100%;
     overflow: scroll;
