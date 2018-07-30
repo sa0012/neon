@@ -1,29 +1,29 @@
 <template>
-  <div class="sq-choose-city" ref="menuWrapper" v-show="showCity">
-    <div class="sq-choose-city-wrapper" ref="cityWrapper" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
+  <div class="sq-choose-city" ref="menuWrapper" v-show="showCity" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
+    <div class="sq-choose-city-wrapper" ref="cityWrapper" >
       <div class="sq-choose-city-inner">
-      <div class="sq-choose-city-current-city">
-        <span class="sq-choose-city-current-city-title">当前城市：</span>
-        <span>{{ currentCity }}</span>
-      </div>
-      <div class="sq-choose-city-city-wrap">
-        <ul class="sq-choose-city-city-list">
-          <li class="sq-choose-city-city-item" v-for="(item, index) in cityIndex" :key="index">
-            <h3 class="sq-choose-city-menu-title" :class="item">{{ item }}</h3>
-            <ul class="sq-choose-city-item-list">
-              <li class="sq-choose-city-item-list-item" v-for="(city, i) in chooseCityData[item]" :key="i" @click="closeCity(city)">{{ city.name }}</li>
-            </ul>
-          </li>
-        </ul>
+        <div class="sq-choose-city-current-city">
+          <span class="sq-choose-city-current-city-title">当前城市：</span>
+          <span>{{ currentCity }}</span>
+        </div>
+        <div class="sq-choose-city-city-wrap">
+          <ul class="sq-choose-city-city-list">
+            <li class="sq-choose-city-city-item" v-for="(item, index) in cityIndex" :key="index">
+              <h3 class="sq-choose-city-menu-title" :class="item">{{ item }}</h3>
+              <ul class="sq-choose-city-item-list">
+                <li class="sq-choose-city-item-list-item" v-for="(city, i) in chooseCityData[item]" :key="i" @click="closeCity(city)">{{ city.name }}</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="sq-choose-city-index-wrap" :class="{'select': showStartColor}">
-      <div class="sq-choose-city-index-inner" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
+      <div class="sq-choose-city-index-inner" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
         <div class="sq-choose-city-index-title" v-for="(item, index) in cityIndex" :key="index">{{ item }}</div>
       </div>
     </div>
     <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
-    </div>
   </div>
 </template>
 
@@ -175,7 +175,7 @@ export default {
     &-wrapper {
       background: #fff;
       width: 100%;
-      height: 100%;
+      // height: 100%;
       box-sizing: border-box;
     }
     &-inner {
