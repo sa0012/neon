@@ -136,7 +136,14 @@ export default {
           this.firstMove = false
           return false
         } else {
-          this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
+          // 左右双向滑动
+          // this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
+          // 只允许左滑动
+          if (currentMoveDisX < 0) {
+            this.$refs[refs].style.transform = 'translateX(0)'
+          } else {
+            this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
+          }
         }
       }
     },
@@ -145,7 +152,9 @@ export default {
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
-      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 2)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3 * 2))) {
+      // 左右双向滑动
+      // if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3 * 2))) {
+      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || lastDistance < 0) {
         this.$refs[refs].style.transform = 'translateX(0)'
       } else if (lastDistance === 0) {
         return false
