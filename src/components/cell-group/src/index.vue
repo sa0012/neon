@@ -33,19 +33,21 @@ export default {
 @import '~@/common/styles/variable';
 $prefixCls: sq-cell-group;
 
-.#{$prefixCls}-wrap {
-  height: 44px;
-  font-size: 13px;
-  padding: 12px 15px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  &-left {
-    color: #666;
-  }
-  &-right {
-    color: $theme-color;
+.#{$prefixCls} {
+  &-wrap {
+    height: 44px;
+    font-size: 13px;
+    padding: 12px 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-left {
+      color: #666;
+    }
+    &-right {
+      color: $theme-color;
+    }
   }
 }
 </style>

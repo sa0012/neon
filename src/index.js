@@ -41,6 +41,7 @@ import Agree from '@/components/agree'
 import Carlicense from '@/components/carlicense'
 import ChildinsuranceCell from '@/components/childinsurance-cell'
 import ChooseCar from '@/components/choose-car'
+import ChooseCity from '@/components/choose-city'
 import CitySelector from '@/components/city-selector'
 import Sendcode from '@/components/sendcode'
 import SubmitBar from '@/components/submit-bar'
@@ -85,6 +86,7 @@ const components = [
   Carlicense,
   ChildinsuranceCell,
   ChooseCar,
+  ChooseCity,
   CitySelector,
   Sendcode,
   SubmitBar
@@ -146,6 +148,7 @@ export {
   Carlicense,
   ChildinsuranceCell,
   ChooseCar,
+  ChooseCity,
   CitySelector,
   Sendcode,
   SubmitBar

@@ -4,8 +4,19 @@
     <sq-cell-group title="选车组件">
       <sq-cell title="选车组件" is-link :value="modelName" @click.native="chooseCar"></sq-cell>
     </sq-cell-group>
-    <div class="address" v-if="showChooseCar">
-      <brand-cars :code="code" :loadMoreArr="loadMoreArr" :carsData="carsData" :selectCar="selectCar" :selectModel="selectModel" @brandCategoryCode="getBrandCategoryCode" @brandModelId="getBrandModelId" @loadMore="getLoadMore" @carDetail="getCarDetail">
+    <div v-if="showChooseCar">
+      <brand-cars 
+        :loadMoreArr="loadMoreArr" 
+        :carsData="carsData" 
+        :selectCar="selectCar" 
+        :selectModel="selectModel"
+        :showChooseCar.sync="showChooseCar"
+        @brandCategoryCode="getBrandCategoryCode" 
+        @brandModelId="getBrandModelId" 
+        @loadMore="getLoadMore" 
+        @carDetail="getCarDetail"
+        @searchOption="getSearchOption"
+        @searchLoadMore="getSearchLoadMore">
         <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
@@ -19,6 +30,7 @@
 import carsData from '../mock/chooseCar.json'
 import selectCar from '../mock/selectCar.json'
 import selectModel from '../mock/selectModel.json'
+import searchCar from '../mock/searchCar.json'
 
 console.log(selectModel.result.content, 233444)
 export default {
@@ -28,13 +40,16 @@ export default {
     return {
       showChooseCar: false,
       carsData: carsData.result,
+      searchCarArr: searchCar.result.content,
       selectCar: [],
       selectModel: [],
       brandCategoryCode: '',
       code: '',
       loadMoreArr: [],
       showChooseCar: false,
-      modelName: ''
+      modelName: '',
+      showChooseCar: true,
+      searchLoadMoreArr: []
     }
   },
 
@@ -61,12 +76,28 @@ export default {
       this.loadMoreArr = selectModel.result.content
       callback(this.loadMoreArr)
     },
+    getSearchLoadMore (callback) {
+      this.searchLoadMoreArr = this.searchCarArr
+      callback(this.searchLoadMoreArr)
+    },
     getCarDetail(detail) {
       console.log(detail)
       this.modelName = detail.modelName
     },
     chooseCar() {
       this.showChooseCar = !this.showChooseCar
+    },
+    searchCar(option, callback) {
+      // if (option === 'aaaa') {
+      //   callback([])
+      // } else {
+      //   callback(this.searchCarArr)
+      // }
+      callback(this.searchCarArr)
+    },
+    getSearchOption(option, callback) {
+      console.log(option, 1234)
+      this.searchCar(option, callback)
     }
   }
 }

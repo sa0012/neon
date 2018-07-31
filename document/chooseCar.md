@@ -14,10 +14,13 @@ Vue.use(ChooseCar)
   :carsData="carsData" 
   :selectCar="selectCar" 
   :selectModel="selectModel" 
+  :showChooseCar.sync="showChooseCar"
   @brandCategoryCode="getBrandCategoryCode" 
   @brandModelId="getBrandModelId" 
   @loadMore="getLoadMore"
   @carDetail="getCarDetail"
+  @searchOption="getSearchOption"
+  @searchLoadMore="getSearchLoadMore"
   >
   <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
   <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
@@ -33,6 +36,7 @@ Vue.use(ChooseCar)
 |  selectCar        |       `Array`     |    选择车型     | ----   | ----  |
 |  selectModel      |       `Array`     |    选择车系     | ----   | ----  |
 |  loadMoreArr      |       `Array`     |    选择车系分页数据     | ----   | ----  |
+|  showChooseCar.sync      |       `Boolean`     |    组件的显示隐藏     | ----   | ----  |
 |  slot-scope       |       --          |    作用于插槽（品牌logo）     | ----   | ----  |
 |  brandCategoryCode      |       `slot`     |    车型logo     | ----   | ----  |
 |  selectModelCode        |       `slot`     |      车系logo   | ----   | ----  |
@@ -44,6 +48,8 @@ Vue.use(ChooseCar)
 | brandModelId      | ----       | 获取(modelCode)    | ---     |
 | loadMore          | `callback` | 执行上拉加载回调    | ---     |
 | carDetail         | ----       | 获取选择车系详情    | ---     |
+| searchOption      | `option callback`       | 接受两个返回参数，option(搜索字符)，callback(回调函数， 将请求回来的数据传入即可)    | ---     |
+| searchLoadMore    | `callback`       | 搜索分页函数， 接受一个返回参数， 将分页数据传入即可    | ---     |
 
 ### 品牌车型车系参数要求
 #### 品牌参数

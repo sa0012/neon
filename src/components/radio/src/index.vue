@@ -103,6 +103,7 @@ $prefixCls: sq-radio;
       border-left: 0;
       transition: transform .2s ease-in-out;
       transform: rotate(45deg) scale(0) translateY(-1px) translateX(-1px);
+      box-sizing: content-box;
     }
   }
   &-checked {
