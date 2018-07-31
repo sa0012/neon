@@ -2,7 +2,7 @@
   <div class="sq-brandCars" ref="menuWrapper" v-if="showChooseCar">
     <div class="sq-brandCars-menu-wrapper" ref="brandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
       <div class="sq-brandCars-search-wrap">
-        <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索">
+        <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
         <i class="sq-icon sq-icon-search sq-brandCars-search-icon" @click="searchCarModels"></i>
       </div>
       <ul class="sq-brandCars-list">
@@ -387,8 +387,8 @@ export default {
     },
     getKeyCode (e) {
       if (e.keyCode === 13) {
-        if (this.search.trim().length < 4) {
-          this.$toast.text('搜索字符不能少于4位', 3000)
+        if (this.search.trim().length < 5) {
+          this.$toast.text('搜索字符不能少于5位', 3000)
           return
         }
         this.$emit('searchOption', this.search, this.getSearchCar)
