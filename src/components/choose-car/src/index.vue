@@ -377,7 +377,7 @@ export default {
           this.isShowText = true
           this.isFinishedLoad = true
         }
-      }, 2000)
+      }, 200)
     },
     loadMore (e) {
       console.log(e)
@@ -423,7 +423,7 @@ export default {
           this.showSearchLoadText = true
           this.searchIsFinishedLoad = true
         }
-      }, 2000)
+      }, 200)
     },
     searchCarLoadMore () {
       this.searchLoading = true
