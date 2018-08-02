@@ -1,5 +1,5 @@
 <template>
-  <div class="sq-brandCars" ref="menuWrapper" v-if="showChooseCar">
+  <div class="sq-brandCars" ref="menuWrapper" v-if="myShowChooseCar">
     <div class="sq-brandCars-menu-wrapper" ref="brandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
       <div class="sq-brandCars-search-wrap">
         <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
@@ -169,7 +169,17 @@ export default {
       showSearchModal: false,
       searchWapperHeight: 0,
       searchLoading: false,
-      searchIsFinishedLoad: false
+      searchIsFinishedLoad: false,
+      myShowChooseCar: this.showChooseCar
+    }
+  },
+  watch: {
+    showChooseCar (newVal, oldVal) {
+      this.myShowChooseCar = newVal
+    },
+    myShowChooseCar (newVal, oldVal) {
+      this.$emit('update:showChooseCar', this.myShowChooseCar)
+      this.$emit('praent-event', this.myShowChooseCar)
     }
   },
   methods: {
@@ -264,9 +274,9 @@ export default {
       } else {
         this.$refs[refs].style.transform = 'translateX(100%)'
         this[showModal] = false
-        if (showModal === 'showChooseCar') {
-          this.$emit('update:showChooseCar', this.showChooseCar)
-          this.$emit('praent-event', this.showChooseCar)
+        if (showModal === 'myShowChooseCar') {
+          this.$emit('update:showChooseCar', this.myShowChooseCar)
+          this.$emit('praent-event', this.myShowChooseCar)
         }
         document.querySelector('.sq-brandCars').style.overflow = 'auto'
       }
@@ -279,7 +289,7 @@ export default {
       this.touchMoveLogic(e, 'brandCars', 'brandCarStartX', 'brandCarStartY')
     },
     brandCarsEnd (e) {
-      this.touchEndLogic(e, 'brandCars', 'showChooseCar', 'brandCarStartX')
+      this.touchEndLogic(e, 'brandCars', 'myShowChooseCar', 'brandCarStartX')
     },
     modelStart (e) {
       this.modelsStartX = e.changedTouches[0].clientX
@@ -351,10 +361,10 @@ export default {
     closeSelectModel (detail) {
       document.querySelector('.sq-brandCars').style.overflow = 'scroll'
       this.showSelectModel = false
-      this.showChooseCar = false
+      this.myShowChooseCar = false
       this.showSelectCar = false
-      this.$emit('update:showChooseCar', this.showChooseCar)
-      this.$emit('praent-event', this.showChooseCar)
+      this.$emit('update:showChooseCar', this.myShowChooseCar)
+      this.$emit('praent-event', this.myShowChooseCar)
       this.$emit('carDetail', detail)
     },
     callback (arr) {

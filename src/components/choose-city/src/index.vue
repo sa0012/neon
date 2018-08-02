@@ -1,5 +1,5 @@
 <template>
-  <div class="sq-choose-city" ref="menuWrapper" v-if="showCity" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
+  <div class="sq-choose-city" ref="menuWrapper" v-if="myShowCity" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
     <div class="sq-choose-city-wrapper" ref="cityWrapper" >
       <div class="sq-choose-city-inner">
         <div class="sq-choose-city-current-city">
@@ -61,7 +61,16 @@ export default {
       curDistance: document.body.clientHeight || document.documentElement.clientHeight,
       selectCityStartX: 0,
       selectCityStartY: 0,
-      firstMove: true
+      firstMove: true,
+      myShowCity: this.showCity
+    }
+  },
+  watch: {
+    showCity (newVal, oldVal) {
+      this.myShowCity = newVal
+    },
+    myShowCity (newVal, oldVal) {
+
     }
   },
   methods: {
@@ -75,10 +84,10 @@ export default {
       })
     },
     closeCity (city) {
-      this.showCity = false
+      this.myShowCity = false
       this.$emit('cityNameCode', city)
-      this.$emit('update:showCity', this.showCity)
-      this.$emit('praent-event', this.showCity)
+      this.$emit('update:showCity', this.myShowCity)
+      this.$emit('praent-event', this.myShowCity)
     },
     touchStart (e) {
       let menuWrapper = this.$refs.menuWrapper
@@ -166,9 +175,9 @@ export default {
       } else {
         this.$refs[refs].style.transform = 'translateX(100%)'
         this[showModal] = false
-        if (showModal === 'showCity') {
-          this.$emit('update:showCity', this.showCity)
-          this.$emit('praent-event', this.showCity)
+        if (showModal === 'myShowCity') {
+          this.$emit('update:showCity', this.myShowCity)
+          this.$emit('praent-event', this.myShowCity)
         }
         document.querySelector('.sq-choose-city').style.overflow = 'auto'
       }
@@ -181,7 +190,7 @@ export default {
       this.touchMoveLogic(e, 'cityWrapper', 'selectCityStartX', 'selectCityStartY')
     },
     cityEnd (e) {
-      this.touchEndLogic(e, 'cityWrapper', 'showCity', 'selectCityStartX')
+      this.touchEndLogic(e, 'cityWrapper', 'myShowCity', 'selectCityStartX')
     }
   },
   mounted () {
