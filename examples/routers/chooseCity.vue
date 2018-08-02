@@ -3,11 +3,13 @@
     <sq-cell-group title="选择城市">
       <sq-cell title="选择城市" is-link :value="cityData.name" @click.native="chooseCity"></sq-cell>
     </sq-cell-group>
-    <div class="address" v-if="showCity">
+    <div class="address" v-if="showChooseCity">
+      <!--:showCity.sync="showChooseCity"-->
+      <!--v-model="showChooseCity"-->
       <choose-city 
       :chooseCityData="chooseCityData" 
       @cityNameCode="getCityData"
-      :showCity.sync="showCity"
+      v-model="showChooseCity"
       :currentCity="currentCity"></choose-city>
     </div>
   </div>
@@ -21,12 +23,12 @@ export default {
       chooseCityData: chooseCity.result,
       cityData: {},
       currentCity: '上海',
-      showCity: false
+      showChooseCity: false
     }
   },
   methods: {
     chooseCity() {
-      this.showCity = !this.showCity
+      this.showChooseCity = !this.showChooseCity
     },
     getCityData (city) {
       this.cityData = city

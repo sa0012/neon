@@ -114,6 +114,10 @@
 <script>
 export default {
   name: 'BrandCars',
+  model: {
+    prop: 'showChooseCar',
+    event: 'praent-event'
+  },
   props: {
     carsData: {
       type: Object
@@ -253,7 +257,7 @@ export default {
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
-      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || lastDistance < 0) {
+      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || lastDistance < 0) {
         this.$refs[refs].style.transform = 'translateX(0)'
       } else if (lastDistance === 0) {
         return false
@@ -262,6 +266,7 @@ export default {
         this[showModal] = false
         if (showModal === 'showChooseCar') {
           this.$emit('update:showChooseCar', this.showChooseCar)
+          this.$emit('praent-event', this.showChooseCar)
         }
         document.querySelector('.sq-brandCars').style.overflow = 'auto'
       }
@@ -349,6 +354,7 @@ export default {
       this.showChooseCar = false
       this.showSelectCar = false
       this.$emit('update:showChooseCar', this.showChooseCar)
+      this.$emit('praent-event', this.showChooseCar)
       this.$emit('carDetail', detail)
     },
     callback (arr) {

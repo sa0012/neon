@@ -1,5 +1,5 @@
 <template>
-  <div class="sq-choose-city" ref="menuWrapper" v-show="showCity" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
+  <div class="sq-choose-city" ref="menuWrapper" v-if="showCity" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
     <div class="sq-choose-city-wrapper" ref="cityWrapper" >
       <div class="sq-choose-city-inner">
         <div class="sq-choose-city-current-city">
@@ -30,6 +30,10 @@
 <script>
 export default {
   name: 'chooseCity',
+  model: {
+    prop: 'showCity',
+    event: 'praent-event'
+  },
   props: {
     chooseCityData: {
       type: Object,
@@ -74,6 +78,7 @@ export default {
       this.showCity = false
       this.$emit('cityNameCode', city)
       this.$emit('update:showCity', this.showCity)
+      this.$emit('praent-event', this.showCity)
     },
     touchStart (e) {
       let menuWrapper = this.$refs.menuWrapper
@@ -154,7 +159,7 @@ export default {
       let selectModelWidth = this.$refs[refs].clientWidth
       // 左右双向滑动
       // if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3 * 2))) {
-      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || lastDistance < 0) {
+      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || lastDistance < 0) {
         this.$refs[refs].style.transform = 'translateX(0)'
       } else if (lastDistance === 0) {
         return false
@@ -163,6 +168,7 @@ export default {
         this[showModal] = false
         if (showModal === 'showCity') {
           this.$emit('update:showCity', this.showCity)
+          this.$emit('praent-event', this.showCity)
         }
         document.querySelector('.sq-choose-city').style.overflow = 'auto'
       }

@@ -5,12 +5,14 @@
       <sq-cell title="选车组件" is-link :value="modelName" @click.native="chooseCar"></sq-cell>
     </sq-cell-group>
     <div v-if="showChooseCar">
+      <!--:showChooseCar.sync="showChooseCar"-->
+      <!--v-model="showChooseCar"-->
       <brand-cars 
         :loadMoreArr="loadMoreArr" 
         :carsData="carsData" 
         :selectCar="selectCar" 
         :selectModel="selectModel"
-        :showChooseCar.sync="showChooseCar"
+        v-model="showChooseCar"
         @brandCategoryCode="getBrandCategoryCode" 
         @brandModelId="getBrandModelId" 
         @loadMore="getLoadMore" 
@@ -46,18 +48,12 @@ export default {
       brandCategoryCode: '',
       code: '',
       loadMoreArr: [],
-      showChooseCar: false,
       modelName: '',
-      showChooseCar: true,
       searchLoadMoreArr: []
     }
   },
 
   methods: {
-    chooseCar() {
-      this.carsData = carsData.result
-      this.showChooseCar = true
-    },
     test(code) {
       this.selectCar = selectCar.result
     },
