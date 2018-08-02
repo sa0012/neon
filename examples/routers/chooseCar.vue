@@ -70,7 +70,10 @@ export default {
     getLoadMore(callback) {
       console.log('this is a loadmore function')
       this.loadMoreArr = selectModel.result.content
-      callback(this.loadMoreArr)
+      setTimeout(() => {
+        callback(this.loadMoreArr)
+      }, 200)
+      // callback(this.loadMoreArr)
     },
     getSearchLoadMore (callback) {
       this.searchLoadMoreArr = this.searchCarArr
