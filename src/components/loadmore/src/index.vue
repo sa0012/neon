@@ -3,7 +3,7 @@
     <div class="sq-loadmore-main" :style="{ 'transform': transform }" :class="{'sq-loadmore-is-transition': isTransition}">
       <slot></slot>
       <div :ref="flagWrap" class="sq-loadmore-flag"></div>
-      <div class="sq-loadmore-bottom">
+      <div class="sq-loadmore-bottom" v-show="!(bottomStatus === 'loading' && !loading)" :style="{'marginBottom': marginBottom}">
         <span v-show="showLoadingIcon && loading" class="sq-loadmore-spinner-wrap">
           <div class="sq-loadmore-loading-icon"></div>
         </span>
@@ -71,8 +71,11 @@ export default {
   },
 
   computed: {
+    marginBottom () {
+      return this.isFinishedLoad ? '0' : '-50px'
+    },
     transform () {
-      return this.moveLength > 0 ? null : `translate(0, ${this.moveLength}px)`
+      return (+this.moveLength > 0 || this.isFinishedLoad) ? null : `translate(0, ${this.moveLength}px)`
     },
     flagWrap () {
       return `flagWrap${String(Math.random()).slice(2)}`
