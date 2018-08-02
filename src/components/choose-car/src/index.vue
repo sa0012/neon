@@ -358,7 +358,8 @@ export default {
       this.$emit('carDetail', detail)
     },
     callback (arr) {
-      this.$refs.selectModel.style.transform = 'translateX(100%)'
+      // this.$refs.selectModel.style.transform = 'translateX(100%)'
+      console.log(arr, 'this is a getLoadMore')
       setTimeout(() => {
         this.selectModel.push(...arr)
         this.loading = false
