@@ -180,6 +180,9 @@ export default {
     myShowChooseCar (newVal, oldVal) {
       this.$emit('update:showChooseCar', this.myShowChooseCar)
       this.$emit('praent-event', this.myShowChooseCar)
+      if (newVal) {
+        this.getBrandCategoryArr()
+      }
     }
   },
   methods: {
@@ -368,8 +371,6 @@ export default {
       this.$emit('carDetail', detail)
     },
     callback (arr) {
-      // this.$refs.selectModel.style.transform = 'translateX(100%)'
-      console.log(arr, 'this is a getLoadMore')
       setTimeout(() => {
         this.selectModel.push(...arr)
         this.loading = false
@@ -380,7 +381,6 @@ export default {
       }, 200)
     },
     loadMore (e) {
-      console.log(e)
       this.loading = true
       this.$emit('loadMore', this.callback)
     },
@@ -431,7 +431,9 @@ export default {
     }
   },
   mounted () {
-    this.getBrandCategoryArr()
+    if (this.myShowChooseCar) {
+      this.getBrandCategoryArr()
+    }
   }
 }
 </script>
@@ -748,6 +750,7 @@ export default {
     padding-bottom: 8px;
     padding-right: 15px;
     box-sizing: border-box;
+    line-height: 1.5em;
     @include mix-1px($top: 1);
   }
   &-footer {

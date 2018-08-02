@@ -47,7 +47,7 @@ export default {
     },
     showCity: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data () {
@@ -70,7 +70,11 @@ export default {
       this.myShowCity = newVal
     },
     myShowCity (newVal, oldVal) {
-
+      this.$emit('update:showCity', newVal)
+      this.$emit('praent-event', newVal)
+      if (newVal) {
+        this.cityIndexArr()
+      }
     }
   },
   methods: {
@@ -194,7 +198,11 @@ export default {
     }
   },
   mounted () {
-    this.cityIndexArr()
+    console.log(this.myShowCity, 'this is a myShowCity')
+    if (this.myShowCity) {
+      this.cityIndexArr()
+    }
+    // this.cityIndexArr()
   }
 }
 </script>

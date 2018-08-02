@@ -1,10 +1,9 @@
 <template>
   <div>
-    <!--<div @click="chooseCar" class="button">选车组件</div>-->
     <sq-cell-group title="选车组件">
       <sq-cell title="选车组件" is-link :value="modelName" @click.native="chooseCar"></sq-cell>
     </sq-cell-group>
-    <div v-if="showChooseCar">
+    <!--<div v-if="showChooseCar">-->
       <!--:showChooseCar.sync="showChooseCar"-->
       <!--v-model="showChooseCar"-->
       <brand-cars 
@@ -23,7 +22,7 @@
         <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
         <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
       </brand-cars>
-    </div>
+    <!--</div>-->
 
   </div>
 </template>
