@@ -9,6 +9,8 @@ Vue.use(ChooseCar)
 
 #### 例子
 ```html
+<!--:showChooseCar.sync="showChooseCar"-->
+<!--v-model="showChooseCar"-->
 <brand-cars 
   :loadMoreArr="loadMoreArr" 
   :carsData="carsData" 
@@ -36,7 +38,7 @@ Vue.use(ChooseCar)
 |  selectCar        |       `Array`     |    选择车型     | ----   | ----  |
 |  selectModel      |       `Array`     |    选择车系     | ----   | ----  |
 |  loadMoreArr      |       `Array`     |    选择车系分页数据     | ----   | ----  |
-|  showChooseCar.sync      |       `Boolean`     |    组件的显示隐藏     | ----   | ----  |
+|  showChooseCar.sync (vue 2.30以上版本， 推荐使用v-model)|       `Boolean`     |    组件的显示隐藏(或者使用v-model)     | ----   | ----  |
 |  slot-scope       |       --          |    作用于插槽（品牌logo）     | ----   | ----  |
 |  brandCategoryCode      |       `slot`     |    车型logo     | ----   | ----  |
 |  selectModelCode        |       `slot`     |      车系logo   | ----   | ----  |
@@ -121,6 +123,53 @@ Vue.use(ChooseCar)
     "pageSize": 20,
     "totalPage": 7
   }
+}
+
+```
+
+#### 搜索车型品牌参数
+```json
+{
+  "result": {
+    "total": 56,
+    "content": [{
+        "modelCode": "DZABGD0047",
+        "modelName": "大众汽车SVW71417DL轿车",
+        "carYear": "2015",
+        "displayName": "大众汽车SVW71417DL轿车，朗行230TSI MT舒适版 5座 11.89万"
+      },
+      {
+        "modelCode": "DZABGD0048",
+        "modelName": "大众汽车SVW71417DL轿车",
+        "carYear": "2015",
+        "displayName": "大众汽车SVW71417DL轿车，朗行230TSI MT豪华版 5座 13.19万"
+      },
+      {
+        "modelCode": "DZABGD0049",
+        "modelName": "大众汽车SVW71417EL轿车",
+        "carYear": "2015",
+        "displayName": "大众汽车SVW71417EL轿车，朗行230TSI DSG舒适版 5座 13.29万"
+      },
+      {
+        "modelCode": "DZABGD0050",
+        "modelName": "大众汽车SVW71417EL轿车",
+        "carYear": "2015",
+        "displayName": "大众汽车SVW71417EL轿车，朗行230TSI DSG豪华版 5座 14.59万"
+      },
+      {
+        "modelCode": "DZABGD0045",
+        "modelName": "大众汽车SVW71617CM轿车",
+        "carYear": "2015",
+        "displayName": "大众汽车SVW71617CM轿车，朗行1.6L MT风尚版 5座 9.59万"
+      }
+    ],
+    "pageNumber": 0,
+    "pageSize": 20,
+    "totalPage": 3
+  },
+  "errorMessges": null,
+  "warningMessage": null,
+  "status": "100"
 }
 
 ```

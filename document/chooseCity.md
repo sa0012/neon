@@ -9,6 +9,8 @@ Vue.use(ChooseCity)
 
 #### 例子
 ```html
+<!--:showCity.sync="showChooseCity"-->
+<!--v-model="showChooseCity"-->
 <template>
   <div class="choose-city">
     <sq-cell-group title="选择城市">
@@ -53,7 +55,7 @@ export default {
 | :-----------      | :---------------  | :-------------- | :---- |:----  |
 |  chooseCityData   |       `Object`     |    城市分类     | ----   | ----  |
 |  currentCity      |       `String`    |    当前城市     | ----   | ----  |
-|  showCity.sync      |       `Boolean`    |    组件的显示隐藏     | ----   | ----  |
+|  showCity.sync (vue 2.30以上版本， 推荐使用v-model)      |       `Boolean`    |    组件的显示隐藏(或者使用v-model)     | ----   | ----  |
 
 #### Event
 | 名称              | 参数        |         描述       | 调用方式 |

@@ -43,6 +43,9 @@ const toastPlugin = {
       error (...option) {
         this.show({ ...this.marge(option), type: 'error' })
       },
+      warn (...option) {
+        this.show({ ...this.marge(option), type: 'warn' })
+      },
       loading (...option) {
         this.show({ ...this.marge(option), type: 'loading' })
       },

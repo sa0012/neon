@@ -10,49 +10,70 @@ Vue.use(Rater)
 #### 例子
 ```html
 <template>
-  <div class="wrap">
+  <div class="demo-page-wrap">
     <div class="rater-wrap">
-      <div class="title">set min</div>
+      <demo-title>set min</demo-title>
       <sq-rater :min="min" @getScore="getScore1">
       </sq-rater>
       <p>评分： {{ score1 }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set max</div>
+      <demo-title>set max</demo-title>
       <sq-rater :max="max" @getScore="getScore2">
       </sq-rater>
       <p>评分： {{ score2 }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set value</div>
+      <demo-title>set value</demo-title>
       <sq-rater :value="value" @getScore="getScore3">
       </sq-rater>
       <p>评分： {{ score3 || value }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set fontSize</div>
+      <demo-title>set fontSize</demo-title>
       <sq-rater :fontSize="fontSize" @getScore="getScore4">
       </sq-rater>
       <p>评分： {{ score4 }}</p>
     </div>
     <div class="rater-wrap">
-      <div class="title">set disabled = true</div>
+      <demo-title>set disabled = true</demo-title>
       <sq-rater :disabled="disabled" :fontSize="fontSize">
       </sq-rater>
     </div>
     <div class="rater-wrap">
-      <div class="title">set activeColor</div>
+      <demo-title>set activeColor</demo-title>
       <sq-rater 
-      :fontSize="fontSize" 
-      :activeColor="activeColor">
+        :fontSize="fontSize" 
+        :activeColor="activeColor">
       </sq-rater>
     </div>
     <div class="rater-wrap">
-      <div class="title">set defaultColor</div>
+      <demo-title>set defaultColor</demo-title>
       <sq-rater 
-      :fontSize="fontSize" 
-      :defaultColor="defaultColor"
-      :activeColor="activeColor">
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor">
+      </sq-rater>
+    </div>
+    <div class="rater-wrap">
+      <demo-title>set charsetIcon</demo-title>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor1"
+        :charsetIcon="charsetIcon">
+      </sq-rater>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor1"
+        :charsetIcon="charsetIcon1">
+      </sq-rater>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor1"
+        :charsetIcon="charsetIcon2">
       </sq-rater>
     </div>
   </div>
@@ -68,11 +89,17 @@ export default {
       max: 10,
       fontSize: '40',
       disabled: true,
+      activeColor: 'green',
+      activeColor1: '#f31212',
+      defaultColor: '#666',
       value: 2,
       score1: 0,
       score2: 0,
       score3: 0,
-      score4: 0
+      score4: 0,
+      charsetIcon: 'flower',
+      charsetIcon1: 'love',
+      charsetIcon2: 'smile'
     }
   },
 
@@ -120,6 +147,7 @@ export default {
 | disabled        | `Number`   | 是否禁用             |   false      |               |
 | activeColor        | `String`   | 设置选中时的字体颜色             |   --      |               |
 | defaultColor        | `String`   | 设置未选中时的字体颜色             |   --      |               |
+| charsetIcon        | `String`   | 设置展示的字符类型（目前只支持四种）             |   `star`      |         `love, flower, smile`      |
 
 ---
 

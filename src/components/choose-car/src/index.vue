@@ -394,14 +394,14 @@ export default {
           }
         }, 30)
       } else {
-        this.$toast.error('没有查询到相关数据', 3000)
+        this.$toast.warn('没有查询到相关数据', 3000)
       }
       console.log(searchCar, 'this is a search')
     },
     searchCarModels () {
       console.log(this)
       if (this.search.trim().length < 4) {
-        this.$toast.text('搜索字符不能少于4位', 3000)
+        this.$toast.text('搜索字符不能少于5位', 3000)
         return
       }
       this.$emit('searchOption', this.search, this.getSearchCar)

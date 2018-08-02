@@ -4,8 +4,8 @@
       <div class="sq-toast">
         <div class="sq-toast-mark" v-show="isShowMark"></div>
         <div class="sq-toast-content" :class="contentClasses">
-          <i :class="classes"></i>
-          <div class="sq-toast-text" v-show="message">{{ message }}</div>
+          <i :class="classes" :style="{ fontSize: iconSize + 'px' }"></i>
+          <div class="sq-toast-text" v-show="message" :style="{ fontSize: textSize + 'px'}">{{ message }}</div>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@ export default {
       type: String,
       default: 'text',
       validator (value) {
-        return ['text', 'success', 'error', 'loading'].indexOf(value) > -1
+        return ['text', 'success', 'error', 'loading', 'warn'].indexOf(value) > -1
       }
     },
     message: {
@@ -35,6 +35,14 @@ export default {
     position: {
       type: String,
       default: 'middle'
+    },
+    iconSize: {
+      type: Number | String,
+      default: 24
+    },
+    textSize: {
+      type: Number | String,
+      default: 12
     }
   },
 
@@ -47,7 +55,8 @@ export default {
         {
           [`sq-toast-icon sq-icon sq-icon-checkmark`]: this.type === 'success',
           [`sq-toast-icon sq-icon sq-icon-error`]: this.type === 'error',
-          [`sq-toast-icon sq-icon sq-icon-animation-loading sq-icon-loading`]: this.type === 'loading'
+          [`sq-toast-icon sq-icon sq-icon-animation-loading sq-icon-loading`]: this.type === 'loading',
+          [`sq-toast-icon sq-icon sq-icon-alert-empty`]: this.type === 'warn'
         }
       ]
     },
