@@ -16,7 +16,7 @@ Vue.component(DemoTitle.name, DemoTitle)
 import Filter from './filter'
 
 Filter(Vue)
-
+Vue.config.devtools = true
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
