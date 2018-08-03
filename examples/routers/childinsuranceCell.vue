@@ -6,6 +6,7 @@
       middle-text="不计免赔"
       right-text="投保"
       v-model="exemptSelected"
+      @click="click"
     />
   </div>
 </template>
