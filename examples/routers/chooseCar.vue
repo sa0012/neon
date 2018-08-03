@@ -3,27 +3,24 @@
     <sq-cell-group title="选车组件">
       <sq-cell title="选车组件" is-link :value="modelName" @click.native="chooseCar"></sq-cell>
     </sq-cell-group>
-    <!--<div v-if="showChooseCar">-->
-      <!--:showChooseCar.sync="showChooseCar"-->
-      <!--v-model="showChooseCar"-->
-      <brand-cars 
-        :loadMoreArr="loadMoreArr" 
-        :carsData="carsData" 
-        :selectCar="selectCar" 
-        :selectModel="selectModel"
-        v-model="showChooseCar"
-        @brandCategoryCode="getBrandCategoryCode" 
-        @brandModelId="getBrandModelId" 
-        @loadMore="getLoadMore" 
-        @carDetail="getCarDetail"
-        @searchOption="getSearchOption"
-        @searchLoadMore="getSearchLoadMore">
-        <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
-        <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
-        <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
-      </brand-cars>
-    <!--</div>-->
-
+    <!--:showChooseCar.sync="showChooseCar"-->
+    <!--v-model="showChooseCar"-->
+    <brand-cars 
+      :loadMoreArr="loadMoreArr" 
+      :carsData="carsData" 
+      :selectCar="selectCar" 
+      :selectModel="selectModel"
+      v-model="showChooseCar"
+      @brandCategoryCode="getBrandCategoryCode" 
+      @brandModelId="getBrandModelId" 
+      @loadMore="getLoadMore" 
+      @carDetail="getCarDetail"
+      @searchOption="getSearchOption"
+      @searchLoadMore="getSearchLoadMore">
+      <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
+      <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
+      <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
+    </brand-cars>
   </div>
 </template>
 
@@ -51,7 +48,6 @@ export default {
       searchLoadMoreArr: []
     }
   },
-
   methods: {
     test(code) {
       this.selectCar = selectCar.result
@@ -83,7 +79,7 @@ export default {
       this.modelName = detail.modelName
     },
     chooseCar() {
-      this.showChooseCar = !this.showChooseCar
+      this.showChooseCar = true
     },
     searchCar(option, callback) {
       if (option === 'aaaaa') {
@@ -96,6 +92,14 @@ export default {
     getSearchOption(option, callback) {
       console.log(option, 1234)
       this.searchCar(option, callback)
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.showChooseCar) {
+      this.showChooseCar = false
+        next(false)
+      } else {
+        next()
     }
   }
 }

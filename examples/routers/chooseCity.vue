@@ -3,15 +3,9 @@
     <sq-cell-group title="选择城市">
       <sq-cell title="选择城市" is-link :value="cityData.name" @click.native="chooseCity"></sq-cell>
     </sq-cell-group>
-    <!--<div class="address" v-if="showChooseCity">-->
-      <!--:showCity.sync="showChooseCity"-->
-      <!--v-model="showChooseCity"-->
-      <choose-city 
-      :chooseCityData="chooseCityData" 
-      @cityNameCode="getCityData"
-      v-model="showChooseCity"
-      :currentCity="currentCity"></choose-city>
-    <!--</div>-->
+    <!--:showCity.sync="showChooseCity"-->
+    <!--v-model="showChooseCity"-->
+    <choose-city :chooseCityData="chooseCityData" @cityNameCode="getCityData" v-model="showChooseCity" :currentCity="currentCity"></choose-city>
   </div>
 </template>
 
@@ -28,17 +22,27 @@ export default {
   },
   methods: {
     chooseCity() {
-      this.showChooseCity = !this.showChooseCity
+      this.showChooseCity = true
     },
-    getCityData (city) {
+    getCityData(city) {
       this.cityData = city
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.showChooseCity) {
+      this.showChooseCity = false
+        next(false)
+      } else {
+        next()
+    }
+  },
+  mounted() {
   }
 }
 </script>
 
 <style lang="scss">
-  .address {}
+.address {}
 </style>
 
 

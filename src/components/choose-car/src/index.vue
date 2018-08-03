@@ -183,6 +183,9 @@ export default {
       this.$emit('update:showChooseCar', this.myShowChooseCar)
       this.$emit('praent-event', this.myShowChooseCar)
       if (newVal) {
+        this.showSelectCar = false
+        this.showSearchModal = false
+        this.showSelectModel = false
         this.getBrandCategoryArr()
       }
     }
