@@ -397,7 +397,7 @@ export default {
       }
     },
     searchCarModels () {
-      if (this.search.trim().length < 4) {
+      if (this.search.trim().length < 5) {
         this.$toast.text('搜索字符不能少于5位', 3000)
         return
       }
