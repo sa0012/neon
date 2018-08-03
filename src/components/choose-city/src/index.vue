@@ -20,7 +20,7 @@
     </div>
     <div class="sq-choose-city-index-wrap" :class="{'select': showStartColor}">
       <div class="sq-choose-city-index-inner" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-        <div class="sq-choose-city-index-title" v-for="(item, index) in cityIndex" :key="index">{{ item }}</div>
+        <div class="sq-choose-city-index-title" :class="{ 'active': item ===  rightIndex }" v-for="(item, index) in cityIndex" :key="index">{{ item }}</div>
       </div>
     </div>
     <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
@@ -62,7 +62,9 @@ export default {
       selectCityStartX: 0,
       selectCityStartY: 0,
       firstMove: true,
-      myShowCity: this.showCity
+      myShowCity: this.showCity,
+      scrollArr: [],
+      rightIndex: ''
     }
   },
   watch: {
@@ -83,8 +85,11 @@ export default {
       this.$nextTick(() => {
         this.cityIndex.forEach(item => {
           let scroll = document.querySelector(`.${item}`).offsetTop
+          this.scrollArr.push(scroll)
           this.titlePos[item] = scroll
         })
+        let _this = this
+        this.$refs.menuWrapper.addEventListener('scroll', _this.handleScroll, true)
       })
     },
     closeCity (city) {
@@ -195,14 +200,22 @@ export default {
     },
     cityEnd (e) {
       this.touchEndLogic(e, 'cityWrapper', 'myShowCity', 'selectCityStartX')
+    },
+    handleScroll () {
+      let scrollTop = this.$refs.menuWrapper.scrollTop
+      let findIndexArr = this.scrollArr.findIndex((item, index) => {
+        return (item >= scrollTop)
+      })
+      this.rightIndex = this.cityIndex[findIndexArr]
+      if (scrollTop < (this.scrollArr[0] - 40)) {
+        this.rightIndex = ''
+      }
     }
   },
   mounted () {
-    console.log(this.myShowCity, 'this is a myShowCity')
     if (this.myShowCity) {
       this.cityIndexArr()
     }
-    // this.cityIndexArr()
   }
 }
 </script>
@@ -287,6 +300,19 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      &.active:after {
+        content: '';
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 1000px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
   }
 

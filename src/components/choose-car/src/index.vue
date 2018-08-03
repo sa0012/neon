@@ -23,7 +23,7 @@
     </div>
     <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}">
       <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-        <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item" @click.stop="jumpTitle(item)">{{ item }}</li>
+        <li v-for="(item, index) in brandCategorys" :class="{ 'active': item ===  rightIndex }" :key="index" class="sq-brandCars-category-rightbar-item">{{ item }}</li>
       </ul>
     </div>
     <!--<select-car v-if="showSelectCar" :brandCategoryData="brandCategoryData" :brandFamilies="selectCar"></select-car>-->
@@ -170,7 +170,9 @@ export default {
       searchWapperHeight: 0,
       searchLoading: false,
       searchIsFinishedLoad: false,
-      myShowChooseCar: this.showChooseCar
+      myShowChooseCar: this.showChooseCar,
+      scrollArr: [],
+      rightIndex: ''
     }
   },
   watch: {
@@ -319,14 +321,11 @@ export default {
       this.$nextTick(() => {
         this.brandCategorys.forEach(item => {
           let scroll = document.querySelector(`.${item}`).offsetTop
+          this.scrollArr.push(scroll)
           this.titlePos[item] = scroll
         })
-      })
-    },
-    jumpTitle (item) {
-      this.$nextTick(() => {
-        let menuWrapper = this.$refs.menuWrapper
-        menuWrapper.scrollTop = this.titlePos[item]
+        let _this = this
+        this.$refs.menuWrapper.addEventListener('scroll', _this.handleScroll, true)
       })
     },
     showModel (code, name, item) {
@@ -396,10 +395,8 @@ export default {
       } else {
         this.$toast.warn('没有查询到相关数据', 3000)
       }
-      console.log(searchCar, 'this is a search')
     },
     searchCarModels () {
-      console.log(this)
       if (this.search.trim().length < 4) {
         this.$toast.text('搜索字符不能少于5位', 3000)
         return
@@ -428,6 +425,16 @@ export default {
     searchCarLoadMore () {
       this.searchLoading = true
       this.$emit('searchLoadMore', this.searchCallBack)
+    },
+    handleScroll () {
+      let scrollTop = this.$refs.menuWrapper.scrollTop
+      let findIndexArr = this.scrollArr.findIndex((item, index) => {
+        return (item >= scrollTop)
+      })
+      this.rightIndex = this.brandCategorys[findIndexArr]
+      if (scrollTop < (this.scrollArr[0] - 40)) {
+        this.rightIndex = ''
+      }
     }
   },
   mounted () {
@@ -558,6 +565,19 @@ export default {
     align-items: center;
     justify-content: center;
     flex: 1;
+    position: relative;
+    &.active:after {
+      content: '';
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 1000px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 }
 
