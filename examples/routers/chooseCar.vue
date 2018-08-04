@@ -10,6 +10,7 @@
       :carsData="carsData" 
       :selectCar="selectCar" 
       :selectModel="selectModel"
+      :imgConfig="imgConfig"
       v-model="showChooseCar"
       @brandCategoryCode="getBrandCategoryCode" 
       @brandModelId="getBrandModelId" 
@@ -17,9 +18,9 @@
       @carDetail="getCarDetail"
       @searchOption="getSearchOption"
       @searchLoadMore="getSearchLoadMore">
-      <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
+      <!--<img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
       <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
-      <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
+      <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">-->
     </brand-cars>
   </div>
 </template>
@@ -29,6 +30,7 @@ import carsData from '../mock/chooseCar.json'
 import selectCar from '../mock/selectCar.json'
 import selectModel from '../mock/selectModel.json'
 import searchCar from '../mock/searchCar.json'
+import imgUrl from '../filter/imgConfig.js'
 
 console.log(selectModel.result.content, 233444)
 export default {
@@ -45,7 +47,8 @@ export default {
       code: '',
       loadMoreArr: [],
       modelName: '',
-      searchLoadMoreArr: []
+      searchLoadMoreArr: [],
+      imgConfig: imgUrl
     }
   },
   methods: {

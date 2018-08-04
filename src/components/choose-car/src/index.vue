@@ -12,7 +12,8 @@
             <li v-for="(car, inx) in carsData[item]" :key="inx" class="sq-brandCars-menu-item" @click="showModel(car.brandCategoryCode, car.brandCategoryName, item)">
               <div class="sq-brandCars-menu-list-item">
                 <!--作用域插槽， 可传参-->
-                <slot :data="car.brandCategoryCode" class="sq-brandCars-category-img"></slot>
+                <!--<slot :data="car.brandCategoryCode" class="sq-brandCars-category-img"></slot>-->
+                <img :src="imgConfig[car.brandCategoryCode]" :alt="car.brandCategoryCode" class="sq-brandCars-category-img">
                 <span>{{car.brandCategoryName}}</span>
               </div>
             </li>
@@ -33,7 +34,8 @@
         <div class="sq-selectcar-inner" ref="selectCar">
           <div class="sq-selectcar-slide" ref="slide">
             <h3 class="sq-selectcar-carts-first-title">
-              <slot name="brandCategoryCode"></slot>
+              <!--<slot name="brandCategoryCode"></slot>-->
+              <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectcar-carts-detail-icon">
               <span>{{ brandCategoryData.name }}</span>
             </h3>
             <ul class="sq-selectcar-cars-ul">
@@ -56,7 +58,8 @@
     <div class="sq-selectmodel" v-if="showSelectModel">
       <div class="sq-selectmodel-wrap" ref="selectModel" @touchstart="modelStart" @touchmove="modelMove" @touchend="modelEnd">
         <div class="sq-selectmodel-icon-title">
-          <slot name="selectModelCode"></slot>
+          <!--<slot name="selectModelCode"></slot>-->
+          <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectmodel-model-icon">
           <span>{{ brandCategoryData.name }}</span>
         </div>
         <div class="sq-selectmodel-wrapper">
@@ -134,6 +137,12 @@ export default {
     showChooseCar: {
       type: Boolean,
       default: true
+    },
+    imgConfig: {
+      type: Object,
+      default: function () {
+        return {}
+      }
     }
   },
   data () {
@@ -183,6 +192,7 @@ export default {
       this.$emit('update:showChooseCar', this.myShowChooseCar)
       this.$emit('praent-event', this.myShowChooseCar)
       if (newVal) {
+        // console.log(this.imgConfig,  'this is a imgConfig')
         this.showSelectCar = false
         this.showSearchModal = false
         this.showSelectModel = false
@@ -640,6 +650,12 @@ export default {
     font-size: 18px;
     letter-spacing: 2px;
   }
+  &-carts-detail-icon {
+    width: 35px;
+    vertical-align: middle;
+    padding-right: 3px;
+    margin-bottom: 4px;
+  }
   &-detail-icon {
     width: 35px;
     vertical-align: middle;
@@ -710,6 +726,12 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
     z-index: 777;
+  }
+  &-model-icon {
+    width: 35px;
+    vertical-align: middle;
+    padding-right: 3px;
+    margin-bottom: 4px;
   }
   &-wrapper {
     width: 100%;
