@@ -82,11 +82,11 @@
               </ul>
             </sq-loadmore>
 
-            <div class="sq-selectmodel-footer" v-if="isShowText">
+            <!--<div class="sq-selectmodel-footer" v-if="isShowText">
               <span class="sq-selectmodel-line-left"></span>
               <span class="sq-selectmodel-line-text">不好意思， 没有数据了</span>
               <span class="sq-selectmodel-line-left"></span>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -103,11 +103,11 @@
           </ul>
         </sq-loadmore>
 
-        <div class="sq-selectmodel-footer" v-if="showSearchLoadText">
+        <!--<div class="sq-selectmodel-footer" v-if="showSearchLoadText">
           <span class="sq-selectmodel-line-left"></span>
           <span class="sq-selectmodel-line-text">不好意思， 没有数据了</span>
           <span class="sq-selectmodel-line-left"></span>
-        </div>
+        </div>-->
       </div>
     </div>
     <div class="sq-selectmodel-model-modal" v-if="showSearchModal"></div>

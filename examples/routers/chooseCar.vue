@@ -86,7 +86,8 @@ export default {
       console.log('this is a loadmore function')
       this.loadMoreArr = selectModel.result.content
       setTimeout(() => {
-        callback(this.loadMoreArr)
+        // callback(this.loadMoreArr)
+        callback([])
       }, 200)
       // callback(this.loadMoreArr)
     },
