@@ -1,6 +1,6 @@
 <template>
   <div class="demo-page-wrap">
-    <demo-title>yyyy-MM-dd hh:mm形式</demo-title>
+    <!-- <demo-title>yyyy-MM-dd hh:mm形式</demo-title>
     <sq-date-picker
       title="请选择时间"
       type="datetime"
@@ -8,17 +8,20 @@
       @confirm="confirm1"
       @cancel="cancel1"
       @on-change="onChange2"
-    />
+    /> -->
+    <sq-button type="primary" size="small" @click.native="dataValue = new Date('2018-08-10')">设置dataValue</sq-button>
     <demo-title>yyyy-MM-dd形式</demo-title>
+    {{dataValue}}
     <sq-date-picker
-      min-date="2016-5-5"
-      max-date="2021-8-13"
+      :min-date="minDate"
+      :max-date="maxDate"
+      v-model="dataValue"
       title="请选择时间"
       @confirm="confirm1"
       @cancel="cancel1"
       @on-change="onChange2"
     />
-    <demo-title>yyyy-MM形式</demo-title>
+    <!-- <demo-title>yyyy-MM形式</demo-title>
     <sq-date-picker
       title="请选择时间"
       type="year-month"
@@ -45,17 +48,21 @@
         @cancel="cancel2"
         @on-change="onChange2"
       />
-    </sq-popup>
+    </sq-popup> -->
   </div>
 </template>
 
 <script>
+const now = new Date()
 export default {
   name: '',
 
   data () {
     return {
-      isShow: false
+      isShow: false,
+      dataValue: '',
+      minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1),
+      maxDate: new Date(2030, 11, 31)
     }
   },
 
