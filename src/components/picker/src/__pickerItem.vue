@@ -6,9 +6,7 @@
         v-for="(item, index) in list"
         :key="index"
       >
-        {{ valueKey ?
-          (formatValueFun ? formatValueFun(item[valueKey]) : item[valueKey]) :
-          (formatValueFun ? formatValueFun(item) : item) }}{{ format }}
+        {{ valueKey ? item[valueKey] : item }}{{ format }}
       </div>
     </div>
     <div class="sq-picker-item-mask"></div>
@@ -33,9 +31,6 @@ export default {
     },
     format: {
       type: String
-    },
-    formatValueFun: {
-      type: Function
     }
   },
 
@@ -60,7 +55,7 @@ export default {
       index: 0, // 选中的下标
       maxY: 0, // 最大偏移距离
       minY: 0, // 最小偏移距离
-      currentValue: this.dataList[0], // 当前选中的值
+      currentValue: null, // 当前选中的值
       rowHeight: 48, // 每行列的高度--为固定值
       offset: 2, // 列表初始偏移量--为固定值
       startTime: undefined,
@@ -69,19 +64,14 @@ export default {
   },
 
   methods: {
-    getColumn () {
-      return this.list
-    },
-    setColumn (column) {
-      this.dataList = column
-    },
-    getValue () {
-      return this.currentValue
-    },
-    setValue (value) {
-      if (value === this.currentValue) return
-      const selectIndex = this.list.indexOf(value) > -1 ? this.list.indexOf(value) : 0
+    updateCol (newDayCol, selectIndex) {
+      this.list = newDayCol
       this.index = selectIndex
+
+      const colLength = newDayCol.length
+      this.maxY = (colLength + this.offset) * this.rowHeight
+      this.minY = (this.offset - colLength + 1) * this.rowHeight
+
       this.$_setCurrentValueByIndex(selectIndex)
       this.$_setYByIndex(selectIndex)
     },
@@ -140,23 +130,17 @@ export default {
       if (this.saveY !== ((this.offset - this.index) * this.rowHeight)) {
         this.transitionTime = 0.3
         // 向下拉 超过显示情况下
-        const oldValue = this.currentValue
-        let newValue = ''
         if (this.saveY > 0 && this.saveY > this.offset * this.rowHeight) {
           this.$_setY(this.offset * this.rowHeight)
-          newValue = this.list[0]
-          this.$_setCurrentValue(newValue)
+          this.$_setCurrentValue(this.list[0])
           // 向上拉 超过显示情况下
         } else if (this.saveY < 0 && this.saveY < this.minY) {
           this.$_setY(this.minY)
-          newValue = this.list[this.list.length - 1]
-          this.$_setCurrentValue(newValue)
+          this.$_setCurrentValue(this.list[this.list.length - 1])
         } else {
           this.$_setY((this.offset - this.index) * this.rowHeight)
-          newValue = this.list[this.index]
-          this.$_setCurrentValue(newValue)
+          this.$_setCurrentValue(this.list[this.index])
         }
-        oldValue !== newValue && this.$emit('on-change', newValue, this)
       }
     },
     $_end (event) {
@@ -198,46 +182,54 @@ export default {
       this.temp.addEventListener('touchstart', this.$_start, false)
       this.temp.addEventListener('touchmove', this.$_move, false)
       this.temp.addEventListener('touchend', this.$_end, false)
-      this.temp.addEventListener('touchcancel', this.$_end, false)
       this.maxY = (this.list.length + this.offset) * this.rowHeight
       this.minY = (this.offset - this.list.length + 1) * this.rowHeight
     }
   },
 
   watch: {
-    dataList: {
-      handler (val) {
-        this.list = val
-      }
-    },
     list: {
-      handler (val, oldVal) {
-        if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
-          const oldCurrentValue = this.currentValue
-          let newValue = ''
-          const i = val.indexOf(oldCurrentValue)
-          if (this.$parent.$parent.$options.name === 'sq-date-picker' && i > -1) {
-            this.index = i
-            newValue = oldCurrentValue
-            this.$_setYByIndex(i)
+      handler (val) {
+        if (this.currentValue === null && val[0] !== void 0) {
+          const parent = this.$parent
+          const parentDefVal = parent.$data.defVal
+
+          if (parentDefVal) {
+            const _uid = this._uid
+            let len = 0
+            parent.$children.forEach((item, index) => {
+              if (item._uid === _uid) {
+                len = index
+              }
+            })
+            const index = val.indexOf(parentDefVal[len])
+            this.$_setYByIndex(index)
+            this.$_setCurrentValueByIndex(index)
           } else {
-            newValue = val[0]
-            this.index = 0
-            this.$_setYByIndex(0)
-          }
-          this.maxY = (val.length + this.offset) * this.rowHeight
-          this.minY = (this.offset - val.length + 1) * this.rowHeight
-          if (JSON.stringify(oldCurrentValue) !== JSON.stringify(newValue)) {
-            this.currentValue = newValue
-            this.$emit('on-change', newValue, this)
+            this.currentValue = val[0]
           }
         }
-      }
+      },
+      immediate: true
+    },
+    currentValue: {
+      handler (val, oldVal) {
+        if (oldVal === void 0) {
+          const flag = !!this.$parent.$data.defVal
+          this.$parent.updateCurrentValue({
+            val: flag ? this.$parent.$data.defVal : val,
+            isDefault: flag ? 1 : 0
+          })
+        } else if (val !== oldVal) {
+          this.$emit('on-change', {
+            item: this.list[this.index],
+            itemIndex: this.index,
+            listIndex: this.listIndex
+          })
+        }
+      },
+      immediate: true
     }
-  },
-
-  created () {
-    this.$parent.children && this.$parent.children.push(this)
   },
 
   mounted () {
@@ -251,7 +243,6 @@ export default {
     this.temp.removeEventListener('touchstart', this.$_start)
     this.temp.removeEventListener('touchmove', this.$_move)
     this.temp.removeEventListener('touchend', this.$_end)
-    this.temp.removeEventListener('touchcancel', this.$_end)
   }
 }
 </script>
