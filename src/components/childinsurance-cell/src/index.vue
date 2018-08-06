@@ -49,9 +49,15 @@ export default {
     }
   },
 
-  computed: {
-    exemptSelected () {
-      return this.value
+  data () {
+    return {
+      exemptSelected: this.value
+    }
+  },
+
+  watch: {
+    value (val) {
+      this.exemptSelected = val
     }
   },
 
