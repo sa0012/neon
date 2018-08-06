@@ -29,9 +29,6 @@ Vue.use(ChooseCar)
       @carDetail="getCarDetail"
       @searchOption="getSearchOption"
       @searchLoadMore="getSearchLoadMore">
-      <!--<img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
-      <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
-      <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">-->
     </brand-cars>
   </div>
 </template>
