@@ -136,26 +136,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.brand-img {
-  width: 20px;
-  vertical-align: middle;
-  padding-right: 3px;
-}
-
-.detail-icon {
-  width: 35px;
-  vertical-align: middle;
-  padding-right: 3px;
-  margin-bottom: 4px;
-}
-
-.model-icon {
-  width: 35px;
-  vertical-align: middle;
-  padding-right: 3px;
-  margin-bottom: 4px;
-}
-
 .button {
   width: 100%;
   height: 40px;
