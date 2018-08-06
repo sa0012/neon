@@ -11,8 +11,7 @@
           <ul class="sq-brandCars-menu-list">
             <li v-for="(car, inx) in carsData[item]" :key="inx" class="sq-brandCars-menu-item" @click="showModel(car.brandCategoryCode, car.brandCategoryName, item)">
               <div class="sq-brandCars-menu-list-item">
-                <!--作用域插槽， 可传参-->
-                <slot :data="car.brandCategoryCode" class="sq-brandCars-category-img"></slot>
+                <img :src="imgConfig[car.brandCategoryCode]" :alt="car.brandCategoryCode" class="sq-brandCars-category-img">
                 <span>{{car.brandCategoryName}}</span>
               </div>
             </li>
@@ -26,14 +25,13 @@
         <li v-for="(item, index) in brandCategorys" :class="{ 'active': item ===  rightIndex }" :key="index" class="sq-brandCars-category-rightbar-item">{{ item }}</li>
       </ul>
     </div>
-    <!--<select-car v-if="showSelectCar" :brandCategoryData="brandCategoryData" :brandFamilies="selectCar"></select-car>-->
     <!-- +++++++++++++++++++++++++++选车系+++++++++++++++++++++++++++ -->
     <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar" @touchstart="selectCarStarts" @touchmove="selectCarMove" @touchend="selectCarEnd">
       <div class="sq-selectcar-cars-wrapper">
         <div class="sq-selectcar-inner" ref="selectCar">
           <div class="sq-selectcar-slide" ref="slide">
             <h3 class="sq-selectcar-carts-first-title">
-              <slot name="brandCategoryCode"></slot>
+              <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectcar-carts-detail-icon">
               <span>{{ brandCategoryData.name }}</span>
             </h3>
             <ul class="sq-selectcar-cars-ul">
@@ -56,7 +54,7 @@
     <div class="sq-selectmodel" v-if="showSelectModel">
       <div class="sq-selectmodel-wrap" ref="selectModel" @touchstart="modelStart" @touchmove="modelMove" @touchend="modelEnd">
         <div class="sq-selectmodel-icon-title">
-          <slot name="selectModelCode"></slot>
+          <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectmodel-model-icon">
           <span>{{ brandCategoryData.name }}</span>
         </div>
         <div class="sq-selectmodel-wrapper">
@@ -78,12 +76,6 @@
                 </li>
               </ul>
             </sq-loadmore>
-
-            <div class="sq-selectmodel-footer" v-if="isShowText">
-              <span class="sq-selectmodel-line-left"></span>
-              <span class="sq-selectmodel-line-text">不好意思， 没有数据了</span>
-              <span class="sq-selectmodel-line-left"></span>
-            </div>
           </div>
         </div>
       </div>
@@ -99,12 +91,6 @@
             <li class="sq-search-list-item" v-for="(item, index) in searchCarArr" :key="index" @click.stop="closeSelectModel(item)">{{ item.displayName }}</li>
           </ul>
         </sq-loadmore>
-
-        <div class="sq-selectmodel-footer" v-if="showSearchLoadText">
-          <span class="sq-selectmodel-line-left"></span>
-          <span class="sq-selectmodel-line-text">不好意思， 没有数据了</span>
-          <span class="sq-selectmodel-line-left"></span>
-        </div>
       </div>
     </div>
     <div class="sq-selectmodel-model-modal" v-if="showSearchModal"></div>
@@ -134,6 +120,12 @@ export default {
     showChooseCar: {
       type: Boolean,
       default: true
+    },
+    imgConfig: {
+      type: Object,
+      default: function () {
+        return {}
+      }
     }
   },
   data () {
@@ -346,7 +338,6 @@ export default {
     },
     jumpChooseCar (brandId, familyId) {
       document.querySelector('.sq-brandCars').style.overflow = 'inherit'
-      // this.showSelectCar = false
       this.showSelectModel = true
       this.$emit('brandModelId', { brandId, familyId })
       try {
@@ -640,6 +631,12 @@ export default {
     font-size: 18px;
     letter-spacing: 2px;
   }
+  &-carts-detail-icon {
+    width: 35px;
+    vertical-align: middle;
+    padding-right: 3px;
+    margin-bottom: 4px;
+  }
   &-detail-icon {
     width: 35px;
     vertical-align: middle;
@@ -673,7 +670,6 @@ export default {
       color: #007EFF;
     }
     &-checked {
-      // display: none;
       position: absolute;
       top: 0;
       right: 15px;
@@ -693,7 +689,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  // background: #fff;
   z-index: 888;
   animation: fadeInRight 0.8s ease;
   animation-fill-mode: forwards;
@@ -710,6 +705,12 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
     z-index: 777;
+  }
+  &-model-icon {
+    width: 35px;
+    vertical-align: middle;
+    padding-right: 3px;
+    margin-bottom: 4px;
   }
   &-wrapper {
     width: 100%;
@@ -744,7 +745,6 @@ export default {
     list-style: none;
   }
   &-list {
-    // padding-left: 15px;
     word-break: break-all;
   }
   &-second-title {
@@ -774,20 +774,6 @@ export default {
     padding-right: 15px;
     box-sizing: border-box;
     line-height: 1.5em;
-    @include mix-1px($top: 1);
-  }
-  &-footer {
-    width: 100%;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 12px;
-    color: #ccc;
-  }
-  &-line-left {
-    width: 50px;
-    background: #ccc;
-    display: inline-block;
-    vertical-align: middle;
     @include mix-1px($top: 1);
   }
 }

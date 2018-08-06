@@ -10,6 +10,7 @@
       :carsData="carsData" 
       :selectCar="selectCar" 
       :selectModel="selectModel"
+      :imgConfig="imgConfig"
       v-model="showChooseCar"
       @brandCategoryCode="getBrandCategoryCode" 
       @brandModelId="getBrandModelId" 
@@ -17,9 +18,6 @@
       @carDetail="getCarDetail"
       @searchOption="getSearchOption"
       @searchLoadMore="getSearchLoadMore">
-      <img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
-      <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
-      <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">
     </brand-cars>
   </div>
 </template>
@@ -29,8 +27,10 @@ import carsData from '../mock/chooseCar.json'
 import selectCar from '../mock/selectCar.json'
 import selectModel from '../mock/selectModel.json'
 import searchCar from '../mock/searchCar.json'
+// import imgUrl from '../filter/imgConfig.js'
 
-console.log(selectModel.result.content, 233444)
+console.log(carsData.result, 233444)
+
 export default {
   name: 'chooseCar',
 
@@ -45,42 +45,64 @@ export default {
       code: '',
       loadMoreArr: [],
       modelName: '',
-      searchLoadMoreArr: []
+      searchLoadMoreArr: [],
+      imgConfig: {}
     }
   },
   methods: {
-    test(code) {
+    // 动态加载图片资源
+    getImageUrl (carsData) {
+      for (let key in carsData) {
+        carsData[key].forEach((item, index) => {
+          import(`../assets/images/car-logo/${key}/${item.brandCategoryCode}.jpg`)
+            .then(res => {
+              this.imgConfig[item.brandCategoryCode] = res
+            })
+        })
+      }
+    },
+    // 获取车系数据的方法
+    getSelectCar(code) {
       this.selectCar = selectCar.result
     },
-    test1(brandId, familyId) {
+    // 获取车型数据的方法
+    getSelectModel(brandId, familyId) {
       this.selectModel = selectModel.result.content
     },
+    // 点击品牌后$emit抛出的方法， 在此处传递车系数据
     getBrandCategoryCode(code) {
       this.brandCategoryCode = code
-      this.test(code)
+      this.getSelectCar(code)
     },
+    // 点击车系后$emit抛出的方法， 在此处传递车型数据
     getBrandModelId({ brandId, familyId }) {
-      this.test1(brandId, familyId)
+      this.getSelectModel(brandId, familyId)
     },
+    // 车型页面分页函数
     getLoadMore(callback) {
       console.log('this is a loadmore function')
       this.loadMoreArr = selectModel.result.content
       setTimeout(() => {
-        callback(this.loadMoreArr)
+        // callback(this.loadMoreArr)
+        callback([])
       }, 200)
       // callback(this.loadMoreArr)
     },
+    // 搜索页面分页函数
     getSearchLoadMore (callback) {
       this.searchLoadMoreArr = this.searchCarArr
       callback(this.searchLoadMoreArr)
     },
+    // 流程执行完毕返回数据对象
     getCarDetail(detail) {
       console.log(detail)
       this.modelName = detail.modelName
     },
+    // 选车弹窗弹起
     chooseCar() {
       this.showChooseCar = true
     },
+    // 搜索车型品牌的方法
     searchCar(option, callback) {
       if (option === 'aaaaa') {
         callback([])
@@ -89,11 +111,13 @@ export default {
       }
       // callback(this.searchCarArr)
     },
+    // 获取用户输入的车型品牌字段
     getSearchOption(option, callback) {
       console.log(option, 1234)
       this.searchCar(option, callback)
     }
   },
+  // 从弹窗返回时避免直接返回到上一页面
   beforeRouteLeave (to, from, next) {
     if (this.showChooseCar) {
       this.showChooseCar = false
@@ -101,31 +125,14 @@ export default {
       } else {
         next()
     }
+  },
+  mounted () {
+    this.getImageUrl(this.carsData)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.brand-img {
-  width: 20px;
-  vertical-align: middle;
-  padding-right: 3px;
-}
-
-.detail-icon {
-  width: 35px;
-  vertical-align: middle;
-  padding-right: 3px;
-  margin-bottom: 4px;
-}
-
-.model-icon {
-  width: 35px;
-  vertical-align: middle;
-  padding-right: 3px;
-  margin-bottom: 4px;
-}
-
 .button {
   width: 100%;
   height: 40px;
