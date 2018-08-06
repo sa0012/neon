@@ -6,6 +6,7 @@
         :loading="loading"
         :bottom-fun="getData"
         :is-finished-load="isFinishedLoad"
+        bottom-finished-text=""
       >
         <ul class="ul">
           <li class="li" v-for="(index) in list" :key="index" >

@@ -3,11 +3,15 @@
     <div class="sq-loadmore-main" :style="{ 'transform': transform }" :class="{'sq-loadmore-is-transition': isTransition}">
       <slot></slot>
       <div :ref="flagWrap" class="sq-loadmore-flag"></div>
-      <div class="sq-loadmore-bottom" v-show="!(bottomStatus === 'loading' && !loading)" :style="{'marginBottom': marginBottom}">
+      <div
+        class="sq-loadmore-bottom"
+        v-show="!((bottomStatus === 'loading' && !loading) || (!bottomText && bottomStatus === 'finished'))"
+        :style="{'marginBottom': marginBottom}"
+      >
         <span v-show="showLoadingIcon && loading" class="sq-loadmore-spinner-wrap">
           <div class="sq-loadmore-loading-icon"></div>
         </span>
-        <span>{{ bottomText }}</span>
+        <span class="sq-loadmore-bottom-text">{{ bottomText }}</span>
       </div>
     </div>
   </div>
@@ -231,6 +235,10 @@ $prefixCls: sq-loadmore;
   }
   &-is-transition {
     transition: transform 0.3s linear;
+  }
+  &-bottom-text {
+    font-size: 13px;
+    color: #999;
   }
 }
 </style>
