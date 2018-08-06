@@ -24,7 +24,9 @@
     </div>
     <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}">
       <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-        <li v-for="(item, index) in brandCategorys" :class="{ 'active': item ===  rightIndex }" :key="index" class="sq-brandCars-category-rightbar-item">{{ item }}</li>
+        <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item">
+          <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
+        </li>
       </ul>
     </div>
     <!--<select-car v-if="showSelectCar" :brandCategoryData="brandCategoryData" :brandFamilies="selectCar"></select-car>-->
@@ -251,16 +253,6 @@ export default {
         }
       })
     },
-    selectCarStarts (e) {
-      this.selectCarStartX = e.changedTouches[0].clientX
-      this.selectCarStartY = e.changedTouches[0].clientY
-    },
-    selectCarMove (e) {
-      this.touchMoveLogic(e, 'selectCar', 'selectCarStartX', 'selectCarStartY')
-    },
-    selectCarEnd (e) {
-      this.touchEndLogic(e, 'selectCar', 'showSelectCar', 'selectCarStartX')
-    },
     touchMoveLogic (e, refs, touchStartX, touchStartY) {
       let currentDisX = e.changedTouches[0].clientX
       let currentDisY = e.changedTouches[0].clientY
@@ -281,25 +273,28 @@ export default {
       }
     },
     touchEndLogic (e, refs, showModal, touchStart) {
-      this.firstMove = true
+      // this.firstMove = true
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
-      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || lastDistance < 0) {
-        this.$refs[refs].style.transform = 'translateX(0)'
-      } else if (lastDistance === 0) {
-        return false
-      } else {
-        this.$refs[refs].style.transform = 'translateX(100%)'
-        this[showModal] = false
-        if (showModal === 'myShowChooseCar') {
-          this.$emit('update:showChooseCar', this.myShowChooseCar)
-          this.$emit('praent-event', this.myShowChooseCar)
+      if (this.firstMove) {
+        if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
+          this.$refs[refs].style.transform = 'translateX(0)'
+        } else if (lastDistance === 0) {
+          return false
+        } else {
+          this.$refs[refs].style.transform = 'translateX(100%)'
+          this[showModal] = false
+          if (showModal === 'myShowChooseCar') {
+            this.$emit('update:showChooseCar', this.myShowChooseCar)
+            this.$emit('praent-event', this.myShowChooseCar)
+          }
+          document.querySelector('.sq-brandCars').style.overflow = 'auto'
         }
-        document.querySelector('.sq-brandCars').style.overflow = 'auto'
       }
     },
     brandCarsStart (e) {
+      this.firstMove = true
       this.brandCarStartX = e.changedTouches[0].clientX
       this.brandCarStartY = e.changedTouches[0].clientY
     },
@@ -309,7 +304,19 @@ export default {
     brandCarsEnd (e) {
       this.touchEndLogic(e, 'brandCars', 'myShowChooseCar', 'brandCarStartX')
     },
+    selectCarStarts (e) {
+      this.firstMove = true
+      this.selectCarStartX = e.changedTouches[0].clientX
+      this.selectCarStartY = e.changedTouches[0].clientY
+    },
+    selectCarMove (e) {
+      this.touchMoveLogic(e, 'selectCar', 'selectCarStartX', 'selectCarStartY')
+    },
+    selectCarEnd (e) {
+      this.touchEndLogic(e, 'selectCar', 'showSelectCar', 'selectCarStartX')
+    },
     modelStart (e) {
+      this.firstMove = true
       this.modelsStartX = e.changedTouches[0].clientX
       this.modelsStartY = e.changedTouches[0].clientY
     },
@@ -320,6 +327,7 @@ export default {
       this.touchEndLogic(e, 'selectModel', 'showSelectModel', 'modelsStartX')
     },
     searchStart (e) {
+      this.firstMove = true
       this.searchCarStartX = e.changedTouches[0].clientX
       this.searchCarStartY = e.changedTouches[0].clientY
     },
@@ -494,7 +502,8 @@ export default {
   }
   &-menu-wrapper {
     width: 100%;
-    overflow-x: hidden;
+    // overflow-x: hidden;
+    overflow: auto;
     background: #fff;
   }
   &-list {
@@ -579,17 +588,20 @@ export default {
     justify-content: center;
     flex: 1;
     position: relative;
-    &.active:after {
-      content: '';
+    &>.active {
       display: inline-block;
       width: 15px;
       height: 15px;
-      background: rgba(0, 0, 0, 0.3);
+      line-height: 15px;
+      text-align: center;
+      background: lawngreen;
+      color: #fff;
       border-radius: 1000px;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      vertical-align: middle;
     }
   }
 }

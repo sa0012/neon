@@ -20,7 +20,9 @@
     </div>
     <div class="sq-choose-city-index-wrap" :class="{'select': showStartColor}">
       <div class="sq-choose-city-index-inner" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-        <div class="sq-choose-city-index-title" :class="{ 'active': item ===  rightIndex }" v-for="(item, index) in cityIndex" :key="index">{{ item }}</div>
+        <div class="sq-choose-city-index-title"  v-for="(item, index) in cityIndex" :key="index">
+          <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
+        </div>
       </div>
     </div>
     <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
@@ -171,27 +173,30 @@ export default {
       }
     },
     touchEndLogic (e, refs, showModal, touchStart) {
-      this.firstMove = true
+      // this.firstMove = true
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
       // 左右双向滑动
       // if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3 * 2))) {
-      if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3)) || lastDistance < 0) {
-        this.$refs[refs].style.transform = 'translateX(0)'
-      } else if (lastDistance === 0) {
-        return false
-      } else {
-        this.$refs[refs].style.transform = 'translateX(100%)'
-        this[showModal] = false
-        if (showModal === 'myShowCity') {
-          this.$emit('update:showCity', this.myShowCity)
-          this.$emit('praent-event', this.myShowCity)
+      if (this.firstMove) {
+        if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
+          this.$refs[refs].style.transform = 'translateX(0)'
+        } else if (lastDistance === 0) {
+          return false
+        } else {
+          this.$refs[refs].style.transform = 'translateX(100%)'
+          this[showModal] = false
+          if (showModal === 'myShowCity') {
+            this.$emit('update:showCity', this.myShowCity)
+            this.$emit('praent-event', this.myShowCity)
+          }
+          document.querySelector('.sq-choose-city').style.overflow = 'auto'
         }
-        document.querySelector('.sq-choose-city').style.overflow = 'auto'
       }
     },
     cityStart (e) {
+      this.firstMove = true
       this.selectCityStartX = e.changedTouches[0].clientX
       this.selectCityStartY = e.changedTouches[0].clientY
     },
@@ -236,6 +241,7 @@ export default {
       background: #fff;
       width: 100%;
       // height: 100%;
+      overflow: auto;
       box-sizing: border-box;
     }
     &-inner {
@@ -301,17 +307,20 @@ export default {
       align-items: center;
       justify-content: center;
       position: relative;
-      &.active:after {
-        content: '';
+      &>.active {
         display: inline-block;
         width: 15px;
         height: 15px;
-        background: rgba(0, 0, 0, 0.3);
+        line-height: 15px;
+        text-align: center;
+        background: lawngreen;
+        color: #fff;
         border-radius: 1000px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        vertical-align: middle;
       }
     }
   }
