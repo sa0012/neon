@@ -11,7 +11,6 @@
         :key="index"
         :data-list="item"
         :format="format ? format[index] : ''"
-        :format-value-fun="formatValueFun"
         :list-index="index"
         :value-key="valueKey"
         @on-change="$_onChange"
@@ -34,12 +33,7 @@ export default {
   },
 
   props: {
-    value: {
-      type: [Array, Date]
-    },
-    formatValueFun: {
-      type: Function
-    },
+    value: {},
     format: {
       type: Array
     },
@@ -69,77 +63,50 @@ export default {
     },
     valueKey: {
       type: String
-    }
-  },
-
-  computed: {
-    isCascade () {
-      return Object.prototype.toString.call(this.columns[0]) === '[object Object]' && Array.isArray(this.columns[0].children)
+    },
+    defaultValue: {
+      type: Array
     }
   },
 
   data () {
     return {
+      isCascade: Object.prototype.toString(this.columns[0]) === '[object Object]' && Array.isArray(this.columns[0].children),
       currentColumns: this.formateColumns(this.columns),
-      currentValue: this.value,
-      children: []
+      currentValue: [],
+      defVal: this.defaultValue
     }
   },
 
   watch: {
     value: {
-      handler (val) {
-        let flag = false
-        if (Object.prototype.toString.call(val) === '[object Date]') {
-          flag = val.valueOf() !== new Date(this.currentValue.toString()).valueOf()
-        } else {
-          flag = JSON.stringify(val) !== JSON.stringify(this.currentValue)
-        }
-        if (flag) {
-          const dateType = this.$parent.type
-          if (dateType === 'date') {
-            const [ yyyy, MM, dd ] = [val.getFullYear(), val.getMonth() + 1, val.getDate()]
-            val = [
-              `${yyyy}`,
-              MM < 10 ? `0${MM}` : `${MM}`,
-              dd < 10 ? `0${dd}` : `${dd}`
-            ]
-          }
-          // 排除将要设置的value不存在于list的情况
-          const arr = val.map((v, i) => this.children[i].list.indexOf(v))
-          if (arr.indexOf(-1) > -1) {
-            this.$emit('input', this.currentValue)
-          } else {
-            this.currentValue = val
-          }
-        }
-      }
-    },
-    currentValue: {
-      handler (val) {
-        this.$emit('input', val)
-        if (val.length) {
-          val.forEach((v, i) => this.children[i].setValue(v))
-        }
-      },
-      deep: true
-    },
-    columns (val) {
-      if (JSON.stringify(this.formateColumns(val)) !== JSON.stringify(this.currentColumns)) {
-        this.currentColumns = this.formateColumns(val)
+      handler (val, oldVal) {
+        console.log(val)
       }
     }
   },
 
   methods: {
+    updateColumnAndValue ({columnIndex = 0, newCol, newValueIndex = 0}) {
+      const col = this.getChildrens()[columnIndex]
+      col.list = newCol
+      col.index = newValueIndex
+
+      const colLength = newCol.length
+      col.maxY = (colLength + col.offset) * col.rowHeight
+      col.minY = (col.offset - colLength + 1) * col.rowHeight
+
+      col.$_setCurrentValueByIndex(newValueIndex)
+      col.$_setYByIndex(newValueIndex)
+    },
     formateColumns (columns) {
       if (columns.length && Array.isArray(columns[0])) {
         return columns
       } else {
         let arr = columns
-        if (Object.prototype.toString.call(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
+        if (Object.prototype.toString(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
           let result = []
-          while (arr && arr[0] && Object.prototype.toString.call(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
+          while (arr && arr[0] && Object.prototype.toString(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
             result.push(arr)
             arr = arr[0].children
           }
@@ -149,44 +116,54 @@ export default {
         }
       }
     },
+    getChildrens () {
+      return this.$children.filter(item => item.$options.name === 'sq-picker-item')
+    },
     $_cancel () {
       this.$emit('cancel', this.currentValue, this.index)
     },
     $_confirm () {
       this.$emit('confirm', this.currentValue, this.index)
     },
-    $_onChange (value, pickerItem) {
-      const index = this.children.indexOf(pickerItem)
-      const sumLenth = this.currentColumns.length
-      if (this.isCascade && index + 1 < sumLenth) {
-        let len = index
-        let newChildrenArr = JSON.parse(JSON.stringify(value.children))
+    updateCurrentValue ({ val, isDefault }) {
+      isDefault === 1 ? (this.currentValue = val) : this.currentValue.push(this.valueKey ? val[this.valueKey] : val)
+    },
+    $_onChange ({ item, itemIndex, listIndex }) {
+      let lenth = this.currentColumns.length
+      const { valueKey } = this
 
-        while (len < sumLenth && newChildrenArr.length > 0) {
-          this.children[len + 1].setColumn(newChildrenArr)
-          this.currentValue[len] = value
+      if (this.isCascade && listIndex < lenth) {
+        let len = listIndex
+        let newChildrenArr = JSON.parse(JSON.stringify(item.children))
+
+        while (len < lenth && newChildrenArr.length > 0) {
+          const child = this.getChildrens()[len + 1]
+          const offset = child.offset
+          const rowHeight = child.rowHeight
+
+          child.list = newChildrenArr
+          child.$_setY(offset * rowHeight)
+          child.maxY = (newChildrenArr.length + offset) * rowHeight
+          child.minY = (offset - newChildrenArr.length + 1) * rowHeight
+          this.currentValue[len + 1] = valueKey ? newChildrenArr[0][valueKey] : newChildrenArr
+
           newChildrenArr = (newChildrenArr[0].children && (JSON.parse(JSON.stringify(newChildrenArr[0].children)))) || []
           len++
         }
-      } else {
-        let arr = []
-        this.currentValue.forEach((v, i) => {
-          if (i === index) { arr.push(value) } else { arr.push(v) }
-        })
-        this.currentValue = arr
-        this.$nextTick(() => {
-          this.$emit('on-change', arr)
-        })
       }
-    }
-  },
 
-  mounted () {
-    if (Array.isArray(this.currentValue)) {
-      this.currentValue.forEach((v, i) => this.children[i].setValue(v))
-    } else {
-      this.currentValue = []
-      this.children.length > 0 && this.children.forEach(child => this.currentValue.push(child.getValue()))
+      this.currentValue[listIndex] = valueKey ? item[valueKey] : item
+
+      this.$emit(
+        'on-change',
+        {
+          value: JSON.parse(JSON.stringify(this.currentValue)),
+          item: JSON.parse(JSON.stringify(item)),
+          itemIndex: itemIndex,
+          listIndex: listIndex
+        },
+        this
+      )
     }
   }
 }

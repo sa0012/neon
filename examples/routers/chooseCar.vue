@@ -18,9 +18,6 @@
       @carDetail="getCarDetail"
       @searchOption="getSearchOption"
       @searchLoadMore="getSearchLoadMore">
-      <!--<img :src="brandCategoryCode.data | imgUrl" alt="" slot-scope="brandCategoryCode" class="brand-img">
-      <img :src="brandCategoryCode | imgUrl" alt="" slot="brandCategoryCode" class="detail-icon">
-      <img :src="brandCategoryCode | imgUrl" alt="" slot="selectModelCode" class="model-icon">-->
     </brand-cars>
   </div>
 </template>
@@ -136,26 +133,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.brand-img {
-  width: 20px;
-  vertical-align: middle;
-  padding-right: 3px;
-}
-
-.detail-icon {
-  width: 35px;
-  vertical-align: middle;
-  padding-right: 3px;
-  margin-bottom: 4px;
-}
-
-.model-icon {
-  width: 35px;
-  vertical-align: middle;
-  padding-right: 3px;
-  margin-bottom: 4px;
-}
-
 .button {
   width: 100%;
   height: 40px;

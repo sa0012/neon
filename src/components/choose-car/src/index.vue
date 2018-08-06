@@ -66,7 +66,7 @@
         </div>
         <div class="sq-selectmodel-wrapper">
           <div class="sq-selectmodel-inner" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-            <sq-loadmore :loading="loading" :bottom-fun="loadMore" :is-finished-load="isFinishedLoad">
+            <sq-loadmore :loading="loading" :bottom-fun="loadMore" :is-finished-load="isFinishedLoad" :bottom-finished-text="finishedText">
               <ul class="sq-selectmodel-ul">
                 <li class="sq-selectmodel-list" v-for="(item, index) in selectModel" :key="index">
                   <h3 class="sq-selectmodel-second-title" v-if="item.carYear">{{ item.carYear }}款</h3>
@@ -84,11 +84,11 @@
               </ul>
             </sq-loadmore>
 
-            <!--<div class="sq-selectmodel-footer" v-if="isShowText">
+            <div class="sq-selectmodel-footer" v-if="isShowText">
               <span class="sq-selectmodel-line-left"></span>
               <span class="sq-selectmodel-line-text">不好意思， 没有数据了</span>
               <span class="sq-selectmodel-line-left"></span>
-            </div>-->
+            </div>
           </div>
         </div>
       </div>
@@ -99,17 +99,17 @@
     <!-- +++++++++++++++++++++++++++++++++搜索车型+++++++++++++++++++++++++++++++++ -->
     <div class="sq-search" v-if="showSearchModal" >
       <div class="sq-search-inner" ref="searchWapper" :style="{ height: searchWapperHeight + 'px' }" @touchstart="searchStart" @touchmove="searchMove" @touchend="searchEnd">
-        <sq-loadmore :loading="searchLoading" :bottom-fun="searchCarLoadMore" :is-finished-load="searchIsFinishedLoad">
+        <sq-loadmore :loading="searchLoading" :bottom-fun="searchCarLoadMore" :is-finished-load="searchIsFinishedLoad" :bottom-finished-text="finishedText">
           <ul class="sq-search-list">
             <li class="sq-search-list-item" v-for="(item, index) in searchCarArr" :key="index" @click.stop="closeSelectModel(item)">{{ item.displayName }}</li>
           </ul>
         </sq-loadmore>
 
-        <!--<div class="sq-selectmodel-footer" v-if="showSearchLoadText">
+        <div class="sq-selectmodel-footer" v-if="showSearchLoadText">
           <span class="sq-selectmodel-line-left"></span>
           <span class="sq-selectmodel-line-text">不好意思， 没有数据了</span>
           <span class="sq-selectmodel-line-left"></span>
-        </div>-->
+        </div>
       </div>
     </div>
     <div class="sq-selectmodel-model-modal" v-if="showSearchModal"></div>
@@ -183,7 +183,8 @@ export default {
       searchIsFinishedLoad: false,
       myShowChooseCar: this.showChooseCar,
       scrollArr: [],
-      rightIndex: ''
+      rightIndex: '',
+      finishedText: ''
     }
   },
   watch: {

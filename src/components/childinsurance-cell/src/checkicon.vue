@@ -38,6 +38,7 @@ export default {
 }
 
 </script>
+
 <style lang="scss">
 @import '~@/common/styles/variable';
 $prefixCls: sq-checkicon;
@@ -78,6 +79,7 @@ $prefixCls: sq-checkicon;
       border-left: 0;
       transform: rotate(45deg) scale(0);
       transition: all .2s ease-in-out;
+      box-sizing: content-box;
     }
   }
   &-text {
@@ -91,5 +93,4 @@ $prefixCls: sq-checkicon;
     transform: rotate(45deg) scale(1);
   }
 }
-
 </style>
