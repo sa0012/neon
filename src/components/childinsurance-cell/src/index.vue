@@ -2,21 +2,26 @@
   <div class="sq-childinsurance-cell">
     <div class="sq-childinsurance-cell-row">
       <div class="sq-childinsurance-cell-left">{{ label }}</div>
-      <sq-checkicon v-model="exemptSelected" class="sq-childinsurance-cell-middle" @change="$_clickiconChangeHandle">
+      <sq-checkicon
+        v-show="hasExemptClause && rightText !== '不投保'"
+        v-model="exemptSelected"
+        class="sq-childinsurance-cell-middle"
+        @change="$_clickiconChangeHandle"
+      >
         <span style="color:rgb(153, 153, 153);">{{ middleText }}</span>
       </sq-checkicon>
       <div
         class="sq-childinsurance-cell-right sq-childinsurance-cell-arrow"
         @click="$_click"
       >
-        {{ rightText }}
+        <span v-show="rightText !== '不投保'">{{ rightText }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SqCheckicon from '../../checkicon'
+import SqCheckicon from './checkicon'
 
 export default {
   name: 'sq-childinsurance-cell',
@@ -26,6 +31,9 @@ export default {
   },
 
   props: {
+    hasExemptClause: {
+      type: Boolean
+    },
     label: {
       type: String
     },
@@ -37,13 +45,13 @@ export default {
       type: String
     },
     rightText: {
-      type: String
+      type: [String, Number]
     }
   },
 
-  data () {
-    return {
-      exemptSelected: this.value
+  computed: {
+    exemptSelected () {
+      return this.value
     }
   },
 
