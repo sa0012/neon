@@ -195,7 +195,6 @@ export default {
       this.$emit('update:showChooseCar', this.myShowChooseCar)
       this.$emit('praent-event', this.myShowChooseCar)
       if (newVal) {
-        // console.log(this.imgConfig,  'this is a imgConfig')
         this.showSelectCar = false
         this.showSearchModal = false
         this.showSelectModel = false
@@ -208,7 +207,7 @@ export default {
       let menuWrapper = this.$refs.menuWrapper
       this.showStartColor = true
       this.$refs.menuWrapper.style.overflow = 'hidden'
-      this.start = e.changedTouches[0].pageY - this.curDistance / 4
+      this.start = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(this.start / everyDistance)
       if (this.start < 0) {
@@ -221,7 +220,7 @@ export default {
     },
     touchMove (e) {
       // 计算每个区间的距离
-      let curMove = e.changedTouches[0].pageY - this.curDistance / 4
+      let curMove = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
       let maxHeight = (this.curDistance - 0) / 2
@@ -239,7 +238,7 @@ export default {
     touchEnd (e) {
       this.showStartColor = false
       this.$refs.menuWrapper.style.overflow = 'auto'
-      let curMove = e.changedTouches[0].pageY - this.curDistance / 4
+      let curMove = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
       let maxHeight = (this.curDistance - 0) / 2
@@ -265,6 +264,7 @@ export default {
           this.firstMove = false
           return false
         } else {
+          this.$refs.menuWrapper.style.overflow = 'hidden'
           if (currentMoveDisX < 0) {
             this.$refs[refs].style.transform = 'translateX(0)'
           } else {
@@ -292,10 +292,13 @@ export default {
           }
           document.querySelector('.sq-brandCars').style.overflow = 'auto'
         }
+      } else {
+        this.$refs[refs].style.transform = 'translateX(0)'
       }
     },
     brandCarsStart (e) {
       this.firstMove = true
+      this.$refs.menuWrapper.style.overflow = 'auto'
       this.brandCarStartX = e.changedTouches[0].clientX
       this.brandCarStartY = e.changedTouches[0].clientY
     },
@@ -307,6 +310,7 @@ export default {
     },
     selectCarStarts (e) {
       this.firstMove = true
+      this.$refs.menuWrapper.style.overflow = 'auto'
       this.selectCarStartX = e.changedTouches[0].clientX
       this.selectCarStartY = e.changedTouches[0].clientY
     },
@@ -318,6 +322,7 @@ export default {
     },
     modelStart (e) {
       this.firstMove = true
+      this.$refs.menuWrapper.style.overflow = 'auto'
       this.modelsStartX = e.changedTouches[0].clientX
       this.modelsStartY = e.changedTouches[0].clientY
     },
@@ -329,6 +334,7 @@ export default {
     },
     searchStart (e) {
       this.firstMove = true
+      this.$refs.menuWrapper.style.overflow = 'auto'
       this.searchCarStartX = e.changedTouches[0].clientX
       this.searchCarStartY = e.changedTouches[0].clientY
     },
@@ -479,7 +485,6 @@ export default {
   left: 0;
   background: rgba(0, 0, 0, 0.7);
   z-index: 333;
-  -webkit-overflow-scrolling: touch;
   &-search-wrap {
     background: #F5F5F5;
     padding: 10px 15px;

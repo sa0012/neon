@@ -104,7 +104,7 @@ export default {
       let menuWrapper = this.$refs.menuWrapper
       this.showStartColor = true
       this.$refs.menuWrapper.style.overflow = 'hidden'
-      this.start = e.changedTouches[0].pageY - this.curDistance / 4
+      this.start = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
       this.carIndex = Math.floor(this.start / everyDistance)
       if (this.start < 0) {
@@ -117,7 +117,7 @@ export default {
     },
     touchMove (e) {
       // 计算每个区间的距离
-      let curMove = e.changedTouches[0].pageY - this.curDistance / 4
+      let curMove = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
       let maxHeight = (this.curDistance - 0) / 2
@@ -135,7 +135,7 @@ export default {
     touchEnd (e) {
       this.showStartColor = false
       this.$refs.menuWrapper.style.overflow = 'auto'
-      let curMove = e.changedTouches[0].pageY - this.curDistance / 4
+      let curMove = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
       let maxHeight = (this.curDistance - 0) / 2
@@ -164,6 +164,7 @@ export default {
           // 左右双向滑动
           // this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
           // 只允许左滑动
+          this.$refs.menuWrapper.style.overflow = 'hidden'
           if (currentMoveDisX < 0) {
             this.$refs[refs].style.transform = 'translateX(0)'
           } else {
@@ -193,10 +194,13 @@ export default {
           }
           document.querySelector('.sq-choose-city').style.overflow = 'auto'
         }
+      } else {
+        this.$refs[refs].style.transform = 'translateX(0)'
       }
     },
     cityStart (e) {
       this.firstMove = true
+      this.$refs.menuWrapper.style.overflow = 'auto'
       this.selectCityStartX = e.changedTouches[0].clientX
       this.selectCityStartY = e.changedTouches[0].clientY
     },
