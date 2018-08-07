@@ -83,6 +83,8 @@
               </div>
             </div>
           </div>
+          <!--左滑时遮盖-->
+          <!--<div :class="{'no-select': noTouch}"></div>-->
         </div>
       </div>
       <div class="sq-selectmodel-model-modal" v-if="showSelectModel"></div>
@@ -267,9 +269,9 @@ export default {
       let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
       let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
       let currentMoveDisX = currentDisX - this[touchStartX]
-      if (lastDistanceX > 20) {
-        this.noTouch = true
-      }
+      // if (lastDistanceX > 20) {
+      //   this.noTouch = true
+      // }
       if (this.firstMove) {
         if (lastDistanceY > lastDistanceX) {
           this.firstMove = false
@@ -750,6 +752,8 @@ export default {
     width: 100%;
     height: 100%;
     background: #fff;
+    position: relative;
+    z-index: 333;
   }
   &-model-modal {
     position: fixed;
@@ -896,5 +900,15 @@ export default {
 
 .no-touch {
   overflow: hidden;
+}
+
+.no-select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 444899999;
+  background: rgba(0, 0, 0, 0.7);
 }
 </style>
