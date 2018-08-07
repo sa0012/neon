@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="sq-brandCars" ref="menuWrapper" v-if="myShowChooseCar">
+  <div v-if="myShowChooseCar">
+    <div class="sq-brandCars" ref="menuWrapper">
       <div class="sq-brandCars-menu-wrapper" ref="brandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
         <div class="sq-brandCars-search-wrap">
           <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="sq-selectmodel-model-modal" v-if="showSelectModel"></div>
-      <div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>
+      <!--<div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>-->
 
       <!-- +++++++++++++++++++++++++++++++++搜索车型+++++++++++++++++++++++++++++++++ -->
       <div class="sq-search" v-if="showSearchModal" >
@@ -106,9 +106,10 @@
           </div>
         </div>
       </div>
+      <div class="sq-selectmodel-model-modal" v-if="showSearchModal"></div>
     </div>
     <!-- +++++++++++++++++++++++++++++车辆品牌索引+++++++++++++++++++++++++++ -->
-    <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}">
+    <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}" v-if="showIndex">
       <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
         <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item">
           <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
@@ -116,7 +117,7 @@
       </ul>
     </div>
     <!-- ++++++++++++++++++++++++++++++++车辆品牌索引展示++++++++++++++++++++++++ -->
-    <div class="sq-selectmodel-model-modal" v-if="showSearchModal"></div>
+    <div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>
   </div>
 </template>
 
@@ -188,7 +189,8 @@ export default {
       myShowChooseCar: this.showChooseCar,
       scrollArr: [],
       rightIndex: '',
-      finishedText: ''
+      finishedText: '',
+      showIndex: true
     }
   },
   watch: {
@@ -202,6 +204,7 @@ export default {
         this.showSelectCar = false
         this.showSearchModal = false
         this.showSelectModel = false
+        this.showIndex = true
         this.getBrandCategoryArr()
       }
     }
@@ -295,6 +298,10 @@ export default {
             this.$emit('update:showChooseCar', this.myShowChooseCar)
             this.$emit('praent-event', this.myShowChooseCar)
           }
+
+          if (showModal === 'showSelectCar' || showModal === 'showSearchModal') {
+            this.showIndex = true
+          }
         }
       } else {
         this.$refs[refs].style.transform = 'translateX(0)'
@@ -360,6 +367,7 @@ export default {
     },
     showModel (code, name, item) {
       this.showSelectCar = true
+      this.showIndex = false
       this.$nextTick(() => {
         // 目标盒子内容总高度 - 窗口可视区域高度
         let clientWidth = document.documentElement.clientWidth || document.body.clientWidth
@@ -390,6 +398,7 @@ export default {
       this.showSelectModel = false
       this.myShowChooseCar = false
       this.showSelectCar = false
+      this.showIndex = false
       this.$emit('update:showChooseCar', this.myShowChooseCar)
       this.$emit('praent-event', this.myShowChooseCar)
       this.$emit('carDetail', detail)
@@ -412,6 +421,7 @@ export default {
       this.searchCarArr = searchCar
       if (this.searchCarArr.length > 0) {
         this.showSearchModal = true
+        this.showIndex = false
         setTimeout(() => {
           if (this.$refs.searchWapper) {
             this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWapper.getBoundingClientRect().top
@@ -507,6 +517,8 @@ export default {
   }
   &-menu-wrapper {
     width: 100%;
+    // overflow-x: hidden;
+    overflow: auto;
     background: #fff;
   }
   &-list {
@@ -633,6 +645,7 @@ export default {
     height: 100%;
     z-index: 333;
     background: #fff;
+    overflow-x: hidden;
     transition-property: transform, -webkit-transform;
     animation: fadeLeft 0.4s ease-out;
     animation-fill-mode: forwards;
@@ -752,9 +765,11 @@ export default {
     height: 100%;
     box-sizing: border-box;
     padding-top: 80px;
+    // overflow: auto;
   }
   &-inner {
     width: 100%;
+    overflow: scroll;
   }
   &-icon-title {
     margin: 0;
@@ -852,6 +867,7 @@ export default {
   z-index: 888;
   &-inner {
     width: 100%;
+    overflow: scroll;
     background: #fff;
   }
   &-list {
