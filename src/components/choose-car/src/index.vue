@@ -1,6 +1,6 @@
 <template>
   <div v-if="myShowChooseCar">
-    <div class="sq-brandCars" ref="menuWrapper">
+    <div class="sq-brandCars" ref="menuWrapper" :class="{'no-touch': noTouch}">
       <div class="sq-brandCars-menu-wrapper" ref="brandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
         <div class="sq-brandCars-search-wrap">
           <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
@@ -13,7 +13,6 @@
               <li v-for="(car, inx) in carsData[item]" :key="inx" class="sq-brandCars-menu-item" @click="showModel(car.brandCategoryCode, car.brandCategoryName, item)">
                 <div class="sq-brandCars-menu-list-item">
                   <!--作用域插槽， 可传参-->
-                  <!--<slot :data="car.brandCategoryCode" class="sq-brandCars-category-img"></slot>-->
                   <img :src="imgConfig[car.brandCategoryCode]" :alt="car.brandCategoryCode" class="sq-brandCars-category-img">
                   <span>{{car.brandCategoryName}}</span>
                 </div>
@@ -23,10 +22,9 @@
           </li>
         </ul>
       </div>
-      <!--<select-car v-if="showSelectCar" :brandCategoryData="brandCategoryData" :brandFamilies="selectCar"></select-car>-->
       <!-- +++++++++++++++++++++++++++选车系+++++++++++++++++++++++++++ -->
       <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar" @touchstart="selectCarStarts" @touchmove="selectCarMove" @touchend="selectCarEnd">
-        <div class="sq-selectcar-cars-wrapper">
+        <div class="sq-selectcar-cars-wrapper" :class="{'no-touch': noTouch}">
           <div class="sq-selectcar-inner" ref="selectCar">
             <div class="sq-selectcar-slide" ref="slide">
               <h3 class="sq-selectcar-carts-first-title">
@@ -190,7 +188,8 @@ export default {
       scrollArr: [],
       rightIndex: '',
       finishedText: '',
-      showIndex: true
+      showIndex: true,
+      noTouch: false
     }
   },
   watch: {
@@ -268,6 +267,9 @@ export default {
       let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
       let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
       let currentMoveDisX = currentDisX - this[touchStartX]
+      if (lastDistanceX > 20) {
+        this.noTouch = true
+      }
       if (this.firstMove) {
         if (lastDistanceY > lastDistanceX) {
           this.firstMove = false
@@ -282,11 +284,11 @@ export default {
       }
     },
     touchEndLogic (e, refs, showModal, touchStart) {
-      // this.firstMove = true
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
       if (this.firstMove) {
+        this.noTouch = false
         if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
           this.$refs[refs].style.transform = 'translateX(0)'
         } else if (lastDistance === 0) {
@@ -311,6 +313,7 @@ export default {
     },
     brandCarsStart (e) {
       this.firstMove = true
+      this.noTouch = false
       this.brandCarStartX = e.changedTouches[0].clientX
       this.brandCarStartY = e.changedTouches[0].clientY
     },
@@ -322,6 +325,7 @@ export default {
     },
     selectCarStarts (e) {
       this.firstMove = true
+      this.noTouch = false
       this.selectCarStartX = e.changedTouches[0].clientX
       this.selectCarStartY = e.changedTouches[0].clientY
     },
@@ -333,6 +337,7 @@ export default {
     },
     modelStart (e) {
       this.firstMove = true
+      this.noTouch = false
       this.modelsStartX = e.changedTouches[0].clientX
       this.modelsStartY = e.changedTouches[0].clientY
     },
@@ -344,6 +349,7 @@ export default {
     },
     searchStart (e) {
       this.firstMove = true
+      this.noTouch = false
       this.searchCarStartX = e.changedTouches[0].clientX
       this.searchCarStartY = e.changedTouches[0].clientY
     },
@@ -886,5 +892,9 @@ export default {
     box-sizing: border-box;
     @include mix-1px($top: 1);
   }
+}
+
+.no-touch {
+  overflow: hidden;
 }
 </style>
