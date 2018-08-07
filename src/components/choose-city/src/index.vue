@@ -1,22 +1,25 @@
 <template>
-  <div class="sq-choose-city" ref="menuWrapper" v-if="myShowCity" @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
-    <div class="sq-choose-city-wrapper" ref="cityWrapper" >
-      <div class="sq-choose-city-inner">
-        <div class="sq-choose-city-current-city">
-          <span class="sq-choose-city-current-city-title">当前城市：</span>
-          <span>{{ currentCity }}</span>
-        </div>
-        <div class="sq-choose-city-city-wrap">
-          <ul class="sq-choose-city-city-list">
-            <li class="sq-choose-city-city-item" v-for="(item, index) in cityIndex" :key="index">
-              <h3 class="sq-choose-city-menu-title" :class="item">{{ item }}</h3>
-              <ul class="sq-choose-city-item-list">
-                <li class="sq-choose-city-item-list-item" v-for="(city, i) in chooseCityData[item]" :key="i" @click="closeCity(city)">{{ city.name }}</li>
-              </ul>
-            </li>
-          </ul>
+  <div v-if="myShowCity">
+    <div class="sq-choose-city" ref="menuWrapper"  @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
+      <div class="sq-choose-city-wrapper" ref="cityWrapper" >
+        <div class="sq-choose-city-inner">
+          <div class="sq-choose-city-current-city">
+            <span class="sq-choose-city-current-city-title">当前城市：</span>
+            <span>{{ currentCity }}</span>
+          </div>
+          <div class="sq-choose-city-city-wrap">
+            <ul class="sq-choose-city-city-list">
+              <li class="sq-choose-city-city-item" v-for="(item, index) in cityIndex" :key="index">
+                <h3 class="sq-choose-city-menu-title" :class="item">{{ item }}</h3>
+                <ul class="sq-choose-city-item-list">
+                  <li class="sq-choose-city-item-list-item" v-for="(city, i) in chooseCityData[item]" :key="i" @click="closeCity(city)">{{ city.name }}</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+      <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
     </div>
     <div class="sq-choose-city-index-wrap" :class="{'select': showStartColor}">
       <div class="sq-choose-city-index-inner" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
@@ -25,7 +28,6 @@
         </div>
       </div>
     </div>
-    <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
   </div>
 </template>
 
@@ -103,7 +105,6 @@ export default {
     touchStart (e) {
       let menuWrapper = this.$refs.menuWrapper
       this.showStartColor = true
-      this.$refs.menuWrapper.style.overflow = 'hidden'
       this.start = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
       this.carIndex = Math.floor(this.start / everyDistance)
@@ -114,6 +115,8 @@ export default {
       } else {
         menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
       }
+      e.stopPropagation()
+      e.preventDefault()
     },
     touchMove (e) {
       // 计算每个区间的距离
@@ -130,11 +133,12 @@ export default {
         } else {
           menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
         }
+        e.stopPropagation()
+        e.preventDefault()
       })
     },
     touchEnd (e) {
       this.showStartColor = false
-      this.$refs.menuWrapper.style.overflow = 'auto'
       let curMove = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
@@ -149,6 +153,8 @@ export default {
           menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
         }
       })
+      e.stopPropagation()
+      e.preventDefault()
     },
     touchMoveLogic (e, refs, touchStartX, touchStartY) {
       let currentDisX = e.changedTouches[0].clientX
@@ -164,7 +170,6 @@ export default {
           // 左右双向滑动
           // this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
           // 只允许左滑动
-          this.$refs.menuWrapper.style.overflow = 'hidden'
           if (currentMoveDisX < 0) {
             this.$refs[refs].style.transform = 'translateX(0)'
           } else {
@@ -192,7 +197,6 @@ export default {
             this.$emit('update:showCity', this.myShowCity)
             this.$emit('praent-event', this.myShowCity)
           }
-          document.querySelector('.sq-choose-city').style.overflow = 'auto'
         }
       } else {
         this.$refs[refs].style.transform = 'translateX(0)'
@@ -200,7 +204,6 @@ export default {
     },
     cityStart (e) {
       this.firstMove = true
-      this.$refs.menuWrapper.style.overflow = 'auto'
       this.selectCityStartX = e.changedTouches[0].clientX
       this.selectCityStartY = e.changedTouches[0].clientY
     },
@@ -233,6 +236,8 @@ export default {
   @import '../../../common/styles/mixins.scss';
   .sq-choose-city {
     overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -244,8 +249,6 @@ export default {
     &-wrapper {
       background: #fff;
       width: 100%;
-      // height: 100%;
-      overflow: auto;
       box-sizing: border-box;
     }
     &-inner {
@@ -286,21 +289,24 @@ export default {
       top: 0;
       right: 0;
       width: 30px;
-      height: 100%;
+      // height: 100%;
+      bottom: 0;
       font-size: 12px;
+      z-index: 444;
       &.select {
         background: rgba(0, 0, 0, 0.3);
       }
     }
     &-index-inner {
       position: fixed;
-      top: 0;
+      // top: 0;
+      bottom: 0;
       right: 0;
       width: 30px;
       display: flex;
       flex-direction: column;
       top: 50%;
-      height: 50%;
+      // height: 50%;
       transform: translateY(-50%);
       box-sizing: border-box;
     }
