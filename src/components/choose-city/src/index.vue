@@ -1,6 +1,6 @@
 <template>
-  <div v-if="myShowCity">
-    <div class="sq-choose-city" ref="menuWrapper"  @touchstart="cityStart" @touchmove="cityMove" @touchend="cityEnd">
+  <div v-if="myShowCity" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+    <div class="sq-choose-city" ref="menuWrapper">
       <div class="sq-choose-city-wrapper" ref="cityWrapper" >
         <div class="sq-choose-city-inner">
           <div class="sq-choose-city-current-city">
@@ -163,6 +163,7 @@ export default {
       let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
       let currentMoveDisX = currentDisX - this[touchStartX]
       if (this.firstMove) {
+        this.$refs[refs].style.overflow = 'hidden'
         if (lastDistanceY > lastDistanceX) {
           this.firstMove = false
           return false
@@ -177,6 +178,8 @@ export default {
           }
         }
       }
+      e.stopPropagation()
+      // e.preventDefault()
     },
     touchEndLogic (e, refs, showModal, touchStart) {
       // this.firstMove = true
@@ -186,6 +189,7 @@ export default {
       // 左右双向滑动
       // if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || (lastDistance < 0 && lastDistance > -(selectModelWidth / 3 * 2))) {
       if (this.firstMove) {
+        this.$refs[refs].style.overflow = 'scroll'
         if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
           this.$refs[refs].style.transform = 'translateX(0)'
         } else if (lastDistance === 0) {
@@ -201,6 +205,8 @@ export default {
       } else {
         this.$refs[refs].style.transform = 'translateX(0)'
       }
+      e.stopPropagation()
+      // e.preventDefault()
     },
     cityStart (e) {
       this.firstMove = true

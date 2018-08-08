@@ -1,7 +1,7 @@
 <template>
-  <div v-if="myShowChooseCar">
-    <div class="sq-brandCars" ref="menuWrapper" :class="{'no-touch': noTouch}">
-      <div class="sq-brandCars-menu-wrapper" ref="brandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
+  <div v-if="myShowChooseCar" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+    <div class="sq-brandCars" ref="menuWrapper">
+      <div class="sq-brandCars-menu-wrapper" ref="brandCars">
         <div class="sq-brandCars-search-wrap">
           <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
           <i class="sq-icon sq-icon-search sq-brandCars-search-icon" @click="searchCarModels"></i>
@@ -23,8 +23,8 @@
         </ul>
       </div>
       <!-- +++++++++++++++++++++++++++选车系+++++++++++++++++++++++++++ -->
-      <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar" @touchstart="selectCarStarts" @touchmove="selectCarMove" @touchend="selectCarEnd">
-        <div class="sq-selectcar-cars-wrapper" :class="{'no-touch': noTouch}">
+      <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar">
+        <div class="sq-selectcar-cars-wrapper">
           <div class="sq-selectcar-inner" ref="selectCar">
             <div class="sq-selectcar-slide" ref="slide">
               <h3 class="sq-selectcar-carts-first-title">
@@ -50,7 +50,7 @@
 
       <!-- +++++++++++++++++++++++++++++++++选车型+++++++++++++++++++++++++++++++ -->
       <div class="sq-selectmodel" v-if="showSelectModel">
-        <div class="sq-selectmodel-wrap" ref="selectModel" @touchstart="modelStart" @touchmove="modelMove" @touchend="modelEnd">
+        <div class="sq-selectmodel-wrap" ref="selectModel">
           <div class="sq-selectmodel-icon-title">
             <!--<slot name="selectModelCode"></slot>-->
             <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectmodel-model-icon">
@@ -92,7 +92,7 @@
 
       <!-- +++++++++++++++++++++++++++++++++搜索车型+++++++++++++++++++++++++++++++++ -->
       <div class="sq-search" v-if="showSearchModal" >
-        <div class="sq-search-inner" ref="searchWapper" :style="{ height: searchWapperHeight + 'px' }" @touchstart="searchStart" @touchmove="searchMove" @touchend="searchEnd">
+        <div class="sq-search-inner" ref="searchWapper" :style="{ height: searchWapperHeight + 'px' }">
           <sq-loadmore :loading="searchLoading" :bottom-fun="searchCarLoadMore" :is-finished-load="searchIsFinishedLoad" :bottom-finished-text="finishedText">
             <ul class="sq-search-list">
               <li class="sq-search-list-item" v-for="(item, index) in searchCarArr" :key="index" @click.stop="closeSelectModel(item)">{{ item.displayName }}</li>
@@ -190,8 +190,7 @@ export default {
       scrollArr: [],
       rightIndex: '',
       finishedText: '',
-      showIndex: true,
-      noTouch: false
+      showIndex: true
     }
   },
   watch: {
@@ -243,6 +242,8 @@ export default {
           menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
         }
       })
+      e.stopPropagation()
+      e.preventDefault()
     },
     touchEnd (e) {
       this.showStartColor = false
@@ -269,9 +270,6 @@ export default {
       let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
       let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
       let currentMoveDisX = currentDisX - this[touchStartX]
-      // if (lastDistanceX > 20) {
-      //   this.noTouch = true
-      // }
       if (this.firstMove) {
         if (lastDistanceY > lastDistanceX) {
           this.firstMove = false
@@ -284,13 +282,15 @@ export default {
           }
         }
       }
+      e.stopPropagation()
+      // e.preventDefault()
     },
     touchEndLogic (e, refs, showModal, touchStart) {
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
       if (this.firstMove) {
-        this.noTouch = false
+        this.$refs[refs].style.overflow = 'auto'
         if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
           this.$refs[refs].style.transform = 'translateX(0)'
         } else if (lastDistance === 0) {
@@ -311,11 +311,10 @@ export default {
         this.$refs[refs].style.transform = 'translateX(0)'
       }
       e.stopPropagation()
-      e.preventDefault()
+      // e.preventDefault()
     },
     brandCarsStart (e) {
       this.firstMove = true
-      this.noTouch = false
       this.brandCarStartX = e.changedTouches[0].clientX
       this.brandCarStartY = e.changedTouches[0].clientY
     },
@@ -327,7 +326,6 @@ export default {
     },
     selectCarStarts (e) {
       this.firstMove = true
-      this.noTouch = false
       this.selectCarStartX = e.changedTouches[0].clientX
       this.selectCarStartY = e.changedTouches[0].clientY
     },
@@ -339,7 +337,6 @@ export default {
     },
     modelStart (e) {
       this.firstMove = true
-      this.noTouch = false
       this.modelsStartX = e.changedTouches[0].clientX
       this.modelsStartY = e.changedTouches[0].clientY
     },
@@ -351,7 +348,6 @@ export default {
     },
     searchStart (e) {
       this.firstMove = true
-      this.noTouch = false
       this.searchCarStartX = e.changedTouches[0].clientX
       this.searchCarStartY = e.changedTouches[0].clientY
     },
@@ -896,19 +892,5 @@ export default {
     box-sizing: border-box;
     @include mix-1px($top: 1);
   }
-}
-
-.no-touch {
-  overflow: hidden;
-}
-
-.no-select {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 444899999;
-  background: rgba(0, 0, 0, 0.7);
 }
 </style>
