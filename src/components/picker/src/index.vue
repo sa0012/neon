@@ -2,12 +2,12 @@
   <div class="sq-picker">
     <div class="sq-picker-header sq-picker-bottom-line" v-show="showToolbar">
       <div @click="$_cancel">{{ cancelButtonText }}</div>
-      <div>{{ title }}</div>
+      <div>{{ title }}{{isCascade}}</div>
       <div @click="$_confirm">{{ confirmButtonText }}</div>
     </div>
-    <div class="sq-picker-body">
+    <div class="sq-picker-body" @touchmove.prevent>
       <picker-item
-        v-for="(item, index) in currentColumns"
+        v-for="(item, index) in formatColumns(columns)"
         :key="index"
         :data-list="item"
         :format="format ? format[index] : ''"
@@ -34,15 +34,8 @@ export default {
   },
 
   props: {
-    value: {
-      type: [Array, Date]
-    },
-    formatValueFun: {
-      type: Function
-    },
-    format: {
-      type: Array
-    },
+    formatValueFun: Function,
+    format: Array,
     cancelButtonText: {
       type: String,
       default: '取消'
@@ -67,127 +60,71 @@ export default {
       type: Array,
       default: () => []
     },
-    valueKey: {
-      type: String
-    }
-  },
-
-  computed: {
-    isCascade () {
-      return Object.prototype.toString.call(this.columns[0]) === '[object Object]' && Array.isArray(this.columns[0].children)
-    }
+    valueKey: String
   },
 
   data () {
     return {
-      currentColumns: this.formateColumns(this.columns),
-      currentValue: this.value,
       children: []
     }
   },
 
   watch: {
-    value: {
-      handler (val) {
-        let flag = false
-        if (Object.prototype.toString.call(val) === '[object Date]') {
-          flag = val.valueOf() !== new Date(this.currentValue.toString()).valueOf()
-        } else {
-          flag = JSON.stringify(val) !== JSON.stringify(this.currentValue)
-        }
-        if (flag) {
-          const dateType = this.$parent.type
-          if (dateType === 'date') {
-            const [ yyyy, MM, dd ] = [val.getFullYear(), val.getMonth() + 1, val.getDate()]
-            val = [
-              `${yyyy}`,
-              MM < 10 ? `0${MM}` : `${MM}`,
-              dd < 10 ? `0${dd}` : `${dd}`
-            ]
-          }
-          // 排除将要设置的value不存在于list的情况
-          const arr = val.map((v, i) => this.children[i].list.indexOf(v))
-          if (arr.indexOf(-1) > -1) {
-            this.$emit('input', this.currentValue)
-          } else {
-            this.currentValue = val
-          }
-        }
-      }
-    },
-    currentValue: {
-      handler (val) {
-        this.$emit('input', val)
-        if (val.length) {
-          val.forEach((v, i) => this.children[i].setValue(v))
-        }
-      },
-      deep: true
-    },
     columns (val) {
-      if (JSON.stringify(this.formateColumns(val)) !== JSON.stringify(this.currentColumns)) {
-        this.currentColumns = this.formateColumns(val)
-      }
+      this.setColumns(val)
     }
   },
 
   methods: {
-    formateColumns (columns) {
+    formatColumns (columns) {
       if (columns.length && Array.isArray(columns[0])) {
         return columns
+      } else if (Object.prototype.toString.call(columns[0]) === '[object Object]' && columns[0].values) {
+        return columns.map(column => { return column.values })
       } else {
-        let arr = columns
-        if (Object.prototype.toString.call(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
-          let result = []
-          while (arr && arr[0] && Object.prototype.toString.call(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
-            result.push(arr)
-            arr = arr[0].children
-          }
-          return result
-        } else {
-          return [columns]
-        }
+        return [columns]
       }
     },
-    $_cancel () {
-      this.$emit('cancel', this.currentValue, this.index)
-    },
-    $_confirm () {
-      this.$emit('confirm', this.currentValue, this.index)
-    },
-    $_onChange (value, pickerItem) {
-      const index = this.children.indexOf(pickerItem)
-      const sumLenth = this.currentColumns.length
-      if (this.isCascade && index + 1 < sumLenth) {
-        let len = index
-        let newChildrenArr = JSON.parse(JSON.stringify(value.children))
 
-        while (len < sumLenth && newChildrenArr.length > 0) {
-          this.children[len + 1].setColumn(newChildrenArr)
-          this.currentValue[len] = value
-          newChildrenArr = (newChildrenArr[0].children && (JSON.parse(JSON.stringify(newChildrenArr[0].children)))) || []
-          len++
-        }
-      } else {
-        let arr = []
-        this.currentValue.forEach((v, i) => {
-          if (i === index) { arr.push(value) } else { arr.push(v) }
-        })
-        this.currentValue = arr
-        this.$nextTick(() => {
-          this.$emit('on-change', arr)
-        })
+    $_cancel () {
+      this.$emit('cancel')
+    },
+
+    $_confirm () {
+      this.$emit('confirm', this.getValues())
+    },
+
+    $_onChange (columnIndex) {
+      this.$emit('on-change', this.getValues(), this)
+    },
+
+    getValues () {
+      return this.children.map(child => child.getValue())
+    },
+
+    setValues (values) {
+      values.forEach((value, index) => {
+        this.children[index] && this.children[index].setValue(value)
+      })
+    },
+
+    setColumnValues (index, dataList) {
+      const column = this.children[index]
+      if (column && JSON.stringify(column.list) !== JSON.stringify(dataList)) {
+        column.list = dataList
+        column.setIndex(0)
       }
+    },
+
+    setColumns (val) {
+      const columns = this.formatColumns(val || this.columns)
+      columns.forEach((dataList, index) => {
+        this.setColumnValues(index, dataList)
+      })
     }
   },
 
   mounted () {
-    if (Array.isArray(this.currentValue)) {
-      this.currentValue.forEach((v, i) => this.children[i].setValue(v))
-    } else {
-      this.currentValue = []
-      this.children.length > 0 && this.children.forEach(child => this.currentValue.push(child.getValue()))
-    }
   }
 }
 </script>

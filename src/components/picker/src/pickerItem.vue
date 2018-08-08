@@ -25,9 +25,6 @@ export default {
       type: Array,
       default: () => []
     },
-    listIndex: {
-      type: Number
-    },
     valueKey: {
       type: String
     },
@@ -36,6 +33,10 @@ export default {
     },
     formatValueFun: {
       type: Function
+    },
+    defaultIndex: {
+      type: Number,
+      default: 0
     }
   },
 
@@ -57,10 +58,7 @@ export default {
       startY: 0, // 起始值
       moveY: 0, // 移动的距离
       saveY: 96, // 缓存偏移量
-      index: 0, // 选中的下标
-      maxY: 0, // 最大偏移距离
-      minY: 0, // 最小偏移距离
-      currentValue: this.dataList[0], // 当前选中的值
+      currentIndex: this.defaultIndex, // 选中的下标
       rowHeight: 48, // 每行列的高度--为固定值
       offset: 2, // 列表初始偏移量--为固定值
       startTime: undefined,
@@ -69,36 +67,16 @@ export default {
   },
 
   methods: {
-    getColumn () {
-      return this.list
+    init () {
+      this.temp.addEventListener('touchstart', this.onTouchStart, false)
+      this.temp.addEventListener('touchmove', this.onTouchMove, false)
+      this.temp.addEventListener('touchend', this.onTouchEnd, false)
+      this.temp.addEventListener('touchcancel', this.onTouchEnd, false)
     },
-    setColumn (column) {
-      this.dataList = column
-    },
-    getValue () {
-      return this.currentValue
-    },
-    setValue (value) {
-      if (value === this.currentValue) return
-      const selectIndex = this.list.indexOf(value) > -1 ? this.list.indexOf(value) : 0
-      this.index = selectIndex
-      this.$_setCurrentValueByIndex(selectIndex)
-      this.$_setYByIndex(selectIndex)
-    },
-    $_setYByIndex (index) {
-      this.saveY = this.translateY = (this.offset - index) * this.rowHeight
-    },
-    $_setCurrentValueByIndex (index) {
-      this.currentValue = this.list[index]
-    },
-    $_setY (val) {
-      this.saveY = this.translateY = val
-    },
-    $_setCurrentValue (val) {
-      this.currentValue = val
-    },
-    $_start (event) {
+
+    onTouchStart (event) {
       if (this.loading) return
+
       this.startY = event.changedTouches[0].pageY
       this.moveY = 0
       this.startTime = +new Date()
@@ -106,8 +84,10 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
-    $_move (event) {
+
+    onTouchMove (event) {
       if (this.loading) return
+
       if (this.transitionTime) {
         this.transitionTime = 0
       }
@@ -124,49 +104,15 @@ export default {
       event.stopPropagation()
       event.preventDefault()
     },
-    $_stop (diff = 0) {
-      // 缓存上次translateY的值
-      this.saveY = this.translateY
 
-      // 获得list 下标
-      this.index = parseInt((this.offset * this.rowHeight - this.saveY - diff) / this.rowHeight)
-      if (this.index < 0) {
-        this.index = 0
-      } else if (this.index >= this.list.length) {
-        this.index = this.list.length - 1
-      }
-
-      // 当前位置与 标准情况下 下标距离值 进行对比， 不相同情况下，进行手动设置位置
-      if (this.saveY !== ((this.offset - this.index) * this.rowHeight)) {
-        this.transitionTime = 0.3
-        // 向下拉 超过显示情况下
-        const oldValue = this.currentValue
-        let newValue = ''
-        if (this.saveY > 0 && this.saveY > this.offset * this.rowHeight) {
-          this.$_setY(this.offset * this.rowHeight)
-          newValue = this.list[0]
-          this.$_setCurrentValue(newValue)
-          // 向上拉 超过显示情况下
-        } else if (this.saveY < 0 && this.saveY < this.minY) {
-          this.$_setY(this.minY)
-          newValue = this.list[this.list.length - 1]
-          this.$_setCurrentValue(newValue)
-        } else {
-          this.$_setY((this.offset - this.index) * this.rowHeight)
-          newValue = this.list[this.index]
-          this.$_setCurrentValue(newValue)
-        }
-        oldValue !== newValue && this.$emit('on-change', newValue, this)
-      }
-    },
-    $_end (event) {
+    onTouchEnd (event) {
       if (!this.startY || this.loading) return
 
       const endY = event.changedTouches[0].pageY
       const endTime = +new Date()
       // 如果最后次move时间与end时间超过100ms，不添加惯性滑动
       if (endTime - this.startTime > 100) {
-        this.$_stop()
+        this.onStop()
       } else {
         if (Math.abs(endY - this.startY) > 10) {
           const endPos = this.points.length - 1
@@ -182,57 +128,65 @@ export default {
             const s = ep.y - sp.y
             const v = s / t // 出手时的速度
             const diff = v * 150 // 滑行 150ms,这里直接影响“灵敏度”
-            this.$_stop(diff)
+            this.onStop(diff)
           } else {
-            this.$_stop()
+            this.onStop()
           }
         } else {
-          this.$_stop()
+          this.onStop()
         }
       }
 
       event.stopPropagation()
       event.preventDefault()
     },
-    init () {
-      this.temp.addEventListener('touchstart', this.$_start, false)
-      this.temp.addEventListener('touchmove', this.$_move, false)
-      this.temp.addEventListener('touchend', this.$_end, false)
-      this.temp.addEventListener('touchcancel', this.$_end, false)
-      this.maxY = (this.list.length + this.offset) * this.rowHeight
-      this.minY = (this.offset - this.list.length + 1) * this.rowHeight
-    }
-  },
 
-  watch: {
-    dataList: {
-      handler (val) {
-        this.list = val
+    onStop (diff = 0) {
+      // 缓存上次translateY的值
+      this.saveY = this.translateY
+      const {offset, rowHeight, list, currentIndex} = this
+      const _saveY = this.saveY
+      const count = list.length
+      // 获得list 下标
+      let _index = parseInt((offset * rowHeight - _saveY - diff) / rowHeight)
+      if (_index < 0) {
+        _index = 0
+      } else if (_index >= count) {
+        _index = count - 1
       }
-    },
-    list: {
-      handler (val, oldVal) {
-        if (JSON.stringify(val) !== JSON.stringify(oldVal)) {
-          const oldCurrentValue = this.currentValue
-          let newValue = ''
-          const i = val.indexOf(oldCurrentValue)
-          if (this.$parent.$parent.$options.name === 'sq-date-picker' && i > -1) {
-            this.index = i
-            newValue = oldCurrentValue
-            this.$_setYByIndex(i)
-          } else {
-            newValue = val[0]
-            this.index = 0
-            this.$_setYByIndex(0)
-          }
-          this.maxY = (val.length + this.offset) * this.rowHeight
-          this.minY = (this.offset - val.length + 1) * this.rowHeight
-          if (JSON.stringify(oldCurrentValue) !== JSON.stringify(newValue)) {
-            this.currentValue = newValue
-            this.$emit('on-change', newValue, this)
-          }
+
+      // 当前位置与 标准情况下 下标距离值 进行对比， 不相同情况下，进行手动设置位置
+      if (_saveY !== ((offset - currentIndex) * rowHeight)) {
+        this.transitionTime = 0.3
+        // 向下拉 超过显示情况下
+        if (_saveY > 0 && _saveY > offset * rowHeight) {
+          this.setIndex(0, true)
+          // 向上拉 超过显示情况下
+        } else if (_saveY < 0 && _saveY < (offset - count + 1) * rowHeight) {
+          this.setIndex(count - 1, true)
+        } else {
+          this.setIndex(_index, true)
         }
       }
+    },
+
+    setIndex (index, userAction) {
+      this.saveY = this.translateY = (this.offset - index) * this.rowHeight
+
+      if (index !== this.currentIndex) {
+        this.currentIndex = index
+        userAction && this.$emit('on-change', index)
+      }
+    },
+
+    getValue () {
+      return this.list[this.currentIndex]
+    },
+
+    setValue (value) {
+      const { list } = this
+      const selectIndex = list.indexOf(value) > -1 ? list.indexOf(value) : 0
+      this.setIndex(selectIndex)
     }
   },
 
@@ -248,10 +202,14 @@ export default {
   },
 
   beforeDestroy () {
-    this.temp.removeEventListener('touchstart', this.$_start)
-    this.temp.removeEventListener('touchmove', this.$_move)
-    this.temp.removeEventListener('touchend', this.$_end)
-    this.temp.removeEventListener('touchcancel', this.$_end)
+    this.temp.removeEventListener('touchstart', this.onTouchStart)
+    this.temp.removeEventListener('touchmove', this.onTouchMove)
+    this.temp.removeEventListener('touchend', this.onTouchEnd)
+    this.temp.removeEventListener('touchcancel', this.onTouchEnd)
+  },
+
+  destroyed () {
+    this.$parent.children && this.$parent.children.splice(this.$parent.children.indexOf(this), 1)
   }
 }
 </script>
@@ -291,6 +249,7 @@ $prefixCls: sq-picker-item;
     top: 0;
     left: 0;
     width: 100%;
+    font-size: 16px;
   }
   &-row {
     height: 48px;
