@@ -742,7 +742,7 @@ export default {
   height: 100%;
   // background: #fff;
   z-index: 888;
-  animation: fadeInRight 0.8s ease;
+  animation: fadeInRight 0.5s ease;
   animation-fill-mode: forwards;
   &-wrap {
     width: 100%;
