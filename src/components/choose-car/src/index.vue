@@ -613,7 +613,7 @@ export default {
       height: 15px;
       line-height: 15px;
       text-align: center;
-      background: lawngreen;
+      background: #007AFF;
       color: #fff;
       border-radius: 1000px;
       position: absolute;
