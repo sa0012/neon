@@ -409,7 +409,18 @@ export default {
     },
     callback (arr) {
       setTimeout(() => {
-        this.selectModel.push(...arr)
+        let newSelectModel = arr
+        // this.selectModel.push(...arr)
+        if (this.selectModel.length > 0) {
+          this.selectModel.forEach((item, index) => {
+            newSelectModel.forEach((val, i) => {
+              if (item.carYear === val.carYear) {
+                delete val.carYear
+              }
+            })
+          })
+        }
+        this.selectModel = this.selectModel.concat(newSelectModel)
         this.loading = false
         if (arr.length <= 0) {
           this.isShowText = true
