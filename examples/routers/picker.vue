@@ -12,7 +12,7 @@
       @cancel="handleCancel"
       @on-change="onChange"
     />
-    <sq-button size="small" type="primary" @click="value2 = ['菠萝', 'B']">设置新值</sq-button>
+    <!-- <sq-button size="small" type="primary" @click="value2 = ['菠萝', 'B']">设置新值</sq-button>
     <sq-button size="small" type="primary" @click="list2 = [['苹果', '香蕉', '菠萝', '草莓'], ['A', 'B', 'C', 'D']]">改变数据源</sq-button>
     <p>{{value2}}</p>
     <demo-title>单列形式 -- ['']数据结构</demo-title>
@@ -23,7 +23,7 @@
       @confirm="handleConfirm"
       @cancel="handleCancel"
       @on-change="onChange"
-    />
+    /> -->
     <p>***************</p>
     <demo-title>多列形式 -- [[''],['']]数据结构</demo-title>
     <p>{{value3}}</p>
@@ -31,6 +31,8 @@
       show-toolbar
       v-model="value3"
       :columns="list2"
+      @confirm="handleConfirm"
+      @cancel="handleCancel"
       @on-change="onChange"
     />
     <demo-title>多列形式 -- [{},{}]数据结构</demo-title>
@@ -39,19 +41,21 @@
       show-toolbar
       v-model="value4"
       :columns="list3"
+      @confirm="handleConfirm"
+      @cancel="handleCancel"
       @on-change="onChange"
       value-key="label"
     />
 
     <demo-title>联动形式</demo-title>
+    <!-- value-key="label" -->
     <sq-picker
       show-toolbar
       v-model="value5"
       :columns="list4"
-      value-key="label"
       @confirm="handleConfirm"
       @cancel="handleCancel"
-      @on-change="handleChange"
+      @on-change="handleChange5"
     />
     
     <demo-title>loading状态</demo-title>
@@ -75,8 +79,10 @@
 </template>
 
 <script>
-import mock from './pickCityMock.js'
-
+const mock = {
+  '浙江': ['杭州', '宁波', '温州', '杭州'],
+  '上海': ['黄浦区', '静安区', '长宁区', '徐汇区']
+}
 export default {
   name: '',
 
@@ -113,7 +119,14 @@ export default {
           { value: 17, label: 'Gg' }
         ]
       ],
-      list4: mock,
+      list4: [
+        {
+          values: Object.keys(mock)
+        },
+        {
+          values: mock['浙江']
+        }
+      ],
       isShow: false
     }
   },
@@ -163,6 +176,10 @@ export default {
       console.log(result)
       // this.$toast.text(`当前值为${item}`)
       this.isShow = !this.isShow
+    },
+    handleChange5 (value, picker) {
+      console.log(value)
+      picker.setColumnValues(1, mock[value[0]])
     }
   }
 }

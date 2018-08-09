@@ -409,7 +409,7 @@ export default {
     },
     callback (arr) {
       setTimeout(() => {
-        let newSelectModel = arr
+        let newSelectModel = JSON.parse(JSON.stringify(arr))
         // this.selectModel.push(...arr)
         if (this.selectModel.length > 0) {
           this.selectModel.forEach((item, index) => {
@@ -420,7 +420,7 @@ export default {
             })
           })
         }
-        this.selectModel = this.selectModel.concat(newSelectModel)
+        this.selectModel.push(...newSelectModel)
         this.loading = false
         if (arr.length <= 0) {
           this.isShowText = true

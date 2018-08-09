@@ -1,5 +1,6 @@
 <template>
   <picker
+    ref="picker"
     show-toolbar
     :columns="columns"
     :title="title"
@@ -17,7 +18,7 @@
 import picker from '../../picker'
 
 const currentYear = new Date().getFullYear()
-const isCheckedDate = (value) => Object.prototype.toString.call(value) === '[object Date]'
+const isCheckedDate = (value) => Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())
 const fullTwo = num => `00${num}`.slice(-2)
 const getMonthEndDay = (year, month) => 32 - new Date(year, month, 32).getDate()
 
@@ -51,11 +52,11 @@ export default {
     },
     minDate: {
       type: Date,
-      default: new Date(currentYear - 10, 0, 1)
+      default: () => new Date(currentYear - 10, 0, 1, 0, 0)
     },
     maxDate: {
       type: Date,
-      default: new Date(currentYear + 10, 11, 31)
+      default: () => new Date(currentYear + 10, 11, 31, 23, 59)
     },
     minHour: {
       type: Number,
@@ -74,22 +75,13 @@ export default {
   },
 
   watch: {
-    value (val, oldVal) {
-      if (Array.isArray(val) && new Date(val.toString()).valueOf() === oldVal.valueOf()) return
+    value (val) {
       val = this.filterValue(val)
-      let { type, innerValue } = this
-      if (Array.isArray(innerValue)) {
-        innerValue = new Date(innerValue.toString())
-      }
-      const isEqual = (type === 'time' ? val === innerValue : val.valueOf() === innerValue.valueOf())
-      if (!isEqual) {
-        this.innerValue = val
-      }
+      const isEqual = this.type === 'time' ? val === this.innerValue : val.valueOf() === this.innerValue.valueOf()
+      if (!isEqual) this.innerValue = val
     },
     innerValue: {
-      handler (val, oldVal) {
-        if (Array.isArray(val) && new Date(val.toString()).valueOf() === oldVal.valueOf()) return
-        if (Array.isArray(oldVal) && new Date(oldVal.toString()).valueOf() === val.valueOf()) return
+      handler (val) {
         this.updateColumnValue(val)
         this.$emit('input', val)
       }
@@ -117,6 +109,7 @@ export default {
       if (this.type === 'year-month') result.splice(2, 3)
       return result
     },
+
     columns () {
       const results = this.ranges.map(({ type, range }) => {
         const values = this.times(range[1] - range[0] + 1, index => {
@@ -132,18 +125,10 @@ export default {
   },
 
   methods: {
-    setDefaultValue () {
-      const date = this.filterValue(this.value)
-      return [date.getFullYear(), fullTwo(date.getMonth() + 1), date.getDate()]
-    },
     $_confirm () {
-      const val = this.innerValue
-      if (Array.isArray(val)) {
-        this.$emit('confirm', new Date(val.toString()))
-      } else {
-        this.$emit('confirm', val)
-      }
+      this.$emit('confirm', this.innerValue)
     },
+
     times (n, iteratee) {
       let index = -1
       const result = Array(n)
@@ -152,18 +137,15 @@ export default {
       }
       return result
     },
+
     filterValue (value) {
       const { type, minHour, maxHour, minDate } = this
       const isDateType = type !== 'time'
-      if (Array.isArray(value)) {
-        value = new Date(value.toString())
-      }
       if (isDateType && !isCheckedDate(value)) {
         value = minDate
       } else if (!value) {
         value = fullTwo(value) + ':00'
       }
-
       if (!isDateType) {
         const [hour, minute] = value.split(':')
         let filterHour = Math.max(hour, minHour)
@@ -184,9 +166,6 @@ export default {
     },
 
     getLimit (limitType, value) {
-      if (Array.isArray(value)) {
-        value = new Date(value.toString())
-      }
       const limitDate = this[`${limitType}Date`]
       const year = limitDate.getFullYear()
       let [month, date, hour, minute] = [0, 1, 0, 0]
@@ -219,10 +198,8 @@ export default {
         [`_${limitType}F`]: minute
       }
     },
+
     updateColumnValue (value) {
-      if (Array.isArray(value)) {
-        value = new Date(value.toString())
-      }
       const { type } = this
       let values = []
       if (type === 'time') {
@@ -241,7 +218,12 @@ export default {
           values.push(`${fullTwo(value.getMinutes())}`)
         }
       }
+
+      this.$nextTick(() => {
+        this.$refs.picker.setValues(values)
+      })
     },
+
     getTrueValue (formattedValue) {
       if (!formattedValue) return
       while (isNaN(parseInt(formattedValue, 10))) {
@@ -249,6 +231,7 @@ export default {
       }
       return parseInt(formattedValue, 10)
     },
+
     $_change (values, picker) {
       let value
       if (this.type === 'time') {
