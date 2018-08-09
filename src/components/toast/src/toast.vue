@@ -37,12 +37,12 @@ export default {
       default: 'middle'
     },
     iconSize: {
-      type: Number | String,
+      type: [Number, String],
       default: 24
     },
     textSize: {
-      type: Number | String,
-      default: 12
+      type: [Number, String],
+      default: 14
     }
   },
 
