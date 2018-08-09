@@ -161,27 +161,27 @@ export default {
     },
     inView (element, ref) {
       if (ref === void 0) ref = {}
-      var offset = ref.offset
+      let offset = ref.offset
       if (offset === void 0) offset = 0
-      var threshold = ref.threshold
+      let threshold = ref.threshold
       if (threshold === void 0) threshold = 0
 
-      var ref$1 = element.getBoundingClientRect()
-      var top = ref$1.top
-      var right = ref$1.right
-      var bottom = ref$1.bottom
-      var left = ref$1.left
-      var width = ref$1.width
-      var height = ref$1.height
+      let ref$1 = element.getBoundingClientRect()
+      let top = ref$1.top
+      let right = ref$1.right
+      let bottom = ref$1.bottom
+      let left = ref$1.left
+      let width = ref$1.width
+      let height = ref$1.height
 
-      var intersection = {
+      let intersection = {
         t: bottom,
         r: window.innerWidth - left,
         b: window.innerHeight - top,
         l: right
       }
 
-      var elementThreshold = {
+      let elementThreshold = {
         x: threshold * width,
         y: threshold * height
       }

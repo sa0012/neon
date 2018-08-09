@@ -16,7 +16,7 @@
 
     <sq-button type="primary" size="small" @click.native="dataValue2 = new Date()">设置日期为当前</sq-button>
     <demo-title>yyyy-MM-dd hh:mm形式</demo-title>
-    {{dataValue2 | formatDate('yyyy-MM-dd hh-mm')}}
+    {{dataValue2 | formatDate('yyyy-MM-dd hh:mm')}}
     <sq-date-picker
       type="datetime"
       v-model="dataValue2"
@@ -78,7 +78,7 @@ export default {
   },
 
   filters: {
-    formatDate (datetime, fmt = 'yyyy-MM-dd hh-mm-ss') {
+    formatDate (datetime, fmt = 'yyyy-MM-dd hh:mm:ss') {
       if (!datetime) return
       if (typeof datetime === 'string' && datetime.indexOf(':') > -1) return datetime
       let date = datetime
