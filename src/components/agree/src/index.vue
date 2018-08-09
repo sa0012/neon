@@ -85,6 +85,7 @@ $prefixCls: sq-agree;
     display: inline-block;
     margin-left: 6px;
     flex: 1;
+    text-align: left;
   }
 }
 </style>
