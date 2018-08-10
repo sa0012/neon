@@ -16,6 +16,10 @@ export default {
     value: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -31,6 +35,7 @@ export default {
 
   methods: {
     $_click (event) {
+      if (this.disabled) return
       this.$emit('change', !this.value)
       this.$emit('input', !this.value)
     }

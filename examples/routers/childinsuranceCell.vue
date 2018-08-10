@@ -2,12 +2,14 @@
   <div class="childinsuranceCell-page">
     <demo-title left>基础用法</demo-title>
     {{exemptSelected}}
+    <sq-button type="primary" size="small" @click="disabled = !disabled">disabled</sq-button>
     <sq-childinsurance-cell
       :has-exempt-clause="hasExemptClause"
       label="司机责任险"
       middle-text="不计免赔"
       right-text="投保"
       v-model="exemptSelected"
+      :checkbox-disabled="disabled"
       @click="click"
     />
   </div>
@@ -20,7 +22,8 @@ export default {
   data () {
     return {
       exemptSelected: false,
-      hasExemptClause: true
+      hasExemptClause: true,
+      disabled: false
     }
   },
 

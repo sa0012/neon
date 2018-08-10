@@ -6,6 +6,7 @@
         v-show="hasExemptClause && rightText !== '不投保'"
         v-model="exemptSelected"
         class="sq-childinsurance-cell-middle"
+        :disabled="checkboxDisabled"
         @change="$_clickiconChangeHandle"
       >
         <span style="color:rgb(153, 153, 153);">{{ middleText }}</span>
@@ -46,6 +47,10 @@ export default {
     },
     rightText: {
       type: [String, Number]
+    },
+    checkboxDisabled: {
+      type: Boolean,
+      default: false
     }
   },
 
