@@ -32,7 +32,7 @@ const toastPlugin = {
       },
       hide (callback) {
         instance && (instance.visible = false)
-        callback && callback()
+        typeof callback === 'function' && callback()
       },
       text (...option) {
         this.show({ ...this.marge(option), type: 'text' })
@@ -62,11 +62,7 @@ const toastPlugin = {
       }
     }
 
-    Vue.mixin({
-      created: function () {
-        this.$toast = toast
-      }
-    })
+    Vue.prototype.$toast = toast
   }
 }
 
