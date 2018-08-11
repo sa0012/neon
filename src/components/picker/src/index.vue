@@ -10,7 +10,7 @@
         v-for="(item, index) in formatColumns(columns)"
         :key="index"
         :data-list="item"
-        :format="format ? format[index] : ''"
+        :format="format && format.length ? format[index] : ''"
         :format-value-fun="formatValueFun"
         :list-index="index"
         :value-key="valueKey"

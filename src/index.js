@@ -32,6 +32,7 @@ import Uploader from '@/components/uploader'
 // action
 import Actionsheet from '@/components/actionsheet'
 import DatePicker from '@/components/date-picker'
+import Datetime from '@/components/datetime'
 import Dialog from '@/components/dialog'
 import Picker from '@/components/picker'
 import Toast from '@/components/toast'
@@ -100,6 +101,7 @@ const install = Vue => {
 
   Vue.use(Toast)
   Vue.use(Dialog)
+  Vue.use(Datetime)
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
@@ -140,6 +142,7 @@ export {
   Actionsheet,
   Dialog,
   DatePicker,
+  Datetime,
   Picker,
   Toast,
 

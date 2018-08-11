@@ -36,7 +36,8 @@ export default {
       default: 'date'
     },
     format: {
-      type: Array
+      type: Array,
+      default: () => []
     },
     cancelButtonText: {
       type: String,
@@ -51,11 +52,11 @@ export default {
       default: ''
     },
     minDate: {
-      type: Date,
+      type: [Date, String],
       default: () => new Date(currentYear - 10, 0, 1, 0, 0)
     },
     maxDate: {
-      type: Date,
+      type: [Date, String],
       default: () => new Date(currentYear + 10, 11, 31, 23, 59)
     },
     minHour: {
@@ -141,8 +142,14 @@ export default {
     filterValue (value) {
       const { type, minHour, maxHour, minDate } = this
       const isDateType = type !== 'time'
+
       if (isDateType && !isCheckedDate(value)) {
-        value = minDate
+        // fix：兼容传入的值为string
+        if (typeof minDate === 'string') {
+          value = new Date(minDate.replace(/-/g, '/'))
+        } else {
+          value = minDate
+        }
       } else if (!value) {
         value = fullTwo(value) + ':00'
       }
@@ -155,6 +162,9 @@ export default {
         return `${filterHour}:${minute}`
       }
 
+      if (typeof value === 'string') {
+
+      }
       const { _maxY, _maxD, _maxM, _maxH, _maxF } = this.getLimit('max', value)
       const { _minY, _minD, _minM, _minH, _minF } = this.getLimit('min', value)
       const _min = new Date(_minY, _minM, _minD, _minH, _minF)
@@ -166,7 +176,18 @@ export default {
     },
 
     getLimit (limitType, value) {
-      const limitDate = this[`${limitType}Date`]
+      let limitDate = this[`${limitType}Date`]
+
+      // fix：插件形式传入maxDate或minDate的值为function
+      if (typeof limitDate === 'function') {
+        limitDate = limitDate()
+      }
+
+      // fix：兼容传入的maxDate或minDate值为string
+      if (typeof limitDate === 'string') {
+        limitDate = new Date(limitDate.replace(/-/g, '/'))
+      }
+
       const year = limitDate.getFullYear()
       let [month, date, hour, minute] = [0, 1, 0, 0]
 

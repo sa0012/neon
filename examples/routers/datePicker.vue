@@ -1,9 +1,15 @@
 <template>
   <div class="demo-page-wrap">
+    <sq-button type="primary" size="large" @click="pluginClick1" style="font-size:14px;">插件式调用--默认今天[date类型]</sq-button>
+    <sq-button type="primary" size="large" @click="pluginClick2" style="font-size:14px;">插件式调用--默认明天[date类型]</sq-button>
+    <sq-button type="primary" size="large" @click="pluginClick3" style="font-size:14px;">插件式调用--默认明天[datetime类型]</sq-button>
+    <sq-button type="primary" size="large" @click="pluginClick4" style="font-size:14px;">插件式调用--默认今天[yearMonth类型]</sq-button>
+    <sq-button type="primary" size="large" @click="pluginClick5" style="font-size:14px;">插件式调用--默认今天[time类型]</sq-button>
+    <br>
     <sq-button type="primary" size="small"
       @click.native="dataValue1 = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)">设置日期为后天</sq-button>
     <demo-title>yyyy-MM-dd形式</demo-title>
-    {{dataValue1 | formatDate('yyyy-MM-dd')}}
+    "{{dataValue1 | formatDate('yyyy-MM-dd')}}"
     <sq-date-picker
       :min-date="minDate"
       :max-date="maxDate"
@@ -16,7 +22,7 @@
 
     <sq-button type="primary" size="small" @click.native="dataValue2 = new Date()">设置日期为当前</sq-button>
     <demo-title>yyyy-MM-dd hh:mm形式</demo-title>
-    {{dataValue2 | formatDate('yyyy-MM-dd hh:mm')}}
+    "{{dataValue2 | formatDate('yyyy-MM-dd hh:mm')}}"
     <sq-date-picker
       type="datetime"
       v-model="dataValue2"
@@ -27,7 +33,7 @@
     />
 
     <demo-title>yyyy-MM形式</demo-title>
-    {{dataValue3 | formatDate('yyyy-MM')}}
+    "{{dataValue3 | formatDate('yyyy-MM')}}"
     <sq-date-picker
       v-model="dataValue3"
       type="year-month"
@@ -36,7 +42,7 @@
       @on-change="onChange2"
     />
     <demo-title>hh-mm形式</demo-title>
-    {{dataValue4 | formatDate('hh-mm')}}
+    "{{dataValue4 | formatDate('hh-mm')}}"
     <sq-date-picker
       v-model="dataValue4"
       type="time"
@@ -112,6 +118,114 @@ export default {
   },
 
   methods: {
+    pluginClick1 () {
+      this.$datetime.date({
+        minDate: '2016-01-01',
+        maxDate: '2020-12-31',
+        value: new Date(),
+        onConfirm: (value) => {
+          console.log(value)
+          this.$datetime.hide(() => {
+            console.log(value)
+          })
+        },
+        onCancel: () => {
+          this.$datetime.hide()
+        },
+        onChange (value) {
+          console.log(value)
+        }
+      })
+    },
+    pluginClick2 () {
+      const now = new Date()
+      this.$datetime.date({
+        title: 'type为date',
+        value: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1),
+        minDate: '2017-06-05',
+        maxDate: '2019-09-04',
+        onConfirm: (value) => {
+          console.log(value)
+          this.$datetime.hide(() => {
+            console.log(value)
+          })
+        },
+        onCancel: () => {
+          this.$datetime.hide()
+        },
+        onChange (value) {
+          console.log(value)
+        }
+      })
+    },
+    pluginClick3 () {
+      const now = new Date()
+      this.$datetime.datetime({
+        title: 'type为datetime',
+        value: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, now.getHours(), now.getMinutes()),
+        minDate: new Date(2017, 5, 5, 6, 6),
+        maxDate: new Date(2019, 8, 4, 8, 8),
+        onConfirm: (value) => {
+          console.log(value)
+          this.$datetime.hide(() => {
+            console.log(value)
+          })
+        },
+        onCancel: () => {
+          this.$datetime.hide()
+        },
+        onChange (value) {
+          console.log(value)
+        }
+      })
+    },
+    pluginClick4 () {
+      const now = new Date()
+      this.$datetime.yearMonth({
+        title: 'type为yearMonth',
+        format: ['年', '月'],
+        value: new Date(now.getFullYear(), now.getMonth()),
+        minDate: new Date(2017, 2),
+        maxDate: new Date(2019, 10),
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
+        onConfirm: (value) => {
+          console.log(value)
+          this.$datetime.hide(() => {
+            console.log(value)
+          })
+        },
+        onCancel: () => {
+          this.$datetime.hide()
+        },
+        onChange (value) {
+          console.log(value)
+        }
+      })
+    },
+    pluginClick5 () {
+      const now = new Date()
+      this.$datetime.time({
+        title: 'type为time',
+        value: '19:30',
+        minHour: 3,
+        maxHour: 22,
+        confirmButtonText: 'confirm',
+        cancelButtonText: 'cancel',
+        onConfirm: (value) => {
+          console.log(value)
+          this.$datetime.hide(() => {
+            console.log(value)
+          })
+        },
+        onCancel: () => {
+          this.$datetime.hide()
+        },
+        onChange (value) {
+          console.log(value)
+        }
+      })
+    },
     confirm1 (val) {
       console.log(val)
     },
