@@ -11,6 +11,9 @@
     <demo-title>加载提示</demo-title>
     <sq-button type="primary" size="small" @click="showLoading">加载提示</sq-button>
     <sq-button type="primary" size="small" @click="showLoading2">加载提示无文字</sq-button>
+
+    <demo-title>自定义iconClass</demo-title>
+    <sq-button type="primary" size="small" @click="showDiy">自定义</sq-button>
   </div>
 </template>
 
@@ -46,6 +49,9 @@ export default {
     },
     showLoading2 () {
       this.$toast.loading('')
+    },
+    showDiy () {
+      this.$toast.show({ message: '自定义icon', iconClass: 'pentagram' })
     }
   }
 }

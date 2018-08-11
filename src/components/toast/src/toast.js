@@ -23,9 +23,11 @@ const toastPlugin = {
         for (let key in opt) {
           instance[key] = opt[key]
         }
+        instance.timeOut && clearTimeout(instance.timeOut)
         if (instance.duration !== -1) {
-          setTimeout(() => {
+          instance.timeOut = setTimeout(() => {
             instance.visible = false
+            instance.timeOut && clearTimeout(instance.timeOut)
           }, instance.duration)
         }
         instance.visible = true

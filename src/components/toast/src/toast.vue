@@ -40,6 +40,10 @@ export default {
       type: [Number, String],
       default: 44
     },
+    iconClass: {
+      type: String,
+      default: ''
+    },
     textSize: {
       type: [Number, String],
       default: 14
@@ -57,12 +61,13 @@ export default {
           [`sq-toast-icon sq-icon sq-icon-error`]: this.type === 'error',
           [`sq-toast-icon sq-icon sq-icon-animation-loading sq-icon-loading`]: this.type === 'loading',
           [`sq-toast-icon sq-icon sq-icon-alert-empty`]: this.type === 'warn'
-        }
+        },
+        this.iconClass ? `sq-toast-icon sq-icon sq-icon-${this.iconClass}` : ''
       ]
     },
     contentClasses () {
       return {
-        'sq-toast-type': this.type === 'text',
+        'sq-toast-type': this.type === 'text' && !this.iconClass,
         'sq-toast-bottom': this.position === 'bottom',
         'sq-toast-min-width': this.message !== void 0 && this.message !== ''
       }
