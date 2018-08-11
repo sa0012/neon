@@ -38,7 +38,7 @@ export default {
     },
     iconSize: {
       type: [Number, String],
-      default: 24
+      default: 44
     },
     textSize: {
       type: [Number, String],

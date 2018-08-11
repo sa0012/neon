@@ -44,21 +44,25 @@ const toastPlugin = {
         this.show({ ...this.marge(option), type: 'error' })
       },
       warn (...option) {
-        this.show({ ...this.marge(option), type: 'warn' })
+        this.show({ iconSize: 24, ...this.marge(option), type: 'warn' })
       },
       loading (...option) {
-        this.show({ ...this.marge(option), type: 'loading' })
+        this.show({ iconSize: 34, ...this.marge(option), type: 'loading' })
       },
       marge (data) {
-        if (data.length === 1) {
-          return { message: data[0] }
-        }
-        if (data.length === 2) {
-          return { message: data[0], duration: data[1] }
-        }
-        if (data.length === 3) {
-          return { message: data[0], duration: data[1], position: data[2] }
-        }
+        let options = {}
+        data.forEach((d, i) => {
+          i === 0 && (options.message = d)
+          i === 1 && (options.duration = d)
+          if (i === 2) {
+            if (typeof d === 'string') {
+              options.position = d
+            } else if (d && Object.prototype.toString.call(d) === '[object Object]') {
+              options = Object.assign({}, options, d)
+            }
+          }
+        })
+        return options
       }
     }
 
