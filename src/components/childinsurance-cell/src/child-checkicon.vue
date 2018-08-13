@@ -1,8 +1,8 @@
 <template>
-  <div class="sq-checkicon-wrap" @click="$_click">
-    <div class="sq-checkicon-checkbox" :class="classes">
+  <div class="sq-child-checkicon-wrap" @click="$_click">
+    <div class="sq-child-checkicon-checkbox" :class="classes">
     </div>
-    <div class="sq-checkicon-text">
+    <div class="sq-child-checkicon-text">
       <slot></slot>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'sq-checkicon',
+  name: 'sq-child-checkicon',
 
   props: {
     value: {
@@ -27,7 +27,7 @@ export default {
     classes () {
       return [
         {
-          'sq-checkicon-checked': this.value
+          'sq-child-checkicon-checked': this.value
         }
       ]
     }
@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss">
 @import '~@/common/styles/variable';
-$prefixCls: sq-checkicon;
+$prefixCls: sq-child-checkicon;
 
 .#{$prefixCls} {
   &-wrap {
