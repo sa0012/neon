@@ -3,7 +3,7 @@
     <sq-date-picker
       v-model="value"
       :type="type"
-      :format="format"
+      :format="format ? format : []"
       :cancel-button-text="cancelButtonText"
       :confirm-button-text="confirmButtonText"
       :title="title"
@@ -37,8 +37,7 @@ export default {
       default: 'date'
     },
     format: {
-      type: Array,
-      default: () => []
+      type: Array
     },
     cancelButtonText: {
       type: String,

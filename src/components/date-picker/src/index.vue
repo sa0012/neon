@@ -6,7 +6,7 @@
     :title="title"
     :cancel-button-text="cancelButtonText"
     :confirm-button-text="confirmButtonText"
-    :format="format"
+    :format="format ? format : []"
     v-model="innerValue"
     @confirm="$_confirm"
     @cancel="$emit('cancel')"
@@ -36,8 +36,7 @@ export default {
       default: 'date'
     },
     format: {
-      type: Array,
-      default: () => []
+      type: Array
     },
     cancelButtonText: {
       type: String,

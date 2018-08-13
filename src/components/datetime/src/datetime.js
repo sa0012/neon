@@ -17,6 +17,8 @@ const dateTimePlugin = {
         for (let i in instance.$options.props) {
           if (instance.$options.props[i].default !== void 0) {
             defaults[i] = instance.$options.props[i].default
+          } else {
+            defaults[i] = void 0
           }
         }
 
