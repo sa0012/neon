@@ -60,12 +60,12 @@ export default {
   methods: {
     $_change () {
       if (this.disabled || this.isGroupDisabled) return
-      this.$parent.update(this.name)
+      this.$parent && this.$parent.$options.name === 'sq-radio-group' && this.$parent.update(this.name)
     }
   },
 
   mounted () {
-    this.$parent.update()
+    this.$parent && this.$parent.$options.name === 'sq-radio-group' && this.$parent.update()
   }
 }
 
