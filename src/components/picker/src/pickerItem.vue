@@ -1,7 +1,7 @@
 <template>
   <div class="sq-picker-item">
-    <div class="sq-picker-item-content" :style="itemStyles">
-      <div
+    <ul class="sq-picker-item-wrapper" :style="itemStyles">
+      <li
         class="sq-picker-item-row"
         v-for="(item, index) in list"
         :key="index"
@@ -9,10 +9,8 @@
         {{ valueKey ?
           (formatValueFun ? formatValueFun(item[valueKey]) : item[valueKey]) :
           (formatValueFun ? formatValueFun(item) : item) }}{{ format }}
-      </div>
-    </div>
-    <div class="sq-picker-item-mask"></div>
-    <div class="sq-picker-item-active-line sq-picker-item-top-line sq-picker-item-bottom-line"></div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -220,74 +218,25 @@ $prefixCls: sq-picker-item;
 
 .#{$prefixCls} {
   flex: 1;
+  flex-basis: 1e-9px;
+  width: 1%;
+  height: 240px;
   position: relative;
-  height: 100%;
-  &-mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)),
-      linear-gradient(0deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6));
-    background-position: top, bottom;
-    background-size: 100% 96px;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  &-active-line {
-    width: 100%;
-    height: 48px;
-    position: absolute;
-    left: 0;
-    top: 96px;
-  }
-  &-content {
+  overflow: hidden;
+  &-wrapper {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     font-size: 16px;
+    margin: 0;
+    padding: 0;
   }
   &-row {
     height: 48px;
-    &.#{$prefixCls}-bottom-line {
-      &:last-child::after {
-        border: 0;
-      }
-    }
-  }
-  &-top-line {
-    position: relative;
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      height: 1px;
-      border-bottom: 1px solid #E5E5E5;
-      color: #E5E5E5;
-      transform-origin: 0 100%;
-      transform: scaleY(0.5);
-    }
-  }
-  &-bottom-line {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      height: 1px;
-      border-bottom: 1px solid #E5E5E5;
-      color: #E5E5E5;
-      transform-origin: 0 100%;
-      transform: scaleY(0.5);
-    }
+    line-height: 48px;
+    margin: 0;
+    padding: 0;
   }
 }
 </style>

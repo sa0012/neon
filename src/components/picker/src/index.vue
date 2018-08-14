@@ -6,16 +6,19 @@
       <div @click="$_confirm">{{ confirmButtonText }}</div>
     </div>
     <div class="sq-picker-body" @touchmove.prevent>
-      <picker-item
-        v-for="(item, index) in formatColumns(columns)"
-        :key="index"
-        :data-list="item"
-        :format="format && format.length ? format[index] : ''"
-        :format-value-fun="formatValueFun"
-        :list-index="index"
-        :value-key="valueKey"
-        @on-change="$_onChange"
-      />
+      <div class="sq-picker-body-mask top"></div>
+      <div class="sq-picker-body-mask bottom"></div>
+      <div class="sq-picker-body-wrapper">
+        <picker-item
+          v-for="(item, index) in formatColumns(columns)"
+          :key="index"
+          :data-list="item"
+          :format="format && format.length ? format[index] : ''"
+          :format-value-fun="formatValueFun"
+          :value-key="valueKey"
+          @on-change="$_onChange"
+        />
+      </div>
     </div>
     <div class="sq-picker-loading-mask" v-show="loading">
       <div class="sq-picker-loading-icon"></div>
@@ -130,7 +133,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/common/styles/mixins';
 @import '~@/common/styles/variable';
+
 $prefixCls: sq-picker;
 
 .#{$prefixCls} {
@@ -141,6 +146,7 @@ $prefixCls: sq-picker;
     display: flex;
     min-height: 50px;
     line-height: 50px;
+    @include mix-1px($bottom: 1);
     :nth-child(1) {
       width: 80px;
       flex: 0 0 80px;
@@ -158,25 +164,51 @@ $prefixCls: sq-picker;
     }
   }
   &-body {
-    height: 240px;
-    line-height: 48px;
     position: relative;
-    display: flex;
-    overflow: hidden;
-  }
-  &-bottom-line {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      height: 1px;
-      border-bottom: 1px solid #E5E5E5;
-      color: #E5E5E5;
-      transform-origin: 0 100%;
-      transform: scaleY(0.5);
+    &-mask {
+      position: absolute !important;
+      z-index: 10;
+      width: 100%;
+      height: 96px;
+      pointer-events: none;
+      transform: translateZ(0);
+      &.top {
+        top: 0;
+        background: -webkit-gradient(linear,left bottom,left top,from(hsla(0,0%,100%,.6)),to(hsla(0,0%,100%,.95)));
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          height: 1px;
+          border-bottom: 1px solid #E5E5E5;
+          color: #E5E5E5;
+          transform-origin: 0 100%;
+          transform: scaleY(0.5);
+        }
+      }
+      &.bottom {
+        bottom: 0;
+        background: -webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,.6)),to(hsla(0,0%,100%,.95)));
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          height: 1px;
+          border-bottom: 1px solid #E5E5E5;
+          color: #E5E5E5;
+          transform-origin: 0 100%;
+          transform: scaleY(0.5);
+        }
+      }
+    }
+    &-wrapper {
+      display: flex;
     }
   }
   &-loading-mask {
@@ -189,6 +221,7 @@ $prefixCls: sq-picker;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 11;
   }
   &-loading-icon {
     box-sizing: border-box;
