@@ -38,6 +38,8 @@ export default {
     display: inline-block;
     background-color: #ffffff;
     box-sizing: border-box;
+    line-height: 1;
+    transform: translate3d(0, 1px, 0) scale(1.2);
     &.checked {
       background-color: transparent;
       border-color: transparent;
