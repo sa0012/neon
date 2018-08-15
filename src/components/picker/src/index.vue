@@ -233,7 +233,7 @@ $prefixCls: sq-picker;
     border-left-color: $theme-color;
     border-bottom-color: $theme-color;
     border-radius: 50%;
-    animation: quan .8s infinite linear
+    animation: quan .8s infinite linear;
   }
 }
 </style>
