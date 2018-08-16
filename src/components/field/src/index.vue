@@ -142,7 +142,7 @@ $prefixCls: sq-field;
     padding: 14px 0px;
     font-size: 14px;
   }
-  &::after {
+  &~&::after {
     content: '';
     position: absolute;
     top: 0;
@@ -155,7 +155,7 @@ $prefixCls: sq-field;
     width: auto;
     transform: scale(1, .5);
     border: 0 solid #e5e5e5;
-    border-bottom-width: 1px;
+    border-top-width: 1px;
   }
 }
 
