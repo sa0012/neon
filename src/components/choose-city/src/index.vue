@@ -239,122 +239,122 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../common/styles/mixins.scss';
-  .sq-choose-city {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+@import '~@/common/styles/mixins';
+.sq-choose-city {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 333;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.7);
+  &-wrapper {
+    background: #fff;
     width: 100%;
-    height: 100%;
+    box-sizing: border-box;
+  }
+  &-inner {
+    width: 100%;
+    padding-left: 15px;
+    box-sizing: border-box;
+  }
+  &-current-city {
+    width: 100%;
+    height: 52px;
+    line-height: 52px;
+  }
+  &-current-city-title {
+    color: #666;
+  }
+  &-city-wrap {
+    height: auto;
+  }
+  &-city-item {
+    list-style: none;
+  }
+  &-menu-title {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    @include mix-1px($bottom: 1);
+    height: 50px;
+    line-height: 50px;
+  }
+  &-item-list-item {
+    height: 52px;
+    line-height: 52px;
+    list-style: none;
+  }
+  &-index-wrap {
     position: fixed;
     top: 0;
-    left: 0;
-    z-index: 333;
-    font-size: 14px;
-    background: rgba(0, 0, 0, 0.7);
-    &-wrapper {
-      background: #fff;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    &-inner {
-      width: 100%;
-      padding-left: 15px;
-      box-sizing: border-box;
-    }
-    &-current-city {
-      width: 100%;
-      height: 52px;
-      line-height: 52px;
-    }
-    &-current-city-title {
-      color: #666;
-    }
-    &-city-wrap {
-      height: auto;
-    }
-    &-city-item {
-      list-style: none;
-    }
-    &-menu-title {
-      margin: 0;
-      padding: 0;
-      font-weight: 400;
-      font-size: 14px;
-      @include mix-1px($bottom: 1);
-      height: 50px;
-      line-height: 50px;
-    }
-    &-item-list-item {
-      height: 52px;
-      line-height: 52px;
-      list-style: none;
-    }
-    &-index-wrap {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 30px;
-      // height: 100%;
-      bottom: 0;
-      font-size: 12px;
-      z-index: 444;
-      &.select {
-        background: rgba(0, 0, 0, 0.3);
-      }
-    }
-    &-index-inner {
-      position: fixed;
-      // top: 0;
-      bottom: 0;
-      right: 0;
-      width: 30px;
-      display: flex;
-      flex-direction: column;
-      top: 50%;
-      // height: 50%;
-      transform: translateY(-50%);
-      box-sizing: border-box;
-    }
-    &-index-title {
-      color: #007AFF;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      &>.active {
-        display: inline-block;
-        width: 15px;
-        height: 15px;
-        line-height: 15px;
-        text-align: center;
-        background: #007AFF;
-        color: #fff;
-        border-radius: 1000px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        vertical-align: middle;
-      }
+    right: 0;
+    width: 30px;
+    // height: 100%;
+    bottom: 0;
+    font-size: 12px;
+    z-index: 444;
+    &.select {
+      background: rgba(0, 0, 0, 0.3);
     }
   }
-
-  .car-index {
+  &-index-inner {
     position: fixed;
+    // top: 0;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    border-radius: 3px;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 99999;
-    text-align: center;
-    line-height: 80px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: bold;
+    // height: 50%;
+    transform: translateY(-50%);
+    box-sizing: border-box;
   }
+  &-index-title {
+    color: #007AFF;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &>.active {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      line-height: 15px;
+      text-align: center;
+      background: #007AFF;
+      color: #fff;
+      border-radius: 1000px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      vertical-align: middle;
+    }
+  }
+}
+
+.car-index {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 99999;
+  text-align: center;
+  line-height: 80px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
 </style>

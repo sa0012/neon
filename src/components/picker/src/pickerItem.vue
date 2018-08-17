@@ -1,10 +1,12 @@
 <template>
-  <div class="sq-picker-item">
+  <div class="sq-picker-item" :style="isShowPickerItem">
     <ul class="sq-picker-item-wrapper" :style="itemStyles">
       <li
         class="sq-picker-item-row"
         v-for="(item, index) in list"
         :key="index"
+        :style="rowStyles"
+        @click="setIndex(index, true)"
       >
         {{ valueKey ?
           (formatValueFun ? formatValueFun(item[valueKey]) : item[valueKey]) :
@@ -35,7 +37,15 @@ export default {
     defaultIndex: {
       type: Number,
       default: 0
-    }
+    },
+    hideEmptyColumn: {
+      type: Boolean,
+      default: false
+    },
+    // 每行列的高度
+    rowHeight: Number,
+    // 每列显示数量
+    rowCount: Number
   },
 
   computed: {
@@ -44,6 +54,21 @@ export default {
         transform: `translate3d(0px, ${this.translateY}px, 0px)`,
         transition: `transform ${this.transitionTime}s`
       }
+    },
+    rowStyles () {
+      return {
+        height: `${this.rowHeight}px`,
+        lineHeight: `${this.rowHeight}px`
+      }
+    },
+    isShowPickerItem () {
+      return {
+        display: this.hideEmptyColumn && !this.list.length ? 'none' : ''
+      }
+    },
+    // 列表初始偏移量
+    offset () {
+      return parseInt(this.rowCount / 2)
     }
   },
 
@@ -51,14 +76,12 @@ export default {
     return {
       list: this.dataList,
       temp: null, // 容器
-      translateY: 96,
+      translateY: parseInt(this.rowCount / 2) * this.rowHeight,
       transitionTime: 0,
       startY: 0, // 起始值
       moveY: 0, // 移动的距离
-      saveY: 96, // 缓存偏移量
+      saveY: parseInt(this.rowCount / 2) * this.rowHeight, // 缓存偏移量
       currentIndex: this.defaultIndex, // 选中的下标
-      rowHeight: 48, // 每行列的高度--为固定值
-      offset: 2, // 列表初始偏移量--为固定值
       startTime: undefined,
       points: []
     }
@@ -79,7 +102,6 @@ export default {
       this.moveY = 0
       this.startTime = +new Date()
 
-      event.stopPropagation()
       event.preventDefault()
     },
 
@@ -99,7 +121,6 @@ export default {
         this.points.shift()
       }
 
-      event.stopPropagation()
       event.preventDefault()
     },
 
@@ -135,7 +156,6 @@ export default {
         }
       }
 
-      event.stopPropagation()
       event.preventDefault()
     },
 
@@ -173,7 +193,7 @@ export default {
 
       if (index !== this.currentIndex) {
         this.currentIndex = index
-        userAction && this.$emit('on-change', index)
+        userAction && this.$emit('on-change', index, this.$parent.children.indexOf(this))
       }
     },
 
@@ -183,7 +203,17 @@ export default {
 
     setValue (value) {
       const { list } = this
-      const selectIndex = list.indexOf(value) > -1 ? list.indexOf(value) : 0
+
+      let selectIndex = 0
+      if (Object.prototype.toString.call(value) === '[object Object]' && this.valueKey) {
+        list.forEach((item, i) => {
+          if (item[this.valueKey] === value[this.valueKey]) {
+            selectIndex = i
+          }
+        })
+      } else {
+        selectIndex = list.indexOf(value) > -1 ? list.indexOf(value) : 0
+      }
       this.setIndex(selectIndex)
     }
   },
@@ -220,7 +250,6 @@ $prefixCls: sq-picker-item;
   flex: 1;
   flex-basis: 1e-9px;
   width: 1%;
-  height: 240px;
   position: relative;
   overflow: hidden;
   &-wrapper {
@@ -233,10 +262,11 @@ $prefixCls: sq-picker-item;
     padding: 0;
   }
   &-row {
-    height: 48px;
-    line-height: 48px;
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

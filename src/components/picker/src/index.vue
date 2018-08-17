@@ -6,9 +6,9 @@
       <div @click="$_confirm">{{ confirmButtonText }}</div>
     </div>
     <div class="sq-picker-body" @touchmove.prevent>
-      <div class="sq-picker-body-mask top"></div>
-      <div class="sq-picker-body-mask bottom"></div>
-      <div class="sq-picker-body-wrapper">
+      <div class="sq-picker-body-mask top" :style="bodyMaskStyles"></div>
+      <div class="sq-picker-body-mask bottom" :style="bodyMaskStyles"></div>
+      <div class="sq-picker-body-wrapper" :style="bodyStyles">
         <picker-item
           v-for="(item, index) in formatColumns(columns)"
           :key="index"
@@ -16,6 +16,9 @@
           :format="format && format.length ? format[index] : ''"
           :format-value-fun="formatValueFun"
           :value-key="valueKey"
+          :row-height="rowHeight"
+          :row-count="rowCount"
+          :hide-empty-column="hideEmptyColumn"
           @on-change="$_onChange"
         />
       </div>
@@ -63,7 +66,28 @@ export default {
       type: Array,
       default: () => []
     },
-    valueKey: String
+    valueKey: String,
+    hideEmptyColumn: {
+      type: Boolean,
+      default: false
+    },
+    rowHeight: {
+      type: Number,
+      default: 48
+    },
+    rowCount: {
+      type: Number,
+      default: 5
+    }
+  },
+
+  computed: {
+    bodyStyles () {
+      return { height: `${this.rowHeight * this.rowCount}px` }
+    },
+    bodyMaskStyles () {
+      return { height: `${this.rowHeight * parseInt(this.rowCount / 2)}px` }
+    }
   },
 
   data () {
@@ -97,8 +121,11 @@ export default {
       this.$emit('confirm', this.getValues())
     },
 
-    $_onChange (columnIndex) {
-      this.$emit('on-change', this.getValues(), this)
+    $_onChange (valueInColumnIndex, columnInColumnsIndex) {
+      this.$emit('on-change', this.getValues(), this, {
+        valueInColumnIndex,
+        columnInColumnsIndex
+      })
     },
 
     getValues () {
@@ -125,9 +152,6 @@ export default {
         this.setColumnValues(index, dataList)
       })
     }
-  },
-
-  mounted () {
   }
 }
 </script>
@@ -144,8 +168,8 @@ $prefixCls: sq-picker;
   position: relative;
   &-header {
     display: flex;
-    min-height: 50px;
-    line-height: 50px;
+    min-height: 48px;
+    line-height: 48px;
     @include mix-1px($bottom: 1);
     :nth-child(1) {
       width: 80px;
@@ -169,7 +193,6 @@ $prefixCls: sq-picker;
       position: absolute !important;
       z-index: 10;
       width: 100%;
-      height: 96px;
       pointer-events: none;
       transform: translateZ(0);
       &.top {

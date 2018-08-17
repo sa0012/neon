@@ -39,6 +39,7 @@ import Toast from '@/components/toast'
 
 // business
 import Agree from '@/components/agree'
+import Area from '@/components/area'
 import Carlicense from '@/components/carlicense'
 import ChildinsuranceCell from '@/components/childinsurance-cell'
 import ChooseCar from '@/components/choose-car'
@@ -84,6 +85,7 @@ const components = [
 
   // business
   Agree,
+  Area,
   Carlicense,
   ChildinsuranceCell,
   ChooseCar,
@@ -148,6 +150,7 @@ export {
 
   // business
   Agree,
+  Area,
   Carlicense,
   ChildinsuranceCell,
   ChooseCar,

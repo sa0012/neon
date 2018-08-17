@@ -8,6 +8,8 @@
       show-toolbar
       v-model="value1"
       :columns="list1"
+      :row-height="34"
+      :row-count="7"
       @confirm="handleConfirm"
       @cancel="handleCancel"
       @on-change="onChange"
