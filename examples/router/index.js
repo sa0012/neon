@@ -8,6 +8,7 @@ export default new Router({
     return { x: 0, y: 0 }
   },
   routes: [
+    { path: '/area', meta: { name: '省市区选择' }, component: () => import('../routers/area.vue') },
     { path: '/steps', meta: { name: '步骤条' }, component: () => import('../routers/steps.vue') },
     { path: '/numberKeyboard', meta: { name: '数字键盘' }, component: () => import('../routers/numberKeyboard.vue') },
     { path: '/uploader', meta: { name: '图片上传' }, component: () => import('../routers/uploader.vue') },

@@ -25,8 +25,7 @@ export default {
   data () {
     return {
       isOpen: false,
-      contentHeight: 0,
-      contentOpenStatusHeight: 0
+      contentHeight: 0
     }
   },
 
@@ -54,7 +53,7 @@ export default {
 
   methods: {
     $_click () {
-      this.isOpen ? (this.contentHeight = 0) : (this.contentHeight = this.contentOpenStatusHeight)
+      this.isOpen ? (this.contentHeight = 0) : (this.contentHeight = this.$refs.contentWrap.offsetHeight)
       this.isOpen = !this.isOpen
       this.$parent.childrenClickUpdateStatus(this.name, this.isOpen)
     }
@@ -64,7 +63,7 @@ export default {
     isOpen: {
       handler (val, oldVal) {
         if (val && this.contentHeight === 0) {
-          this.contentHeight = this.contentOpenStatusHeight
+          this.contentHeight = this.$refs.contentWrap.offsetHeight
         } else if (this.$parent.accordion && !val && this.contentHeight !== 0) {
           this.contentHeight = 0
         }
@@ -75,7 +74,6 @@ export default {
 
   mounted () {
     this.$nextTick(() => {
-      this.contentOpenStatusHeight = this.$refs.contentWrap.offsetHeight
       this.name !== undefined && this.$parent.updateStatus(this.name)
     })
   }
@@ -83,6 +81,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/common/styles/_mixins.scss';
 $prefixCls: accordion-item;
 .#{$prefixCls} {
   background-color: #fff;
@@ -101,10 +100,12 @@ $prefixCls: accordion-item;
     transition: height .2s ease-in-out;
   }
   &-open~.#{$prefixCls}-content-transition {
-    border-top: 1px solid #e6e6e6;
+    // border-top: 1px solid #e6e6e6;
+    @include mix-1px($top: 1);
   }
   & ~ & {
-    border-top: 1px solid #e6e6e6;
+    // border-top: 1px solid #e6e6e6;
+    @include mix-1px($top: 1);
   }
   &-arrow {
     position: relative;

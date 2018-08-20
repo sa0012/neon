@@ -99,11 +99,12 @@ $prefixCls: sq-checkbox-group;
     }
   }
   &-cell-between {
-    .sq-checkbox {
-      .sq-checkbox-wrap {
-        justify-content: space-between;
-        flex-direction: row-reverse;
-      }
+    .sq-checkbox-wrap {
+      justify-content: space-between;
+      flex-direction: row-reverse;
+    }
+    .sq-checkbox-text {
+      margin-left: 0;
     }
   }
   &-disabled {

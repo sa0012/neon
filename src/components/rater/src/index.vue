@@ -3,8 +3,16 @@
     <input v-model="currentValue" style="display:none">
     <a class="sq-rater-box" v-for="(i, index) in max" @click="handleClick(i-1)" :key="index">
       <i
-        class="sq-icon sq-icon-pentagram"
+        class="sq-icon"
+        :class="[charsetIcon ? charset[charsetIcon] : charset['star']]"
         :style="{fontSize: fontSize + 'px', color: (currentValue > i-1) ? activeColor : defaultColor}"
+        v-if="charsetIcon !== 'smile'"
+      ></i>
+       <i
+        class="sq-icon"
+        :class="[(currentValue > i-1) ? charset['smile'] : charset['weep']]"
+        :style="{fontSize: fontSize + 'px', color: (currentValue > i-1) ? activeColor : defaultColor}"
+        v-if="charsetIcon === 'smile'"
       ></i>
     </a>
   </div>
@@ -43,6 +51,13 @@ export default {
       type: String,
       default: 'rgb(219, 219, 219)'
     },
+    charsetIcon: {
+      type: String,
+      default: 'star',
+      validator (value) {
+        return ['star', 'love', 'flower', 'smile'].indexOf(value) > -1
+      }
+    },
     disabled: Boolean
   },
   methods: {
@@ -60,7 +75,14 @@ export default {
   data () {
     return {
       colors: [],
-      currentValue: 0
+      currentValue: 0,
+      charset: {
+        star: 'sq-icon-pentagram',
+        love: 'sq-icon-aixin',
+        flower: 'sq-icon-flower',
+        smile: 'sq-icon-emoji',
+        weep: 'sq-icon-weep'
+      }
     }
   },
   watch: {

@@ -2,19 +2,26 @@
   <div class="sq-picker">
     <div class="sq-picker-header sq-picker-bottom-line" v-show="showToolbar">
       <div @click="$_cancel">{{ cancelButtonText }}</div>
-      <div>{{ title }}</div>
+      <div>{{ title }}{{isCascade}}</div>
       <div @click="$_confirm">{{ confirmButtonText }}</div>
     </div>
-    <div class="sq-picker-body">
-      <picker-item
-        v-for="(item, index) in currentColumns"
-        :key="index"
-        :data-list="item"
-        :format="format ? format[index] : ''"
-        :list-index="index"
-        :value-key="valueKey"
-        @on-change="$_onChange"
-      />
+    <div class="sq-picker-body" @touchmove.prevent>
+      <div class="sq-picker-body-mask top" :style="bodyMaskStyles"></div>
+      <div class="sq-picker-body-mask bottom" :style="bodyMaskStyles"></div>
+      <div class="sq-picker-body-wrapper" :style="bodyStyles">
+        <picker-item
+          v-for="(item, index) in formatColumns(columns)"
+          :key="index"
+          :data-list="item"
+          :format="format && format.length ? format[index] : ''"
+          :format-value-fun="formatValueFun"
+          :value-key="valueKey"
+          :row-height="rowHeight"
+          :row-count="rowCount"
+          :hide-empty-column="hideEmptyColumn"
+          @on-change="$_onChange"
+        />
+      </div>
     </div>
     <div class="sq-picker-loading-mask" v-show="loading">
       <div class="sq-picker-loading-icon"></div>
@@ -33,9 +40,8 @@ export default {
   },
 
   props: {
-    format: {
-      type: Array
-    },
+    formatValueFun: Function,
+    format: Array,
     cancelButtonText: {
       type: String,
       default: '取消'
@@ -60,108 +66,100 @@ export default {
       type: Array,
       default: () => []
     },
-    valueKey: {
-      type: String
+    valueKey: String,
+    hideEmptyColumn: {
+      type: Boolean,
+      default: false
     },
-    defaultValue: {
-      type: Array
+    rowHeight: {
+      type: Number,
+      default: 48
+    },
+    rowCount: {
+      type: Number,
+      default: 5
+    }
+  },
+
+  computed: {
+    bodyStyles () {
+      return { height: `${this.rowHeight * this.rowCount}px` }
+    },
+    bodyMaskStyles () {
+      return { height: `${this.rowHeight * parseInt(this.rowCount / 2)}px` }
     }
   },
 
   data () {
     return {
-      isCascade: Object.prototype.toString(this.columns[0]) === '[object Object]' && Array.isArray(this.columns[0].children),
-      currentColumns: this.formateColumns(this.columns),
-      currentValue: [],
-      defVal: this.defaultValue
+      children: []
+    }
+  },
+
+  watch: {
+    columns (val) {
+      this.setColumns(val)
     }
   },
 
   methods: {
-    updateColumnAndValue ({columnIndex = 0, newCol, newValueIndex = 0}) {
-      const col = this.getChildrens()[columnIndex]
-      col.list = newCol
-      col.index = newValueIndex
-
-      const colLength = newCol.length
-      col.maxY = (colLength + col.offset) * col.rowHeight
-      col.minY = (col.offset - colLength + 1) * col.rowHeight
-
-      col.$_setCurrentValueByIndex(newValueIndex)
-      col.$_setYByIndex(newValueIndex)
-    },
-    formateColumns (columns) {
+    formatColumns (columns) {
       if (columns.length && Array.isArray(columns[0])) {
         return columns
+      } else if (Object.prototype.toString.call(columns[0]) === '[object Object]' && columns[0].values) {
+        return columns.map(column => { return column.values })
       } else {
-        let arr = columns
-        if (Object.prototype.toString(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
-          let result = []
-          while (arr && arr[0] && Object.prototype.toString(arr[0]) === '[object Object]' && Array.isArray(arr[0].children)) {
-            result.push(arr)
-            arr = arr[0].children
-          }
-          return result
-        } else {
-          return [columns]
-        }
+        return [columns]
       }
     },
-    getChildrens () {
-      return this.$children.filter(item => item.$options.name === 'sq-picker-item')
-    },
+
     $_cancel () {
-      this.$emit('cancel', this.currentValue, this.index)
+      this.$emit('cancel')
     },
+
     $_confirm () {
-      this.$emit('confirm', this.currentValue, this.index)
+      this.$emit('confirm', this.getValues())
     },
-    updateCurrentValue ({ val, isDefault }) {
-      isDefault === 1 ? (this.currentValue = val) : this.currentValue.push(this.valueKey ? val[this.valueKey] : val)
+
+    $_onChange (valueInColumnIndex, columnInColumnsIndex) {
+      this.$emit('on-change', this.getValues(), this, {
+        valueInColumnIndex,
+        columnInColumnsIndex
+      })
     },
-    $_onChange ({ item, itemIndex, listIndex }) {
-      let lenth = this.currentColumns.length
-      const { valueKey } = this
 
-      if (this.isCascade && listIndex < lenth) {
-        let len = listIndex
-        let newChildrenArr = JSON.parse(JSON.stringify(item.children))
+    getValues () {
+      return this.children.map(child => child.getValue())
+    },
 
-        while (len < lenth && newChildrenArr.length > 0) {
-          const child = this.getChildrens()[len + 1]
-          const offset = child.offset
-          const rowHeight = child.rowHeight
+    setValues (values) {
+      values.forEach((value, index) => {
+        this.children[index] && this.children[index].setValue(value)
+      })
+    },
 
-          child.list = newChildrenArr
-          child.$_setY(offset * rowHeight)
-          child.maxY = (newChildrenArr.length + offset) * rowHeight
-          child.minY = (offset - newChildrenArr.length + 1) * rowHeight
-          this.currentValue[len + 1] = valueKey ? newChildrenArr[0][valueKey] : newChildrenArr
-
-          newChildrenArr = (newChildrenArr[0].children && (JSON.parse(JSON.stringify(newChildrenArr[0].children)))) || []
-          len++
-        }
+    setColumnValues (index, dataList) {
+      const column = this.children[index]
+      if (column && JSON.stringify(column.list) !== JSON.stringify(dataList)) {
+        column.list = dataList
+        column.setIndex(0)
       }
+    },
 
-      this.currentValue[listIndex] = valueKey ? item[valueKey] : item
-
-      this.$emit(
-        'on-change',
-        {
-          value: JSON.parse(JSON.stringify(this.currentValue)),
-          item: JSON.parse(JSON.stringify(item)),
-          itemIndex: itemIndex,
-          listIndex: listIndex
-        },
-        this
-      )
+    setColumns (val) {
+      const columns = this.formatColumns(val || this.columns)
+      columns.forEach((dataList, index) => {
+        this.setColumnValues(index, dataList)
+      })
     }
   }
 }
 </script>
 
 <style lang="scss">
+@import '~@/common/styles/mixins';
 @import '~@/common/styles/variable';
+
 $prefixCls: sq-picker;
 
 .#{$prefixCls} {
@@ -170,8 +168,9 @@ $prefixCls: sq-picker;
   position: relative;
   &-header {
     display: flex;
-    min-height: 50px;
-    line-height: 50px;
+    min-height: 48px;
+    line-height: 48px;
+    @include mix-1px($bottom: 1);
     :nth-child(1) {
       width: 80px;
       flex: 0 0 80px;
@@ -189,25 +188,50 @@ $prefixCls: sq-picker;
     }
   }
   &-body {
-    height: 240px;
-    line-height: 48px;
     position: relative;
-    display: flex;
-    overflow: hidden;
-  }
-  &-bottom-line {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      height: 1px;
-      border-bottom: 1px solid #E5E5E5;
-      color: #E5E5E5;
-      transform-origin: 0 100%;
-      transform: scaleY(0.5);
+    &-mask {
+      position: absolute !important;
+      z-index: 10;
+      width: 100%;
+      pointer-events: none;
+      transform: translateZ(0);
+      &.top {
+        top: 0;
+        background: -webkit-gradient(linear,left bottom,left top,from(hsla(0,0%,100%,.6)),to(hsla(0,0%,100%,.95)));
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          height: 1px;
+          border-bottom: 1px solid #E5E5E5;
+          color: #E5E5E5;
+          transform-origin: 0 100%;
+          transform: scaleY(0.5);
+        }
+      }
+      &.bottom {
+        bottom: 0;
+        background: -webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,.6)),to(hsla(0,0%,100%,.95)));
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          height: 1px;
+          border-bottom: 1px solid #E5E5E5;
+          color: #E5E5E5;
+          transform-origin: 0 100%;
+          transform: scaleY(0.5);
+        }
+      }
+    }
+    &-wrapper {
+      display: flex;
     }
   }
   &-loading-mask {
@@ -220,6 +244,7 @@ $prefixCls: sq-picker;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 11;
   }
   &-loading-icon {
     box-sizing: border-box;
@@ -231,7 +256,7 @@ $prefixCls: sq-picker;
     border-left-color: $theme-color;
     border-bottom-color: $theme-color;
     border-radius: 50%;
-    animation: quan .8s infinite linear
+    animation: quan .8s infinite linear;
   }
 }
 </style>

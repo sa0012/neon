@@ -1,3 +1,4 @@
+@import './mixins';
 @import './variable';
 @import './normalize';
 @import './animation';
@@ -9,4 +10,10 @@
   width: 1em;
   height: 1em;
   font-size: 14px;
+}
+.sq-1px-top {
+  @include mix-1px($top: 1);
+}
+.sq-1px-bottom {
+  @include mix-1px($bottom: 1);
 }

@@ -3,11 +3,15 @@
     <div class="sq-loadmore-main" :style="{ 'transform': transform }" :class="{'sq-loadmore-is-transition': isTransition}">
       <slot></slot>
       <div :ref="flagWrap" class="sq-loadmore-flag"></div>
-      <div class="sq-loadmore-bottom">
+      <div
+        class="sq-loadmore-bottom"
+        v-show="!((bottomStatus === 'loading' && !loading) || (!bottomText && bottomStatus === 'finished'))"
+        :style="{'marginBottom': marginBottom}"
+      >
         <span v-show="showLoadingIcon && loading" class="sq-loadmore-spinner-wrap">
           <div class="sq-loadmore-loading-icon"></div>
         </span>
-        <span>{{ bottomText }}</span>
+        <span class="sq-loadmore-bottom-text">{{ bottomText }}</span>
       </div>
     </div>
   </div>
@@ -71,8 +75,11 @@ export default {
   },
 
   computed: {
+    marginBottom () {
+      return this.isFinishedLoad ? '0' : '-50px'
+    },
     transform () {
-      return this.moveLength > 0 ? null : `translate(0, ${this.moveLength}px)`
+      return (+this.moveLength > 0 || this.isFinishedLoad) ? null : `translate(0, ${this.moveLength}px)`
     },
     flagWrap () {
       return `flagWrap${String(Math.random()).slice(2)}`
@@ -154,27 +161,27 @@ export default {
     },
     inView (element, ref) {
       if (ref === void 0) ref = {}
-      var offset = ref.offset
+      let offset = ref.offset
       if (offset === void 0) offset = 0
-      var threshold = ref.threshold
+      let threshold = ref.threshold
       if (threshold === void 0) threshold = 0
 
-      var ref$1 = element.getBoundingClientRect()
-      var top = ref$1.top
-      var right = ref$1.right
-      var bottom = ref$1.bottom
-      var left = ref$1.left
-      var width = ref$1.width
-      var height = ref$1.height
+      let ref$1 = element.getBoundingClientRect()
+      let top = ref$1.top
+      let right = ref$1.right
+      let bottom = ref$1.bottom
+      let left = ref$1.left
+      let width = ref$1.width
+      let height = ref$1.height
 
-      var intersection = {
+      let intersection = {
         t: bottom,
         r: window.innerWidth - left,
         b: window.innerHeight - top,
         l: right
       }
 
-      var elementThreshold = {
+      let elementThreshold = {
         x: threshold * width,
         y: threshold * height
       }
@@ -228,6 +235,10 @@ $prefixCls: sq-loadmore;
   }
   &-is-transition {
     transition: transform 0.3s linear;
+  }
+  &-bottom-text {
+    font-size: 13px;
+    color: #999;
   }
 }
 </style>

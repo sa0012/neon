@@ -3,13 +3,17 @@
     <demo-title>消息提示</demo-title>
     <sq-button type="primary" size="small" @click="showToast">消息提示</sq-button>
 
-    <demo-title>成功/失败提示</demo-title>
+    <demo-title>成功/失败/警告提示</demo-title>
     <sq-button type="primary" size="small" @click="showSuccess">成功提示</sq-button>
     <sq-button type="primary" size="small" @click="showError">失败提示</sq-button>
+    <sq-button type="primary" size="small" @click="showWarn">警告提示</sq-button>
 
     <demo-title>加载提示</demo-title>
     <sq-button type="primary" size="small" @click="showLoading">加载提示</sq-button>
     <sq-button type="primary" size="small" @click="showLoading2">加载提示无文字</sq-button>
+
+    <demo-title>自定义iconClass</demo-title>
+    <sq-button type="primary" size="small" @click="showDiy">自定义</sq-button>
   </div>
 </template>
 
@@ -37,11 +41,17 @@ export default {
         })
       }, 5000)
     },
+    showWarn () {
+      this.$toast.warn('没有查到数据', 2000)
+    },
     showLoading () {
       this.$toast.loading('加载中..')
     },
     showLoading2 () {
       this.$toast.loading('')
+    },
+    showDiy () {
+      this.$toast.show({ message: '自定义icon', iconClass: 'pentagram' })
     }
   }
 }

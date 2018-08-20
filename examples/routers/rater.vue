@@ -44,6 +44,27 @@
         :activeColor="activeColor">
       </sq-rater>
     </div>
+    <div class="rater-wrap">
+      <demo-title>set charsetIcon</demo-title>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor1"
+        :charsetIcon="charsetIcon">
+      </sq-rater>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor1"
+        :charsetIcon="charsetIcon1">
+      </sq-rater>
+      <sq-rater 
+        :fontSize="fontSize" 
+        :defaultColor="defaultColor"
+        :activeColor="activeColor1"
+        :charsetIcon="charsetIcon2">
+      </sq-rater>
+    </div>
   </div>
 </template>
 
@@ -58,12 +79,16 @@ export default {
       fontSize: '40',
       disabled: true,
       activeColor: 'green',
+      activeColor1: '#f31212',
       defaultColor: '#666',
       value: 2,
       score1: 0,
       score2: 0,
       score3: 0,
-      score4: 0
+      score4: 0,
+      charsetIcon: 'flower',
+      charsetIcon1: 'love',
+      charsetIcon2: 'smile'
     }
   },
 

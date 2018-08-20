@@ -90,11 +90,12 @@ $prefixCls: sq-radio-group;
     }
   }
   &-cell-between {
-    .sq-radio {
-      .sq-radio-wrap {
-        justify-content: space-between;
-        flex-direction: row-reverse;
-      }
+    .sq-radio-wrap {
+      justify-content: space-between;
+      flex-direction: row-reverse;
+    }
+    .sq-radio-text {
+      margin-left: 0;
     }
   }
   &-disabled {

@@ -1,22 +1,28 @@
 <template>
   <div class="sq-field">
     <div class="sq-field-label" v-if="label">
-      <span>{{label}}</span>
+      <span class="sq-field-label-text" :class="labelClasses">{{label}}</span>
     </div>
     <div class="sq-field-value" :class="classes">
-      <input
-        v-if="!$slots.control"
-        class="sq-field-control"
-        :class="{'sq-field-right': right}"
-        :type="type"
-        :value="value"
-        :style="iptStyle"
-        v-bind="$attrs"
-        v-on="listeners"
-      >
-      <slot name="control"></slot>
-      <div class="sq-field-button" v-if="$slots.button">
-        <slot name="button"/>
+      <div class="sq-field-body">
+        <input
+          v-if="!$slots.control"
+          class="sq-field-control"
+          :class="{'sq-field-right': right}"
+          :type="type"
+          :value="value"
+          :style="iptStyle"
+          v-bind="$attrs"
+          v-on="listeners"
+        >
+        <slot name="control"></slot>
+        <div class="sq-field-icon" v-if="icon || arrow || isLink" @click="$_clickIcon">
+          <i class="sq-icon" :class="iconClasses" v-if="!$slots.icon"></i>
+          <slot name="icon"></slot>
+        </div>
+        <div class="sq-field-button" v-if="$slots.button">
+          <slot name="button"/>
+        </div>
       </div>
     </div>
   </div>
@@ -45,13 +51,34 @@ export default {
       type: Boolean,
       default: false
     },
-    value: null
+    isLink: {
+      type: Boolean,
+      default: false
+    },
+    value: null,
+    required: {
+      type: Boolean,
+      default: true
+    },
+    icon: String
   },
 
   computed: {
+    iconClasses () {
+      return [
+        {
+          'sq-icon-arrow-right': this.arrow || this.isLink
+        },
+        this.icon ? `sq-icon-${this.icon}` : ''
+      ]
+    },
+    labelClasses () {
+      return {
+        'sq-field-label-required': this.required
+      }
+    },
     classes () {
       return {
-        'sq-field-islink': this.arrow,
         'sq-field-textright': this.right
       }
     },
@@ -64,6 +91,9 @@ export default {
   },
 
   methods: {
+    $_clickIcon () {
+      this.$emit('click-icon')
+    },
     onInput (event) {
       this.$emit('input', event.target.value)
     }
@@ -85,15 +115,26 @@ $prefixCls: sq-field;
   border-radius: 0;
   color: #333;
   overflow: hidden;
-  font-size: 0;
   position: relative;
-  padding-left: 16px;
+  padding: 0 16px;
+  font-size: 14px;
   &-label {
-    flex: 0 0 74px;
-    width: 74px;
+    max-width: 84px;
+    margin-right: 6px;
     box-sizing: border-box;
-    span {
-      font-size: 14px;
+    flex: 1;
+    // &-text {
+    //   font-size: 14px;
+    // }
+    &-required {
+      position: relative;
+      &::after {
+        content: '*';
+        position: absolute;
+        color: red;
+        font-size: 20px;
+        margin-top: 4px;
+      }
     }
     &~.#{$prefixCls}-value {
       .#{$prefixCls}-control {
@@ -133,16 +174,31 @@ $prefixCls: sq-field;
       }
     }
   }
+  &-body {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
   &-control {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
     line-height: normal;
     border:0;
+    margin: 0;
     padding: 14px 0px;
-    font-size: 14px;
+    background-color: transparent;
+    resize: none;
+    display: block;
   }
-  &::after {
+  &-icon {
+    display: inline-block;
+    padding: 0 10px;
+    color: #999;
+    line-height: inherit;
+    margin-right: -10px;
+  }
+  &~&::after {
     content: '';
     position: absolute;
     top: 0;
@@ -155,25 +211,25 @@ $prefixCls: sq-field;
     width: auto;
     transform: scale(1, .5);
     border: 0 solid #e5e5e5;
-    border-bottom-width: 1px;
+    border-top-width: 1px;
   }
 }
 
 // arrow
-.#{$prefixCls}-islink {
-  position: relative;
-}
-.#{$prefixCls}-islink::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 10px;
-  right: 14px;
-  top: 20px;
-  height: 10px;
-  border-right: 2px solid #e6e6e6;
-  border-top: 2px solid #e6e6e6;
-  box-sizing: border-box;
-  transform: rotate(45deg);
-}
+// .#{$prefixCls}-islink {
+//   position: relative;
+// }
+// .#{$prefixCls}-islink::after {
+//   content: "";
+//   display: block;
+//   position: absolute;
+//   width: 10px;
+//   right: 14px;
+//   top: 20px;
+//   height: 10px;
+//   border-right: 2px solid #e6e6e6;
+//   border-top: 2px solid #e6e6e6;
+//   box-sizing: border-box;
+//   transform: rotate(45deg);
+// }
 </style>

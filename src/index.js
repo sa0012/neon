@@ -32,12 +32,14 @@ import Uploader from '@/components/uploader'
 // action
 import Actionsheet from '@/components/actionsheet'
 import DatePicker from '@/components/date-picker'
+import Datetime from '@/components/datetime'
 import Dialog from '@/components/dialog'
 import Picker from '@/components/picker'
 import Toast from '@/components/toast'
 
 // business
 import Agree from '@/components/agree'
+import Area from '@/components/area'
 import Carlicense from '@/components/carlicense'
 import ChildinsuranceCell from '@/components/childinsurance-cell'
 import ChooseCar from '@/components/choose-car'
@@ -83,6 +85,7 @@ const components = [
 
   // business
   Agree,
+  Area,
   Carlicense,
   ChildinsuranceCell,
   ChooseCar,
@@ -100,6 +103,7 @@ const install = Vue => {
 
   Vue.use(Toast)
   Vue.use(Dialog)
+  Vue.use(Datetime)
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
@@ -140,11 +144,13 @@ export {
   Actionsheet,
   Dialog,
   DatePicker,
+  Datetime,
   Picker,
   Toast,
 
   // business
   Agree,
+  Area,
   Carlicense,
   ChildinsuranceCell,
   ChooseCar,

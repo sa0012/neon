@@ -9,7 +9,7 @@
     <sq-field-group>
       <sq-field placeholder="请输入用户名" v-model="name" arrow></sq-field>
       <sq-field label="用户名" placeholder="请输入用户名" v-model="name" arrow></sq-field>
-      <sq-field label="密码" placeholder="请输入密码" v-model="name"></sq-field>
+      <sq-field label="密码" placeholder="请输入密码" v-model="name" icon="error-full" @click-icon="clickIcon"></sq-field>
     </sq-field-group>
 
   </div>
@@ -25,7 +25,11 @@ export default {
     }
   },
 
-  methods: {}
+  methods: {
+    clickIcon () {
+      console.log('clickIcon')
+    }
+  }
 }
 
 </script>

@@ -2,30 +2,40 @@
   <div class="sq-childinsurance-cell">
     <div class="sq-childinsurance-cell-row">
       <div class="sq-childinsurance-cell-left">{{ label }}</div>
-      <sq-checkicon v-model="exemptSelected" class="sq-childinsurance-cell-middle" @change="$_clickiconChangeHandle">
+      <sq-child-checkicon
+        v-show="hasExemptClause && rightText !== '不投保'"
+        v-model="exemptSelected"
+        class="sq-childinsurance-cell-middle"
+        :disabled="checkboxDisabled"
+        :type="borderType"
+        @change="$_clickiconChangeHandle"
+      >
         <span style="color:rgb(153, 153, 153);">{{ middleText }}</span>
-      </sq-checkicon>
+      </sq-child-checkicon>
       <div
         class="sq-childinsurance-cell-right sq-childinsurance-cell-arrow"
         @click="$_click"
       >
-        {{ rightText }}
+        <span v-show="rightText !== '不投保'">{{ rightText }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SqCheckicon from '../../checkicon'
+import SqChildCheckicon from './child-checkicon'
 
 export default {
   name: 'sq-childinsurance-cell',
 
   components: {
-    SqCheckicon
+    SqChildCheckicon
   },
 
   props: {
+    hasExemptClause: {
+      type: Boolean
+    },
     label: {
       type: String
     },
@@ -37,6 +47,13 @@ export default {
       type: String
     },
     rightText: {
+      type: [String, Number]
+    },
+    checkboxDisabled: {
+      type: Boolean,
+      default: false
+    },
+    borderType: {
       type: String
     }
   },
@@ -44,6 +61,12 @@ export default {
   data () {
     return {
       exemptSelected: this.value
+    }
+  },
+
+  watch: {
+    value (val) {
+      this.exemptSelected = val
     }
   },
 

@@ -25,7 +25,7 @@ export default {
       }
     },
     name: {
-      type: String,
+      type: [String, Number],
       required: true
     },
     disabled: {
@@ -61,12 +61,12 @@ export default {
   methods: {
     change () {
       if (this.disabled || this.isGroupDisabled) return
-      this.$parent.update(this.name)
+      this.$parent && this.$parent.$options.name === 'sq-checkbox-group' && this.$parent.update(this.name)
     }
   },
 
   mounted () {
-    this.$parent.update()
+    this.$parent && this.$parent.$options.name === 'sq-checkbox-group' && this.$parent.update()
   }
 }
 

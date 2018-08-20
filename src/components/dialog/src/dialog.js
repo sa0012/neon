@@ -26,7 +26,7 @@ const dialogPlugin = {
       },
       hide (callback) {
         instance.visible = false
-        callback && callback()
+        typeof callback === 'function' && callback()
       },
       alert (option) {
         this.show(Object.assign({}, option, { type: 'alert' }))
@@ -36,11 +36,7 @@ const dialogPlugin = {
       }
     }
 
-    Vue.mixin({
-      created: function () {
-        this.$dialog = dialog
-      }
-    })
+    Vue.prototype.$dialog = dialog
   }
 }
 
