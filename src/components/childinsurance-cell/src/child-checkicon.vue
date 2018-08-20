@@ -20,6 +20,13 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    type: {
+      type: String,
+      default: 'round', // 默认圆形，可设置为方形
+      validator (value) {
+        return ['round', 'square'].indexOf(value) > -1
+      }
     }
   },
 
@@ -27,7 +34,8 @@ export default {
     classes () {
       return [
         {
-          'sq-child-checkicon-checked': this.value
+          'sq-child-checkicon-checked': this.value,
+          'square': this.type === 'square'
         }
       ]
     }
@@ -48,6 +56,9 @@ export default {
 @import '~@/common/styles/variable';
 $prefixCls: sq-child-checkicon;
 
+.square.sq-child-checkicon-checkbox::before {
+  border-radius: 0;
+}
 .#{$prefixCls} {
   &-wrap {
     display: inline-block;
@@ -69,6 +80,11 @@ $prefixCls: sq-child-checkicon;
       margin-top: -8px;
       border-radius: 50%;
       box-sizing: border-box;
+    }
+    &.square {
+      ::before {
+        border-radius: 0;
+      }
     }
     &::after {
       content: "";

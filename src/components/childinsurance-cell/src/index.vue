@@ -7,6 +7,7 @@
         v-model="exemptSelected"
         class="sq-childinsurance-cell-middle"
         :disabled="checkboxDisabled"
+        :type="borderType"
         @change="$_clickiconChangeHandle"
       >
         <span style="color:rgb(153, 153, 153);">{{ middleText }}</span>
@@ -51,6 +52,9 @@ export default {
     checkboxDisabled: {
       type: Boolean,
       default: false
+    },
+    borderType: {
+      type: String
     }
   },
 

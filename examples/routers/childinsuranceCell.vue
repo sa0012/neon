@@ -12,6 +12,16 @@
       :checkbox-disabled="disabled"
       @click="click"
     />
+    <sq-childinsurance-cell
+      :has-exempt-clause="hasExemptClause"
+      label="司机责任险"
+      middle-text="不计免赔"
+      right-text="投保"
+      border-type="square"
+      v-model="exemptSelected"
+      :checkbox-disabled="disabled"
+      @click="click"
+    />
   </div>
 </template>
 
