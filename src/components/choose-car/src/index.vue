@@ -1,12 +1,13 @@
 <template>
   <div v-if="myShowChooseCar" ref="carWrapper" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
-    <div class="sq-brandCars" ref="menuWrapper">
-      <div class="sq-brandCars-menu-wrapper" ref="brandCars"  v-if="isShowBrandCars">
-        <div class="sq-brandCars-search-wrap">
-          <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
-          <i class="sq-icon sq-icon-search sq-brandCars-search-icon" @click="searchCarModels"></i>
-        </div>
+    <div class="sq-brandCars" ref="menuWrapper" >
+      <!-- +++++++++++++++++++++++++++品牌选项+++++++++++++++++++++++++++ -->
+      <div class="sq-brandCars-menu-wrapper" ref="brandCars"  v-if="isShowBrandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
         <ul class="sq-brandCars-list">
+          <li class="sq-brandCars-search">
+            <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
+            <i class="sq-icon sq-icon-search sq-brandCars-search-icon" @click="searchCarModels"></i>
+          </li>
           <li class="sq-brandCars-item" v-for="(item, index) in brandCategorys" :key="index">
             <h3 class="sq-brandCars-menu-title" :class="item">{{item}}</h3>
             <ul class="sq-brandCars-menu-list">
@@ -23,9 +24,9 @@
         </ul>
       </div>
       <!-- +++++++++++++++++++++++++++选车系+++++++++++++++++++++++++++ -->
-      <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar">
-        <div class="sq-selectcar-cars-wrapper">
-          <div class="sq-selectcar-inner" ref="selectCar">
+      <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar" @touchstart="selectCarStarts" @touchmove="selectCarMove" @touchend="selectCarEnd">
+        <div class="sq-selectcar-cars-wrapper" ref="carsWrapper">
+          <div class="sq-selectcar-inner">
             <div class="sq-selectcar-slide" ref="slide">
               <h3 class="sq-selectcar-carts-first-title">
                 <!--<slot name="brandCategoryCode"></slot>-->
@@ -49,7 +50,7 @@
       <div class="sq-selectcar-car-modal" v-if="showSelectCar" @click="closeCarModal"></div>
 
       <!-- +++++++++++++++++++++++++++++++++选车型+++++++++++++++++++++++++++++++ -->
-      <div class="sq-selectmodel" v-if="showSelectModel">
+      <div class="sq-selectmodel" v-if="showSelectModel" @touchstart="modelStart" @touchmove="modelMove" @touchend="modelEnd">
         <div class="sq-selectmodel-wrap" ref="selectModel">
           <div class="sq-selectmodel-icon-title">
             <!--<slot name="selectModelCode"></slot>-->
@@ -91,8 +92,8 @@
       <!--<div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>-->
 
       <!-- +++++++++++++++++++++++++++++++++搜索车型+++++++++++++++++++++++++++++++++ -->
-      <div class="sq-search" v-if="showSearchModal" >
-        <div class="sq-search-inner" ref="searchWapper" :style="{ height: searchWapperHeight + 'px' }">
+      <div class="sq-search" v-if="showSearchModal" @touchstart="searchStart" @touchmove="searchMove" @touchend="searchEnd">
+        <div class="sq-search-inners" ref="searchWap" :style="{ height: searchWapperHeight + 'px' }">
           <sq-loadmore :loading="searchLoading" :bottom-fun="searchCarLoadMore" :is-finished-load="searchIsFinishedLoad" :bottom-finished-text="finishedText">
             <ul class="sq-search-list">
               <li class="sq-search-list-item" v-for="(item, index) in searchCarArr" :key="index" @click.stop="closeSelectModel(item)">{{ item.displayName }}</li>
@@ -267,32 +268,40 @@ export default {
       e.preventDefault()
     },
     touchMoveLogic (e, refs, touchStartX, touchStartY) {
-      let currentDisX = e.changedTouches[0].clientX
-      let currentDisY = e.changedTouches[0].clientY
+      let currentDisX = e.changedTouches[0].pageX
+      let currentDisY = e.changedTouches[0].pageY
       let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
       let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
       let currentMoveDisX = currentDisX - this[touchStartX]
-      // this.$refs.menuWrapper.style.overflowY = 'hidden'
+
+      // 判断滑动方向
       if (this.firstMove) {
-        if (lastDistanceY > lastDistanceX) {
-          this.firstMove = false
-          return false
-        } else {
+        if (lastDistanceX > lastDistanceY && (currentDisX - this[touchStartX] > 0)) {
+          this.$refs.menuWrapper.style.overflowY = 'hidden'
+          if (refs === 'selectCar') {
+            this.$refs.carsWrapper.style.overflowY = 'hidden'
+          }
           if (currentMoveDisX < 0) {
             this.$refs[refs].style.transform = 'translateX(0)'
           } else {
             this.$refs[refs].style.transform = 'translateX(' + currentMoveDisX + 'px)'
           }
+        } else {
+          this.firstMove = false
+          return false
         }
       }
       e.stopPropagation()
       // e.preventDefault()
     },
     touchEndLogic (e, refs, showModal, touchStart) {
-      let currentDis = e.changedTouches[0].clientX
+      let currentDis = e.changedTouches[0].pageX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
       this.$refs.menuWrapper.style.overflowY = 'scroll'
+      if (refs === 'selectCar') {
+        this.$refs.carsWrapper.style.overflowY = 'scroll'
+      }
       if (this.firstMove) {
         this.$refs[refs].style.overflow = 'auto'
         if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
@@ -302,6 +311,12 @@ export default {
         } else {
           this.$refs[refs].style.transform = 'translateX(100%)'
           this[showModal] = false
+          if (refs === 'selectModel' || refs === 'searchWap') {
+            this.isShowBrandCars = true
+          }
+          if (refs === 'selectModel') {
+            this.showSelectCar = true
+          }
           if (showModal === 'myShowChooseCar') {
             this.$emit('update:showChooseCar', this.myShowChooseCar)
             this.$emit('praent-event', this.myShowChooseCar)
@@ -319,8 +334,8 @@ export default {
     },
     brandCarsStart (e) {
       this.firstMove = true
-      this.brandCarStartX = e.changedTouches[0].clientX
-      this.brandCarStartY = e.changedTouches[0].clientY
+      this.brandCarStartX = e.changedTouches[0].pageX
+      this.brandCarStartY = e.changedTouches[0].pageY
     },
     brandCarsMove (e) {
       this.touchMoveLogic(e, 'brandCars', 'brandCarStartX', 'brandCarStartY')
@@ -330,8 +345,8 @@ export default {
     },
     selectCarStarts (e) {
       this.firstMove = true
-      this.selectCarStartX = e.changedTouches[0].clientX
-      this.selectCarStartY = e.changedTouches[0].clientY
+      this.selectCarStartX = e.changedTouches[0].pageX
+      this.selectCarStartY = e.changedTouches[0].pageY
     },
     selectCarMove (e) {
       this.touchMoveLogic(e, 'selectCar', 'selectCarStartX', 'selectCarStartY')
@@ -341,8 +356,8 @@ export default {
     },
     modelStart (e) {
       this.firstMove = true
-      this.modelsStartX = e.changedTouches[0].clientX
-      this.modelsStartY = e.changedTouches[0].clientY
+      this.modelsStartX = e.changedTouches[0].pageX
+      this.modelsStartY = e.changedTouches[0].pageY
     },
     modelMove (e) {
       this.touchMoveLogic(e, 'selectModel', 'modelsStartX', 'modelsStartY')
@@ -352,14 +367,14 @@ export default {
     },
     searchStart (e) {
       this.firstMove = true
-      this.searchCarStartX = e.changedTouches[0].clientX
-      this.searchCarStartY = e.changedTouches[0].clientY
+      this.searchCarStartX = e.changedTouches[0].pageX
+      this.searchCarStartY = e.changedTouches[0].pageY
     },
     searchMove (e) {
-      this.touchMoveLogic(e, 'searchWapper', 'searchCarStartX', 'searchCarStartY')
+      this.touchMoveLogic(e, 'searchWap', 'searchCarStartX', 'searchCarStartY')
     },
     searchEnd (e) {
-      this.touchEndLogic(e, 'searchWapper', 'showSearchModal', 'searchCarStartX')
+      this.touchEndLogic(e, 'searchWap', 'showSearchModal', 'searchCarStartX')
     },
     getBrandCategoryArr () {
       this.brandCategorys = Object.keys(this.carsData)
@@ -445,8 +460,8 @@ export default {
         this.showIndex = false
         this.isShowBrandCars = false
         setTimeout(() => {
-          if (this.$refs.searchWapper) {
-            this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWapper.getBoundingClientRect().top
+          if (this.$refs.searchWap) {
+            this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWap.getBoundingClientRect().top
           }
         }, 30)
       } else {
@@ -516,7 +531,7 @@ export default {
   left: 0;
   background: rgba(0, 0, 0, 0.7);
   z-index: 333;
-  &-search-wrap {
+  &-search {
     background: #F5F5F5;
     padding: 10px 15px;
     position: relative;
@@ -529,6 +544,7 @@ export default {
     border: 1px solid #666;
     padding-left: 15px;
     box-sizing: border-box;
+    -webkit-appearance: none;
   }
   &-search-icon {
     position: absolute;
@@ -889,7 +905,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 888;
-  &-inner {
+  &-inners {
     width: 100%;
     overflow: scroll;
     background: #fff;
