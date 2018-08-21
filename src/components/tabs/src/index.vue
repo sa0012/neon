@@ -1,26 +1,19 @@
 <template>
-  <div class="sq-tabs-wrapper">
-    <div
-      class="sq-tabs-header"
-      :style="{'position': sticky ? 'fixed' : 'absolute'}"
-      ref="tabHeaderWrapper"
-    >
-      <div
-        class="sq-tabs-header-line"
-        :style="{
-          'transform': tleft, 'width': lineWidth,
-          'display': lineDisplay
-        }"
-      >
-      </div>
+  <div class="sq-tabs-wrapper" :style="titleHeightStyles">
+    <div class="sq-tabs-header" :style="headerWrapperStyles" ref="tabHeaderWrapper">
+      <div class="sq-tabs-header-line" v-if="!hideLine && type === 'line'" :style="lineStyles"></div>
       <div
         class="sq-tabs-header-item"
-        :class="{'sq-tabs-active': currentActive === tab.name}"
+        :class="{
+          'sq-tabs-active-line': type === 'line' && currentActive === tab.name,
+          'sq-tabs-active-block': type === 'block' && currentActive === tab.name
+        }"
         @click="handleClick($event, index)"
         v-for="(tab, index) in tabList"
         :key="index"
+        ref="tabItemTitleWrapperRef"
       >
-        {{ tab.label }}
+        <span ref="title" class="sq-tabs-title">{{ tab.label }}</span>
       </div>
     </div>
     <div class="sq-tabs-content">
@@ -40,34 +33,76 @@ export default {
     sticky: {
       type: Boolean,
       default: false
+    },
+    lineScale: {
+      type: [String, Number],
+      default: 1
+    },
+    titleHeight: {
+      type: [String, Number],
+      default: 48
+    },
+    fontSize: {
+      type: [String, Number],
+      default: 16
+    },
+    hideLine: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: 'line',
+      validator (value) {
+        return ['line', 'block'].indexOf(value) > -1
+      }
+    }
+  },
+
+  computed: {
+    titleHeightStyles () {
+      return { 'padding-top': `${this.titleHeight}px` }
+    },
+    headerWrapperStyles () {
+      return { 'position': this.sticky ? 'fixed' : 'absolute', 'height': `${this.titleHeight}px`, 'font-size': `${this.fontSize}px` }
+    },
+    lineStyles () {
+      return { 'transform': this.tleft, 'width': this.lineWidth, 'display': this.lineDisplay }
     }
   },
 
   data () {
     return {
-      tleft: `translate(0, 0)`,
+      tleft: `translate(0, 0) scaleX(${this.lineScale})`,
       tabList: [],
       currentActive: this.active,
       lineWidth: '0',
-      lineDisplay: 'none'
+      lineDisplay: 'none',
+      index: 0
     }
   },
 
   methods: {
     handleClick (event, index) {
+      this.index = index
       const navName = this.tabList[index].name
       if (navName === this.currentActive) { return }
 
       this.currentActive = navName
-      const parentLeft = event.srcElement.parentElement.getBoundingClientRect().left
-      const targetLeft = event.target.getBoundingClientRect().left
-      this.tleft = `translate(${targetLeft - parentLeft}px, 0)`
+
+      if (!this.hideLine && this.type === 'line') {
+        const parentLeft = this.$refs.tabHeaderWrapper.getBoundingClientRect().left
+        const targetLeft = this.$refs.tabItemTitleWrapperRef[index].getBoundingClientRect().left
+        this.tleft = `translate(${targetLeft - parentLeft}px, 0) scaleX(${this.lineScale})`
+      }
 
       this.$emit('click', navName)
     },
+
     getPane () {
       return this.$children.filter(item => item.$options.name === 'sq-tabpane')
     },
+
     updateNav () {
       const children = this.getPane()
       if (children.length === this.tabList.length) { return }
@@ -80,9 +115,23 @@ export default {
         })
       })
 
-      this.lineWidth = (100 / this.tabList.length) + '%'
+      !this.hideLine && this.type === 'line' && (this.lineWidth = (100 / this.tabList.length) + '%')
+    },
+
+    renderTitle (el, index) {
+      this.$nextTick(() => {
+        const title = this.$refs.title[index]
+        title.parentNode.replaceChild(el, title)
+      })
+    },
+
+    listenResize () {
+      const parentLeft = this.$refs.tabHeaderWrapper.getBoundingClientRect().left
+      const targetLeft = this.$refs.tabItemTitleWrapperRef[this.index].getBoundingClientRect().left
+      this.tleft = `translate(${targetLeft - parentLeft}px, 0) scaleX(${this.lineScale})`
     }
   },
+
   mounted () {
     const currentActive = this.currentActive
 
@@ -92,25 +141,43 @@ export default {
 
       this.tabList.forEach((item, index) => {
         if (currentActive === item.name) {
-          this.tleft = `translate(${index * (width / length)}px, 0)`
+          this.index = index
+          this.tleft = `translate(${index * (width / length)}px, 0) scaleX(${this.lineScale})`
           this.lineDisplay = 'block'
         }
       })
     }
-  }
 
+    !this.hideLine && this.type === 'line' && window.addEventListener('resize', this.listenResize, false)
+  },
+
+  beforeDestroy () {
+    !this.hideLine && this.type === 'line' && window.removeEventListener('resize', this.listenResize)
+  }
 }
 </script>
+
 <style lang="scss">
 @import '~@/common/styles/variable';
 
 .sq-tabs {
-  &-active {
+  &-title {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  &-active-line {
     color: $theme-color;
+  }
+  &-active-block {
+    color: #fff;
+    background-color: $theme-color;
   }
   &-wrapper {
     position: relative;
-    padding-top: 48px;
+    // padding-top: 48px;
   }
   &-header {
     z-index: 1;
@@ -119,8 +186,7 @@ export default {
     top: 0;
     left: 0;
     right: 0;
-    height: 48px;
-    line-height: 48px;
+    // height: 48px;
     text-align: center;
     font-size: 16px;
     overflow:hidden;
