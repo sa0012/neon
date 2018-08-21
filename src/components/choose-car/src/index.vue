@@ -1,7 +1,7 @@
 <template>
-  <div v-if="myShowChooseCar" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+  <div v-if="myShowChooseCar" ref="carWrapper" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
     <div class="sq-brandCars" ref="menuWrapper">
-      <div class="sq-brandCars-menu-wrapper" ref="brandCars">
+      <div class="sq-brandCars-menu-wrapper" ref="brandCars"  v-if="isShowBrandCars">
         <div class="sq-brandCars-search-wrap">
           <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
           <i class="sq-icon sq-icon-search sq-brandCars-search-icon" @click="searchCarModels"></i>
@@ -159,6 +159,7 @@ export default {
       brandCategoryData: {},
       showSelectCar: false,
       showSelectModel: false,
+      isShowBrandCars: true,
       isShowText: false,
       showSearchLoadText: false,
       slideHeight: 0,
@@ -204,6 +205,7 @@ export default {
         this.showSelectCar = false
         this.showSearchModal = false
         this.showSelectModel = false
+        this.isShowBrandCars = true
         this.showIndex = true
         this.getBrandCategoryArr()
       }
@@ -270,6 +272,7 @@ export default {
       let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
       let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
       let currentMoveDisX = currentDisX - this[touchStartX]
+      // this.$refs.menuWrapper.style.overflowY = 'hidden'
       if (this.firstMove) {
         if (lastDistanceY > lastDistanceX) {
           this.firstMove = false
@@ -289,6 +292,7 @@ export default {
       let currentDis = e.changedTouches[0].clientX
       let lastDistance = currentDis - this[touchStart]
       let selectModelWidth = this.$refs[refs].clientWidth
+      this.$refs.menuWrapper.style.overflowY = 'scroll'
       if (this.firstMove) {
         this.$refs[refs].style.overflow = 'auto'
         if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
@@ -384,6 +388,8 @@ export default {
     },
     jumpChooseCar (brandId, familyId) {
       this.showSelectModel = true
+      this.showSelectCar = false
+      this.isShowBrandCars = false
       this.$emit('brandModelId', { brandId, familyId })
       try {
         setTimeout(() => {
@@ -437,6 +443,7 @@ export default {
       if (this.searchCarArr.length > 0) {
         this.showSearchModal = true
         this.showIndex = false
+        this.isShowBrandCars = false
         setTimeout(() => {
           if (this.$refs.searchWapper) {
             this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWapper.getBoundingClientRect().top
