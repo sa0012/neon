@@ -1,6 +1,9 @@
 <template>
   <div class="sq-tab-content" v-show="$parent.currentActive === name">
     <slot></slot>
+    <div v-if="$slots.title" ref="title" class="sq-tab-title-wrapper">
+      <slot name="title" />
+    </div>
   </div>
 </template>
 
@@ -12,14 +15,23 @@ export default {
   name: 'sq-tabpane',
 
   props: {
-    name: String,
-    label: String
+    name: [String, Number],
+    label: [String, Number]
   },
 
   mounted () {
     this.$parent.updateNav()
+
+    if (this.$slots.title) {
+      this.$parent.renderTitle(this.$refs.title, this.$parent.getPane().indexOf(this))
+    }
   }
 }
 </script>
+
 <style lang="scss">
+.sq-tab-title-wrapper {
+  width: 100%;
+  height: 100%;
+}
 </style>
