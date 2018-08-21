@@ -58,7 +58,7 @@ export default {
     value: null,
     required: {
       type: Boolean,
-      default: true
+      default: false
     },
     icon: String
   },
