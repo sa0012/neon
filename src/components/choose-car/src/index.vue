@@ -304,7 +304,7 @@ export default {
       }
       if (this.firstMove) {
         this.$refs[refs].style.overflow = 'auto'
-        if ((lastDistance > 0 && lastDistance < (selectModelWidth / 3 * 1.5)) || lastDistance < 0) {
+        if ((lastDistance > 0 && lastDistance < (selectModelWidth / 2)) || lastDistance < 0) {
           this.$refs[refs].style.transform = 'translateX(0)'
         } else if (lastDistance === 0) {
           return false
