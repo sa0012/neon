@@ -529,7 +529,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.3);
   z-index: 333;
   &-search {
     background: #F5F5F5;
@@ -558,6 +558,7 @@ export default {
     // overflow-x: hidden;
     overflow: auto;
     background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
   }
   &-list {
     list-style: none;
@@ -672,7 +673,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 555;
   }
   &-cars-wrapper {
@@ -687,6 +688,7 @@ export default {
     transition-property: transform, -webkit-transform;
     animation: fadeLeft 0.4s ease-out;
     animation-fill-mode: forwards;
+    box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
   }
   &-inner {
     position: relative;
@@ -784,6 +786,7 @@ export default {
     background: #fff;
     position: relative;
     z-index: 333;
+    box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
   }
   &-model-modal {
     position: fixed;
@@ -791,7 +794,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 777;
   }
   &-model-icon {
@@ -909,6 +912,7 @@ export default {
     width: 100%;
     overflow: scroll;
     background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
   }
   &-list {
     margin: 0;
