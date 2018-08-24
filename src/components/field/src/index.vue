@@ -8,7 +8,7 @@
         <input
           v-if="!$slots.control"
           class="sq-field-control"
-          :class="{'sq-field-right': right}"
+          :class="inputClasses"
           :type="type"
           :value="value"
           :style="iptStyle"
@@ -16,8 +16,8 @@
           v-on="listeners"
         >
         <slot name="control"></slot>
-        <div class="sq-field-icon" v-if="icon || arrow || isLink" @click="$_clickIcon">
-          <i class="sq-icon" :class="iconClasses" v-if="!$slots.icon"></i>
+        <div class="sq-field-icon" v-if="clearable || icon || arrow || isLink" :style="iconWrapperStyles" @click="$_clickIcon">
+          <i class="sq-icon" :class="iconClasses" v-if="!$slots.icon" :style="iconStyles"></i>
           <slot name="icon"></slot>
         </div>
         <div class="sq-field-button" v-if="$slots.button">
@@ -37,6 +37,10 @@ export default {
   props: {
     iptStyle: {
       type: Object
+    },
+    align: {
+      type: String,
+      default: 'left'
     },
     right: {
       type: Boolean,
@@ -60,17 +64,43 @@ export default {
       type: Boolean,
       default: false
     },
-    icon: String
+    icon: String,
+    clearable: {
+      type: Boolean,
+      default: false
+    },
+    iconColor: {
+      type: String,
+      default: 'inherit'
+    },
+    iconSize: {
+      type: String,
+      default: '16'
+    }
   },
 
   computed: {
+    inputClasses () {
+      return [ {'sq-field-right': this.right}, `sq-field-ipt-${this.align}` ]
+    },
     iconClasses () {
       return [
         {
-          'sq-icon-arrow-right': this.arrow || this.isLink
+          'sq-icon-arrow-right': !this.clearable && (this.arrow || this.isLink),
+          'sq-icon-error-full': this.clearable && (this.value || this.value === 0)
         },
         this.icon ? `sq-icon-${this.icon}` : ''
       ]
+    },
+    iconWrapperStyles () {
+      return {
+        'color': this.iconColor
+      }
+    },
+    iconStyles () {
+      return {
+        'font-size': `${this.iconSize}px`
+      }
     },
     labelClasses () {
       return {
@@ -92,7 +122,11 @@ export default {
 
   methods: {
     $_clickIcon () {
-      this.$emit('click-icon')
+      if (this.clearable) {
+        this.$emit('input', '')
+      } else {
+        this.$emit('click-icon')
+      }
     },
     onInput (event) {
       this.$emit('input', event.target.value)
@@ -140,9 +174,18 @@ $prefixCls: sq-field;
       .#{$prefixCls}-control {
         padding-left: 0;
       }
+      .#{$prefixCls}-ipt-left {
+        text-align: left;
+      }
+      .#{$prefixCls}-ipt-center {
+        text-align: center;
+      }
+      .#{$prefixCls}-ipt-right {
+        text-align: right;
+      }
       .#{$prefixCls}-right {
         text-align: right;
-        padding-right: 14px;
+        // padding-right: 14px;
       }
     }
     &~.#{$prefixCls}-value.#{$prefixCls}-islink.#{$prefixCls}-textright {
@@ -194,9 +237,12 @@ $prefixCls: sq-field;
   &-icon {
     display: inline-block;
     padding: 0 10px;
-    color: #999;
+    color: inherit;
     line-height: inherit;
     margin-right: -10px;
+    .sq-icon-arrow-right, .sq-icon-error-full {
+      color: #ccc;
+    }
   }
   &~&::after {
     content: '';
@@ -214,22 +260,4 @@ $prefixCls: sq-field;
     border-top-width: 1px;
   }
 }
-
-// arrow
-// .#{$prefixCls}-islink {
-//   position: relative;
-// }
-// .#{$prefixCls}-islink::after {
-//   content: "";
-//   display: block;
-//   position: absolute;
-//   width: 10px;
-//   right: 14px;
-//   top: 20px;
-//   height: 10px;
-//   border-right: 2px solid #e6e6e6;
-//   border-top: 2px solid #e6e6e6;
-//   box-sizing: border-box;
-//   transform: rotate(45deg);
-// }
 </style>

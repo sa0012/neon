@@ -30,9 +30,9 @@
 
     <demo-title left>列表 cell 样式</demo-title>
     <sq-checkbox-group v-model="value5" type="cell" @change="change">
-      <sq-checkbox name="pg">苹果</sq-checkbox>
-      <sq-checkbox name="xj">香蕉</sq-checkbox>
-      <sq-checkbox name="hmg" disabled>哈密瓜</sq-checkbox>
+      <sq-checkbox name="pg" border-type="square-border">苹果</sq-checkbox>
+      <sq-checkbox name="xj" border-type="square-border">香蕉</sq-checkbox>
+      <sq-checkbox name="hmg" border-type="square-border" disabled>哈密瓜</sq-checkbox>
     </sq-checkbox-group>
 
     <demo-title left>列表 cell-between 样式</demo-title>

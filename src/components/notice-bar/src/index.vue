@@ -129,6 +129,7 @@ $prefixCls: sq-notice-bar;
   padding: 8px 15px;
   align-items: center;
   box-sizing: border-box;
+  font-size: 0;
   &-icon {
     max-width: 20px;
     margin-right: 5px;
