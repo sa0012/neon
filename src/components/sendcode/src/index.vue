@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import SqButton from '@/components/button'
+import SqButton from '../../button/src'
 
 export default {
   name: 'sq-sendcode',

@@ -519,7 +519,7 @@ export default {
 
 <style lang="scss">
 /*依赖 base 里的动画 */
-@import '~@/common/styles/mixins';
+// @import '~@/common/styles/mixins';
 .sq-brandCars {
   overflow-x: hidden;
   overflow-y: scroll;

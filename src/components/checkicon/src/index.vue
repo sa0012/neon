@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/variable';
+// @import '~@/common/styles/variable';
 .sq-checkicon {
   &-wrap {
     &.disabled {

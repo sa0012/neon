@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import SqCheckicon from '@/components/checkicon/src'
+import SqCheckicon from '../../checkicon/src'
 
 export default {
   /**
@@ -76,7 +76,7 @@ export default {
 
 </script>
 <style lang="scss">
-@import '~@/common/styles/variable';
+// @import '~@/common/styles/variable';
 $prefixCls: sq-radio;
 
 .#{$prefixCls} {

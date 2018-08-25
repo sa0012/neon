@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import SqCheckicon from '@/components/checkicon/src'
+import SqCheckicon from '../../checkicon/src'
 
 export default {
   name: 'sq-agree',
@@ -35,7 +35,7 @@ export default {
 
 </script>
 <style lang="scss">
-@import '~@/common/styles/_variable.scss';
+// @import '~@/common/styles/variable.scss';
 $prefixCls: sq-agree;
 
 .#{$prefixCls} {
