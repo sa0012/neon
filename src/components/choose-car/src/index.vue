@@ -377,7 +377,6 @@ export default {
           click: true,
           probeType: 3
         })
-        console.dir(this.$refs.brandCars)
         this.menuScroll.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
           this.handleScroll(this.scrollY)
@@ -409,7 +408,7 @@ export default {
       this.isShowBrandCars = false
       this.$refs.menuWrapper.style.overflowY = 'hidden'
       this.$emit('brandModelId', { brandId, familyId })
-      this.childScroll.destroy()
+      this.childScroll && this.childScroll.destroy()
       try {
         setTimeout(() => {
           if (this.$refs.wrapper) {
@@ -422,6 +421,7 @@ export default {
     },
     closeCarModal () {
       this.showSelectCar = false
+      this.showIndex = true
       this.$refs.menuWrapper.style.overflowY = 'scroll'
     },
     closeSelectModel (detail) {
@@ -466,7 +466,7 @@ export default {
         this.showIndex = false
         this.isShowBrandCars = false
         this.$refs.menuWrapper.style.overflowY = 'hidden'
-        this.menuScroll.destroy()
+        this.menuScroll && this.menuScroll.destroy()
         setTimeout(() => {
           if (this.$refs.searchWap) {
             this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWap.getBoundingClientRect().top
@@ -481,7 +481,7 @@ export default {
         this.$toast.text('搜索字符不能少于5位', 3000)
         return
       }
-      this.menuScroll.destroy()
+      this.menuScroll && this.menuScroll.destroy()
       this.$emit('searchOption', this.search, this.getSearchCar)
     },
     getKeyCode (e) {
@@ -913,6 +913,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 888;
+  background: #fff;
   &-inners {
     width: 100%;
     overflow: scroll;
