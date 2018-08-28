@@ -1,6 +1,6 @@
 {
   "name": "@insaic/neon",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "publishConfig": {
     "access": "public"
   },
@@ -21,9 +21,9 @@
     "build:lib": "rm -rf lib && npm run build:dev && npm run build:prod && npm run build:src"
   },
   "dependencies": {
+    "better-scroll": "^1.12.6"
   },
   "peerDependencies": {
-    "better-scroll": "^1.12.6",
     "vue": ">= 2.5.0"
   },
   "devDependencies": {
