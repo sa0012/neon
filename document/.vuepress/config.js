@@ -26,6 +26,8 @@ module.exports = {
         collapsable: false,
         children: [
           ['/quickstart', '快速上手'],
+          ['/defaultStyle', '内置样式'],
+          ['/theme', '主题定制'],
           ['/changelog', '更新日志'],
         ]
       },

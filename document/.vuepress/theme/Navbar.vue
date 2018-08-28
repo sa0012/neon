@@ -10,10 +10,13 @@
         :class="{ 'can-hide': $site.themeConfig.logo }">
         {{ $siteTitle }}
       </span>
+      <span class="neon-version">
+        v{{ NEON_VERSION }}
+      </span>
     </router-link>
+    <AlgoliaSearchBox v-if="isAlgoliaSearch" :options="algolia"/>
+    <SearchBox v-else-if="$site.themeConfig.search !== false"/>
     <div class="links">
-      <AlgoliaSearchBox v-if="isAlgoliaSearch" :options="algolia"/>
-      <SearchBox v-else-if="$site.themeConfig.search !== false"/>
       <NavLinks class="can-hide"/>
     </div>
   </header>
@@ -25,8 +28,16 @@ import AlgoliaSearchBox from '@AlgoliaSearchBox'
 import SearchBox from './SearchBox.vue'
 import NavLinks from './NavLinks.vue'
 
+const pkg = require('../../../package.json')
+const NEON_VERSION = pkg.version
+
 export default {
   components: { SidebarButton, NavLinks, SearchBox, AlgoliaSearchBox },
+  data () {
+    return {
+      NEON_VERSION
+    }
+  },
   computed: {
     algolia () {
       return this.$themeLocaleConfig.algolia || this.$site.themeConfig.algolia || {}

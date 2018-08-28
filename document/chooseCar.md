@@ -7,7 +7,7 @@ import { ChooseCar } from '@insaic/neon'
 Vue.use(ChooseCar)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/chooseCar.vue)
 ```html
 <template>
   <div>

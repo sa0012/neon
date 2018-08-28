@@ -8,7 +8,7 @@ import { Loadmore } from '@insaic/neon'
 Vue.use(Loadmore)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/loadmore.vue)
 按住列表，上拉一定距离（通过 threshold 配置）后释放，被指定为 bottom-fun 的方法就会执行
 ```html
 <div style="overflow:scroll;" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">

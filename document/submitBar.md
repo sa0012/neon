@@ -8,7 +8,7 @@ import { SubmitBar } from '@insaic/neon'
 Vue.use(SubmitBar)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/submitBar.vue)
 ```html
 <!-- 普通状态 -->
 <sq-submit-bar

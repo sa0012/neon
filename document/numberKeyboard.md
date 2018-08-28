@@ -8,7 +8,7 @@ import { NumberKeyboard } from '@insaic/neon'
 Vue.use(NumberKeyboard)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/numberKeyboard.vue)
 ```html
 <!-- 普通键盘 -->
 <sq-number-keyboard

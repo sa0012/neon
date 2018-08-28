@@ -119,8 +119,8 @@ export default {
   margin 0px auto
 
 ::-webkit-scrollbar
-  width 6px
-  height 6px
+  width 10px
+  height 10px
 
 ::-webkit-scrollbar-track-piece
   background-color transparent
@@ -129,13 +129,20 @@ export default {
 
 .sidebar::-webkit-scrollbar-thumb
   background-color transparent
-  height 6px
+  height 12px
 
 .sidebar:hover::-webkit-scrollbar-thumb
   background-color hsla(0,0%,49%,.3)
 
+.page::-webkit-scrollbar-thumb
+  background-color hsla(0,0%,49%,.5)
+  height 12px
+
+.page:hover::-webkit-scrollbar-thumb
+  background-color hsla(0,0%,49%,.5)
+
 ::-webkit-scrollbar-thumb:vertical
-  height 6px
+  height 12px
 
 ::-webkit-scrollbar-thumb:horizontal,::-webkit-scrollbar-thumb:vertical
   background-color transparent
@@ -143,7 +150,7 @@ export default {
   -webkit-border-radius 6px
 
 ::-webkit-scrollbar-thumb:horizontal
-  width 8px
+  width 12px
 
 @media (max-width: 1120px)
   .theme-container

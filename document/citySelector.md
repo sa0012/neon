@@ -7,7 +7,7 @@
 import { CitySelector } from '@insaic/neon'
 Vue.use(CitySelector)
 ```
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/citySelector.vue)
 ```html
 <!-- 配合popup使用 -->
 <sq-popup v-model="isShow" position="bottom">

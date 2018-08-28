@@ -8,7 +8,7 @@ import { ChildinsuranceCell } from '@insaic/neon'
 Vue.use(ChildinsuranceCell)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/childinsuranceCell.vue)
 ```html
 <sq-childinsurance-cell
   label="司机责任险"
