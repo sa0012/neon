@@ -20,7 +20,9 @@
     "build:src": "cross-env NODE_ENV=production webpack --config ./build/webpack.src.conf.js",
     "build:lib": "rm -rf lib && npm run build:dev && npm run build:prod && npm run build:src"
   },
-  "dependencies": {},
+  "dependencies": {
+    "better-scroll": "^1.12.6"
+  },
   "peerDependencies": {
     "vue": ">= 2.5.0"
   },
