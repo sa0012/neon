@@ -88,6 +88,8 @@ export default {
     cityIndexArr () {
       this.cityIndex = Object.keys(this.chooseCityData)
       this.$nextTick(() => {
+        // 禁止鼠标滚动
+
         this.cityIndex.forEach(item => {
           let scroll = document.querySelector(`.${item}`).offsetTop
           this.scrollArr.push(scroll)
@@ -232,6 +234,9 @@ export default {
     if (this.myShowCity) {
       this.cityIndexArr()
     }
+  },
+  destroyed () {
+    this.menuScroll.destroy()
   }
 }
 </script>

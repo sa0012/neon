@@ -393,9 +393,9 @@ export default {
         let clientWidth = document.documentElement.clientWidth || document.body.clientWidth
         this.slideHeight = this.$refs.slide.offsetHeight - clientWidth
         setTimeout(() => {
-          // this.childScroll = new BScroll(this.$refs.selectCar, {
-          //   click: true
-          // })
+          this.childScroll = new BScroll(this.$refs.selectCar, {
+            click: true
+          })
         }, 30)
       })
       this.brandCategoryData.code = code
@@ -409,13 +409,7 @@ export default {
       this.isShowBrandCars = false
       this.$refs.menuWrapper.style.overflowY = 'hidden'
       this.$emit('brandModelId', { brandId, familyId })
-      setTimeout(() => {
-        // console.log(this.refs.selectModel)
-        console.log(document.querySelector('.sq-selectmodel'))
-        // this.modelScroll = new BScroll(document.querySelector('.sq-selectmodel'), {
-        //   click: true
-        // })
-      }, 30)
+      this.childScroll.destroy()
       try {
         setTimeout(() => {
           if (this.$refs.wrapper) {
@@ -472,6 +466,7 @@ export default {
         this.showIndex = false
         this.isShowBrandCars = false
         this.$refs.menuWrapper.style.overflowY = 'hidden'
+        this.menuScroll.destroy()
         setTimeout(() => {
           if (this.$refs.searchWap) {
             this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWap.getBoundingClientRect().top
@@ -486,6 +481,7 @@ export default {
         this.$toast.text('搜索字符不能少于5位', 3000)
         return
       }
+      this.menuScroll.destroy()
       this.$emit('searchOption', this.search, this.getSearchCar)
     },
     getKeyCode (e) {
@@ -522,6 +518,10 @@ export default {
     if (this.myShowChooseCar) {
       this.getBrandCategoryArr()
     }
+  },
+  destroyed () {
+    this.menuScroll.destroy()
+    this.childScroll.destroy()
   }
 }
 </script>
