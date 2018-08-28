@@ -239,7 +239,6 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '~@/common/styles/mixins';
 .sq-choose-city {
   overflow-x: hidden;
   overflow-y: scroll;

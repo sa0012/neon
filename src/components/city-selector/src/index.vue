@@ -151,8 +151,6 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '~@/common/styles/variable';
-
 .sq-slide-left-enter,
 .sq-slide-right-leave-active {
   opacity: 0;

@@ -158,8 +158,6 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '~@/common/styles/variable';
-
 .sq-tabs {
   &-title {
     display: flex;

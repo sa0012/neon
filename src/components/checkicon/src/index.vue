@@ -1,6 +1,7 @@
 <template>
-  <span class="sq-checkicon-wrap" :class="classes">
+  <span class="sq-checkicon-wrap" :class="classes" @click="$_click">
     <i class="sq-icon" :class="iconClasses"></i>
+    <slot></slot>
   </span>
 </template>
 
@@ -50,12 +51,19 @@ export default {
         }
       ]
     }
+  },
+
+  methods: {
+    $_click (event) {
+      if (this.disabled) return
+      this.$emit('change', !this.value)
+      this.$emit('input', !this.value)
+    }
   }
 }
 </script>
 
 <style lang="scss">
-// @import '~@/common/styles/variable';
 .sq-checkicon {
   &-wrap {
     &.disabled {
@@ -70,15 +78,11 @@ export default {
       color: $theme-color;
       transition: all .2s ease-in-out;
       font-size: inherit;
-      width: 100%;
-      height: 100%;
       display: inline-block;
       transform: scale(1.2);
     }
     .sq-icon-unchecked, .sq-icon-square-unchecked, .sq-icon-square-border-unchecked {
       font-size: inherit;
-      width: 100%;
-      height: 100%;
       display: inline-block;
       color: #ccc;
       background-color: #fff;
