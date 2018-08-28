@@ -236,7 +236,9 @@ export default {
     }
   },
   destroyed () {
-    this.menuScroll.destroy()
+    if (this.menuScroll) {
+      this.menuScroll.destroy()
+    }
   }
 }
 </script>

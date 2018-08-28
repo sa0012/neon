@@ -520,8 +520,8 @@ export default {
     }
   },
   destroyed () {
-    this.menuScroll.destroy()
-    this.childScroll.destroy()
+    this.menuScroll && this.menuScroll.destroy()
+    this.childScroll && this.childScroll.destroy()
   }
 }
 </script>
