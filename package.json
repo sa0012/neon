@@ -1,6 +1,6 @@
 {
   "name": "@insaic/neon",
-  "version": "0.4.0",
+  "version": "0.4.4",
   "publishConfig": {
     "access": "public"
   },
@@ -14,17 +14,20 @@
     "dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build:demo": "node build/build.demo.js",
-    "build:dev": "cross-env NODE_ENV=production webpack --config ./build/webpack.lib.dev.conf.js",
-    "build:prod": "cross-env NODE_ENV=production MIN_ENV=min webpack --config ./build/webpack.lib.prod.conf.js",
-    "build:src": "cross-env NODE_ENV=production webpack --config ./build/webpack.src.conf.js",
+    "build:demo": "cross-env BUILD_TYPE=demo node build/build.js",
+    "build:dev": "cross-env BUILD_TYPE=libdev node build/build.js",
+    "build:prod": "cross-env MIN_ENV=min BUILD_TYPE=libprod node build/build.js",
+    "build:src": "cross-env BUILD_TYPE=src node build/build.js",
     "build:lib": "rm -rf lib && npm run build:dev && npm run build:prod && npm run build:src"
   },
-  "dependencies": {},
+  "dependencies": {
+    "better-scroll": "^1.12.6"
+  },
   "peerDependencies": {
     "vue": ">= 2.5.0"
   },
   "devDependencies": {
+    "postcss-pxtorem": "^4.0.1",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",

@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/variable';
+@import '~@/common/styles/variables';
 
 .demo-icon-page {
   user-select: text;

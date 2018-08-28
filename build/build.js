@@ -2,6 +2,7 @@
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
+const BUILD_TYPE = process.env.BUILD_TYPE
 
 const ora = require('ora')
 const rm = require('rimraf')
@@ -9,9 +10,21 @@ const path = require('path')
 const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('../config')
-const webpackConfig = require('./webpack.prod.conf')
 
-const spinner = ora('building for production...')
+let webpackConfig = null
+
+if (BUILD_TYPE === 'demo') {
+  webpackConfig = require('./webpack.demo.conf')
+} else if (BUILD_TYPE === 'libdev') {
+  webpackConfig = require('./webpack.lib.dev.conf')
+} else if (BUILD_TYPE === 'libprod') {
+  webpackConfig = require('./webpack.lib.prod.conf')
+} else if (BUILD_TYPE === 'src') {
+  webpackConfig = require('./webpack.src.conf')
+}
+
+
+const spinner = ora(`building for ${BUILD_TYPE}...`)
 spinner.start()
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {

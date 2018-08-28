@@ -2,16 +2,16 @@
   <div class="sq-childinsurance-cell">
     <div class="sq-childinsurance-cell-row">
       <div class="sq-childinsurance-cell-left">{{ label }}</div>
-      <sq-child-checkicon
-        v-show="hasExemptClause && rightText !== '不投保'"
-        v-model="exemptSelected"
-        class="sq-childinsurance-cell-middle"
-        :disabled="checkboxDisabled"
-        :type="borderType"
-        @change="$_clickiconChangeHandle"
-      >
-        <span style="color:rgb(153, 153, 153);">{{ middleText }}</span>
-      </sq-child-checkicon>
+        <sq-child-checkicon
+          class="sq-childinsurance-cell-middle"
+          v-show="hasExemptClause && rightText !== '不投保'"
+          v-model="exemptSelected"
+          :disabled="checkboxDisabled"
+          :type="borderType"
+          @change="$_clickiconChangeHandle"
+        >
+          <span style="color:rgb(153, 153, 153);">{{ middleText }}</span>
+        </sq-child-checkicon>
       <div
         class="sq-childinsurance-cell-right sq-childinsurance-cell-arrow"
         @click="$_click"
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import SqChildCheckicon from './child-checkicon'
+import SqChildCheckicon from '../../checkicon/src'
 
 export default {
   name: 'sq-childinsurance-cell',
@@ -82,7 +82,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/mixins';
 $prefixCls: sq-childinsurance-cell;
 
 .#{$prefixCls} {

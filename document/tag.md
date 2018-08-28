@@ -7,7 +7,7 @@ import { Tag } from '@insaic/neon'
 Vue.use(Tag)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/tag.vue)
 ```html
 <!-- 基础样式 -->
 <sq-tag>标签</sq-tag>

@@ -7,7 +7,7 @@ import { Cell, CellGroup } from '@insaic/neon'
 Vue.use(Cell).use(CellGroup)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/cell.vue)
 ```html
 <sq-cell-group title="交强险">
   <sq-cell title="交强险" is-link value="投保" @click="show"></sq-cell>
@@ -19,6 +19,11 @@ Vue.use(Cell).use(CellGroup)
   <sq-cell title="起保时间" is-link></sq-cell>
 </sq-cell-group>
 ```
+
+:::warning 注意
+当label不存在时，click事件不会执行，需改为@click.native
+:::
+
 ---
 #### Props
 - cell-group
@@ -34,7 +39,7 @@ Vue.use(Cell).use(CellGroup)
 :----------- |:--------- |:--------         |:------- |:-------
  title       | `String`  | 标题              |    --   |    --
  value       | `String`  | 右边内容文本      |    --   |    --
- isLink      | `Boolean` | 是否显示箭头符号  |  false   |  true
+ is-link      | `Boolean` | 是否显示箭头符号  |  false   |  true
 
 ---
 #### Slot

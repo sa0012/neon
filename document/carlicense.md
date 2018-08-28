@@ -7,7 +7,7 @@ import { Carlicense } from '@insaic/neon'
 Vue.use(Carlicense)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/carlicense.vue)
 ```html
 <sq-carlicense
   :province-name.sync="provName"

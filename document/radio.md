@@ -8,7 +8,7 @@ import { Radio, RadioGroup } from '@insaic/neon'
 Vue.use(Radio).use(RadioGroup)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/radio.vue)
 - 普通形式
 
 ```html
@@ -29,18 +29,19 @@ Vue.use(Radio).use(RadioGroup)
 #### Props
 - radio-group
 
- 名称      | 类型        | 说明                         | 默认值   | 可选值      
-:--------  |:-----------|:-----------------------------|:------- |:-------
- value     | `String`   | 选中值，对应radio里的name      | --       | --             
- disabled  | `Boolean`  | 选择组是否为禁用状态           | false    | true
- type      | `String`   | 显示样式类型                  | --       | cell，cell-between
+ 名称      | 类型        | 说明                          | 默认值   | 可选值      
+:--------  |:-----------|:----------------------------- |:-------  |:-------
+ value     | `String`   | 选中值，对应radio里的name，必传 | --       | --             
+ disabled  | `Boolean`  | 选择组是否为禁用状态            | false    | true
+ type      | `String`   | 显示样式类型                   | --       | cell，cell-between
 
 - radio
 
- 名称       | 类型      | 说明               | 默认值        | 可选值
-:--------   |:--------- |:---------         |:-------      |:-------
- name       | `String`  | 标识名称           | --           | --          
- disabled   | `Boolean` | 选项是否为禁用状态  | false        | true
+ 名称     | 类型               | 说明              | 默认值         | 可选值
+:-------- |:---------         |:---------        |:-------        |:-------
+ name     | `String`、`Number`| 标识名称，必传     | --             | --          
+ disabled | `Boolean`         | 选项是否为禁用状态 | false          | true
+ type     | `String`          | 勾选图标样式类型   | 'round'（圆形） | 'square'（方形）<br>'square-border'（方形圆角）
 
 ---
 

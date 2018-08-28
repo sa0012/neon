@@ -128,8 +128,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/variable';
-@import '~@/common/styles/mixins';
 /*依赖 base 里的动画*/
 $prefixCls: sq-number-keyboard;
 

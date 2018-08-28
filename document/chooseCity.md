@@ -7,7 +7,7 @@ import { ChooseCity } from '@insaic/neon'
 Vue.use(ChooseCity)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/chooseCity.vue)
 ```html
 <!--:showCity.sync="showChooseCity"-->
 <!--v-model="showChooseCity"-->

@@ -152,7 +152,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/variable';
 $prefixCls: sq-stepper;
 
 .#{$prefixCls} {

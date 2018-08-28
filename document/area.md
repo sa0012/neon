@@ -11,7 +11,7 @@ Vue.use(Area)
 地区列表数据源参照 <a href="https://github.com/insaic/neon/blob/dev/examples/mock/districts.js" target="_blank">此处</a>
 :::
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/area.vue)
 ```html
 <sq-popup v-model="isShow" position="bottom">
   <sq-area

@@ -1,6 +1,5 @@
 <template>
-  <div v-if="myShowCity" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
-    <div class="sq-choose-city" ref="menuWrapper">
+    <div class="sq-choose-city" ref="menuWrapper" v-if="myShowCity">
       <div class="sq-choose-city-wrapper" ref="cityWrapper" >
         <div class="sq-choose-city-inner">
           <div class="sq-choose-city-current-city">
@@ -20,18 +19,19 @@
         </div>
       </div>
       <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
-    </div>
-    <div class="sq-choose-city-index-wrap" :class="{'select': showStartColor}">
-      <div class="sq-choose-city-index-inner" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-        <div class="sq-choose-city-index-title"  v-for="(item, index) in cityIndex" :key="index">
-          <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
+      <div class="sq-choose-city-index-wrap" :class="{'select': showStartColor}"  @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
+        <!-- @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd" -->
+        <div class="sq-choose-city-index-inner">
+          <div class="sq-choose-city-index-title"  v-for="(item, index) in cityIndex" :key="index">
+            <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 export default {
   name: 'chooseCity',
   model: {
@@ -68,7 +68,8 @@ export default {
       firstMove: true,
       myShowCity: this.showCity,
       scrollArr: [],
-      rightIndex: ''
+      rightIndex: '',
+      scrollY: 0
     }
   },
   watch: {
@@ -87,13 +88,21 @@ export default {
     cityIndexArr () {
       this.cityIndex = Object.keys(this.chooseCityData)
       this.$nextTick(() => {
+        // 禁止鼠标滚动
+
         this.cityIndex.forEach(item => {
           let scroll = document.querySelector(`.${item}`).offsetTop
           this.scrollArr.push(scroll)
           this.titlePos[item] = scroll
         })
-        let _this = this
-        this.$refs.menuWrapper.addEventListener('scroll', _this.handleScroll, true)
+        this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+          click: true,
+          probeType: 3
+        })
+        this.menuScroll.on('scroll', (pos) => {
+          this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
+          this.handleScroll(this.scrollY)
+        })
       })
     },
     closeCity (city) {
@@ -103,55 +112,50 @@ export default {
       this.$emit('praent-event', this.myShowCity)
     },
     touchStart (e) {
-      let menuWrapper = this.$refs.menuWrapper
       this.showStartColor = true
       this.start = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
       this.carIndex = Math.floor(this.start / everyDistance)
-      if (this.start < 0) {
-        this.carNum = 'A'
-      } else if (this.start > this.curDistance) {
-        this.carNum = this.cityIndex[this.cityIndex.length - 1]
-      } else {
-        menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
-      }
+      let listItem = document.querySelectorAll('.sq-choose-city-city-list > .sq-choose-city-city-item')
+      let itemLi = listItem[this.carIndex]
+      this.menuScroll.scrollToElement(itemLi, 300)
       e.stopPropagation()
       e.preventDefault()
     },
     touchMove (e) {
       // 计算每个区间的距离
       let curMove = e.changedTouches[0].clientY - this.curDistance / 4
+      let maxHeight = (this.curDistance - 0) / 2
+      if (curMove <= 0) {
+        curMove = 0
+      } else if (curMove >= maxHeight) {
+        curMove = maxHeight
+      }
       const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
-      let maxHeight = (this.curDistance - 0) / 2
+      if (this.carIndex < 0) {
+        this.carIndex = 0
+      } else if (this.carIndex > this.cityIndex.length - 1) {
+        this.carIndex = this.cityIndex.length - 1
+      }
       this.$nextTick(() => {
-        let menuWrapper = this.$refs.menuWrapper
-        if (curMove < 0) {
-          this.carNum = 'A'
-        } else if (curMove > maxHeight) {
-          this.carNum = this.cityIndex[this.cityIndex.length - 1]
-        } else {
-          menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
-        }
+        let listItem = document.querySelectorAll('.sq-choose-city-city-list > .sq-choose-city-city-item')
+        let itemLi = listItem[this.carIndex]
+        this.menuScroll.scrollToElement(itemLi, 300)
+        this.carNum = this.cityIndex[this.carIndex]
         e.stopPropagation()
         e.preventDefault()
       })
     },
     touchEnd (e) {
       this.showStartColor = false
-      let curMove = e.changedTouches[0].clientY - this.curDistance / 4
-      const everyDistance = (this.curDistance - 0) / this.cityIndex.length / 2
-      this.carIndex = Math.floor(curMove / everyDistance)
-      let maxHeight = (this.curDistance - 0) / 2
       this.$nextTick(() => {
-        let menuWrapper = this.$refs.menuWrapper
-        if (curMove < 0) {
-          this.carNum = 'A'
-        } else if (curMove > maxHeight) {
-          this.carNum = this.cityIndex[this.cityIndex.length - 1]
-        } else {
-          menuWrapper.scrollTop = this.titlePos[this.cityIndex[this.carIndex]]
-        }
+        let listItem = document.querySelectorAll('.sq-choose-city-city-list > .sq-choose-city-city-item')
+        let itemLi = listItem[this.carIndex]
+        this.menuScroll.scrollToElement(itemLi, 300)
+        this.carNum = this.cityIndex[this.carIndex]
+        e.stopPropagation()
+        e.preventDefault()
       })
       e.stopPropagation()
       e.preventDefault()
@@ -219,31 +223,29 @@ export default {
     cityEnd (e) {
       this.touchEndLogic(e, 'cityWrapper', 'myShowCity', 'selectCityStartX')
     },
-    handleScroll () {
-      let scrollTop = this.$refs.menuWrapper.scrollTop
+    handleScroll (scrollTop) {
       let findIndexArr = this.scrollArr.findIndex((item, index) => {
         return (item >= scrollTop)
       })
       this.rightIndex = this.cityIndex[findIndexArr]
-      if (scrollTop < (this.scrollArr[0] - 40)) {
-        this.rightIndex = ''
-      }
     }
   },
-  mounted () {
+  created () {
     if (this.myShowCity) {
       this.cityIndexArr()
+    }
+  },
+  destroyed () {
+    if (this.menuScroll) {
+      this.menuScroll.destroy()
     }
   }
 }
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/mixins';
 .sq-choose-city {
   overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -251,7 +253,9 @@ export default {
   left: 0;
   z-index: 333;
   font-size: 14px;
-  background: rgba(0, 0, 0, 0.7);
+  background: #fff;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0,0,0);
   &-wrapper {
     background: #fff;
     width: 100%;
@@ -295,7 +299,7 @@ export default {
     top: 0;
     right: 0;
     width: 30px;
-    // height: 100%;
+    height: 100%;
     bottom: 0;
     font-size: 12px;
     z-index: 444;

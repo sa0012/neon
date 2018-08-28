@@ -7,7 +7,7 @@ import { Toast } from '@insaic/neon'
 Vue.use(Toast)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/toast.vue)
 ```js
 // text形式使用
 this.$toast.text('请输入证件号码', 2000)
@@ -21,12 +21,16 @@ this.$toast.warn('操作警告')
 this.$toast.loading('加载中...', -1)
 // 手动隐藏
 this.$toast.hide()
+// 自定义icon
+this.$toast.show({ message: '自定义icon', iconClass: 'pentagram' })
 ```
 ---
 #### Event
 | 名称 | 参数 | 描述 |
 |:---- |:--- |:---- |
-| text<br>success<br>error<br>loading | text,<br>time,<br>position | **参数一：** 显示的文案<br> **参数二：** 显示时间，默认3000ms，time为-1时不消失，需手动调用hide方法隐藏<br> **参数三：** 显示位置，默认`middle`，还可设置为bottom则位于底部显示 |
+| text<br>success<br>error<br>warn<br>loading | text,<br>time,<br>position 或 `Object`类型 | **参数一：** 显示的文案<br>**参数二：** 显示时间，默认3000ms，time为-1时不消失，需手动调用hide方法隐藏<br> **参数三：** <br>1. 当参数为`String`类型时表示显示的位置，默认 `middle` ，还可设置为 `bottom` 则位于底部显示 <br>2. 为`Object`时，可设置<br>`iconSize`：类型为`Number` `String` (默认44)<br> `iconClass`：类型为`String` (默认--)<br> `textSize`：类型为`Number` `String` (默认14)|
 | hide | -- | 隐藏toast，一般配合loading使用 |
-| iconSize | `String` | 设置icon图标大小 |
-| textSize | `String` | 设置提示信息字体大小 |
+
+:::tip
+text、success、error、warn、loading均为show方法里的type参数的简写形式。亦可用show方法传入对象形式使用。
+:::

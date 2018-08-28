@@ -7,7 +7,7 @@ import { Button } from '@insaic/neon'
 Vue.use(Button)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/button.vue)
 ```html
 <!-- 改变样式 -->
 <sq-button type="default">default</sq-button>

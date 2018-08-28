@@ -1,6 +1,6 @@
 
 @font-face {font-family: "sq-icon";
-  src: url('iconfont.ttf?t=1534082724642') format('truetype');
+  src: url('iconfont.ttf?t=1535113759046') format('truetype');
 }
 
 .sq-icon {
@@ -41,17 +41,23 @@
 
 .sq-icon-error-empty:before { content: "\e616"; }
 
+.sq-icon-square-checked:before { content: "\e607"; }
+
 .sq-icon-checkmark-full:before { content: "\e69e"; }
 
 .sq-icon-aixin:before { content: "\e63e"; }
 
 .sq-icon-checkmark:before { content: "\e624"; }
 
+.sq-icon-square-border-unchecked:before { content: "\e678"; }
+
 .sq-icon-loading:before { content: "\e633"; }
 
 .sq-icon-keyboard-down:before { content: "\e6fb"; }
 
 .sq-icon-error:before { content: "\e632"; }
+
+.sq-icon-unchecked:before { content: "\e66d"; }
 
 .sq-icon-error-full:before { content: "\e68c"; }
 
@@ -65,6 +71,8 @@
 
 .sq-icon-flower:before { content: "\e7c3"; }
 
+.sq-icon-square-unchecked:before { content: "\e66c"; }
+
 .sq-icon-pentagram:before { content: "\e601"; }
 
 .sq-icon-emoji:before { content: "\e604"; }
@@ -74,6 +82,8 @@
 .sq-icon-keyboard-xiangshang:before { content: "\e649"; }
 
 .sq-icon-keyboard-delete:before { content: "\e64a"; }
+
+.sq-icon-square-border-checked:before { content: "\e63d"; }
 
 .sq-icon-arrow-up:before { content: "\e8ef"; }
 

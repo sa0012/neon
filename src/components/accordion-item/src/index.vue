@@ -81,7 +81,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/_mixins.scss';
 $prefixCls: accordion-item;
 .#{$prefixCls} {
   background-color: #fff;

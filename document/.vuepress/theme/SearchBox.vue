@@ -3,6 +3,7 @@
     <input
       @input="query = $event.target.value"
       aria-label="Search"
+      placeholder="搜索组件.."
       :value="query"
       autocomplete="off"
       spellcheck="false"
@@ -118,7 +119,7 @@ export default {
       }
     },
     go (i) {
-      this.$router.push(this.suggestions[i].path)
+      this.suggestions[i] && this.$router.push(this.suggestions[i].path)
       this.query = ''
       this.focusIndex = 0
     },

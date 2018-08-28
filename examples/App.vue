@@ -20,6 +20,7 @@ body {
   background-color: #EDF0F4;
   box-sizing: border-box;
   user-select: none;
+  font-size: 16px;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

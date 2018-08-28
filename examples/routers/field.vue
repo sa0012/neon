@@ -1,15 +1,15 @@
 <template>
   <div class="demo-page-wrap demo-field-wrap">
     <demo-title left>列表样式</demo-title>
-    <sq-field placeholder="请输入用户名" v-model="name" arrow></sq-field>
-    <sq-field label="用户名" placeholder="请输入用户名" v-model="name" arrow></sq-field>
-    <sq-field label="密码" placeholder="请输入密码" v-model="name"></sq-field>
+    <sq-field placeholder="请输入用户名" v-model="name"></sq-field>
+    <sq-field required label="用户名" placeholder="请输入用户名" v-model="name" icon="alert-full" @click-icon="clickIcon"></sq-field>
+    <sq-field required label="带清空按钮" placeholder="请输入密码" clearable v-model="name2"></sq-field>
 
     <demo-title left>间隔样式</demo-title>
     <sq-field-group>
-      <sq-field placeholder="请输入用户名" v-model="name" arrow></sq-field>
-      <sq-field label="用户名" placeholder="请输入用户名" v-model="name" arrow></sq-field>
-      <sq-field label="密码" placeholder="请输入密码" v-model="name" icon="error-full" @click-icon="clickIcon"></sq-field>
+      <sq-field placeholder="请输入用户名" v-model="name"></sq-field>
+      <sq-field label="用户名" placeholder="文本居右" right v-model="name"></sq-field>
+      <sq-field required label="带清空按钮" placeholder="请输入密码" clearable v-model.number="name2"></sq-field>
     </sq-field-group>
 
   </div>
@@ -21,13 +21,14 @@ export default {
 
   data () {
     return {
-      name: ''
+      name: '',
+      name2: 0,
     }
   },
 
   methods: {
     clickIcon () {
-      console.log('clickIcon')
+      alert('clickIcon')
     }
   }
 }

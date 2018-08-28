@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import SqPopup from '@/components/popup'
-import SqDatePicker from '@/components/date-picker'
+import SqPopup from '../../popup'
+import SqDatePicker from '../../date-picker'
 
 export default {
   name: 'sq-datetime',
