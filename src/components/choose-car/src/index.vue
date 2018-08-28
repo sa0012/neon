@@ -1,8 +1,7 @@
 <template>
-  <div v-if="myShowChooseCar" ref="carWrapper" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
-    <div class="sq-brandCars" ref="menuWrapper" >
+    <div class="sq-brandCars" ref="menuWrapper" v-if="myShowChooseCar">
       <!-- +++++++++++++++++++++++++++品牌选项+++++++++++++++++++++++++++ -->
-      <div class="sq-brandCars-menu-wrapper" ref="brandCars"  v-if="isShowBrandCars" @touchstart="brandCarsStart" @touchmove="brandCarsMove" @touchend="brandCarsEnd">
+      <div class="sq-brandCars-menu-wrapper" ref="brandCars"  v-if="isShowBrandCars">
         <ul class="sq-brandCars-list">
           <li class="sq-brandCars-search">
             <input type="text" class="sq-brandCars-search-input" @keypress="getKeyCode" v-model="search" placeholder="搜索品牌车型">
@@ -24,34 +23,30 @@
         </ul>
       </div>
       <!-- +++++++++++++++++++++++++++选车系+++++++++++++++++++++++++++ -->
-      <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar" @touchstart="selectCarStarts" @touchmove="selectCarMove" @touchend="selectCarEnd">
-        <div class="sq-selectcar-cars-wrapper" ref="carsWrapper">
-          <div class="sq-selectcar-inner">
-            <div class="sq-selectcar-slide" ref="slide">
-              <h3 class="sq-selectcar-carts-first-title">
-                <!--<slot name="brandCategoryCode"></slot>-->
-                <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectcar-carts-detail-icon">
-                <span>{{ brandCategoryData.name }}</span>
-              </h3>
+      <div class="sq-selectcar" v-if="showSelectCar" ref="selectCar">
+        <div class="sq-selectcar-slide" ref="slide">
+          <h3 class="sq-selectcar-carts-first-title">
+            <!--<slot name="brandCategoryCode"></slot>-->
+            <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectcar-carts-detail-icon">
+            <span>{{ brandCategoryData.name }}</span>
+          </h3>
+          <ul class="sq-selectcar-cars-ul">
+            <li class="sq-selectcar-cars-list" v-for="items in selectCar" :key="items.brandId">
+              <h3 class="sq-selectcar-carts-second-title">{{ items.brandName }}</h3>
               <ul class="sq-selectcar-cars-ul">
-                <li class="sq-selectcar-cars-list" v-for="items in selectCar" :key="items.brandId">
-                  <h3 class="sq-selectcar-carts-second-title">{{ items.brandName }}</h3>
-                  <ul class="sq-selectcar-cars-ul">
-                    <li class="sq-selectcar-cars-item" v-for="detail in items.jyVehicleFamilyMOs" :key="detail.familyId">
-                      <div class="sq-selectcar-car-list-item border_bottom" @click.stop="jumpChooseCar(detail.brandId, detail.familyId);">{{ detail.familyName }}</div>
-                    </li>
-                  </ul>
+                <li class="sq-selectcar-cars-item" v-for="detail in items.jyVehicleFamilyMOs" :key="detail.familyId">
+                  <div class="sq-selectcar-car-list-item border_bottom" @click.stop="jumpChooseCar(detail.brandId, detail.familyId);">{{ detail.familyName }}</div>
                 </li>
               </ul>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="sq-selectcar-car-modal" v-if="showSelectCar" @click="closeCarModal"></div>
 
       <!-- +++++++++++++++++++++++++++++++++选车型+++++++++++++++++++++++++++++++ -->
-      <div class="sq-selectmodel" v-if="showSelectModel" @touchstart="modelStart" @touchmove="modelMove" @touchend="modelEnd">
-        <div class="sq-selectmodel-wrap" ref="selectModel">
+      <div class="sq-selectmodel" v-if="showSelectModel"  ref="selectModel">
+        <div class="sq-selectmodel-wrap">
           <div class="sq-selectmodel-icon-title">
             <!--<slot name="selectModelCode"></slot>-->
             <img :src="imgConfig[brandCategoryData.code]" :alt="brandCategoryData.code" class="sq-selectmodel-model-icon">
@@ -84,15 +79,13 @@
               </div>
             </div>
           </div>
-          <!--左滑时遮盖-->
-          <!--<div :class="{'no-select': noTouch}"></div>-->
         </div>
       </div>
       <div class="sq-selectmodel-model-modal" v-if="showSelectModel"></div>
       <!--<div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>-->
 
       <!-- +++++++++++++++++++++++++++++++++搜索车型+++++++++++++++++++++++++++++++++ -->
-      <div class="sq-search" v-if="showSearchModal" @touchstart="searchStart" @touchmove="searchMove" @touchend="searchEnd">
+      <div class="sq-search" v-if="showSearchModal">
         <div class="sq-search-inners" ref="searchWap" :style="{ height: searchWapperHeight + 'px' }">
           <sq-loadmore :loading="searchLoading" :bottom-fun="searchCarLoadMore" :is-finished-load="searchIsFinishedLoad" :bottom-finished-text="finishedText">
             <ul class="sq-search-list">
@@ -108,21 +101,21 @@
         </div>
       </div>
       <div class="sq-selectmodel-model-modal" v-if="showSearchModal"></div>
+      <!-- +++++++++++++++++++++++++++++车辆品牌索引+++++++++++++++++++++++++++ -->
+      <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}" v-if="showIndex">
+        <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
+          <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item">
+            <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
+          </li>
+        </ul>
+      </div>
+      <!-- ++++++++++++++++++++++++++++++++车辆品牌索引展示++++++++++++++++++++++++ -->
+      <div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>
     </div>
-    <!-- +++++++++++++++++++++++++++++车辆品牌索引+++++++++++++++++++++++++++ -->
-    <div class="sq-brandCars-category-rightbar" :class="{'start': showStartColor}" v-if="showIndex">
-      <ul class="sq-brandCars-category-rightbar-list" @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-        <li v-for="(item, index) in brandCategorys" :key="index" class="sq-brandCars-category-rightbar-item">
-          <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
-        </li>
-      </ul>
-    </div>
-    <!-- ++++++++++++++++++++++++++++++++车辆品牌索引展示++++++++++++++++++++++++ -->
-    <div class="car-index" v-show="showStartColor">{{ brandCategorys[carIndex] || carNum }}</div>
-  </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 export default {
   name: 'BrandCars',
   model: {
@@ -214,55 +207,50 @@ export default {
   },
   methods: {
     touchStart (e) {
-      let menuWrapper = this.$refs.menuWrapper
       this.showStartColor = true
       this.start = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(this.start / everyDistance)
-      if (this.start < 0) {
-        this.carNum = 'A'
-      } else if (this.start > this.curDistance) {
-        this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
-      } else {
-        menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
-      }
+      let listItem = document.querySelectorAll('.sq-brandCars-list > .sq-brandCars-item')
+      let itemLi = listItem[this.carIndex]
+      this.menuScroll.scrollToElement(itemLi, 300)
       e.stopPropagation()
       e.preventDefault()
     },
     touchMove (e) {
       // 计算每个区间的距离
       let curMove = e.changedTouches[0].clientY - this.curDistance / 4
+      let maxHeight = (this.curDistance - 0) / 2
+      if (curMove <= 0) {
+        curMove = 0
+      } else if (curMove >= maxHeight) {
+        curMove = maxHeight
+      }
       const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(curMove / everyDistance)
-      let maxHeight = (this.curDistance - 0) / 2
+      if (this.carIndex < 0) {
+        this.carIndex = 0
+      } else if (this.carIndex > this.brandCategorys.length - 1) {
+        this.carIndex = this.brandCategorys.length - 1
+      }
       this.$nextTick(() => {
-        let menuWrapper = this.$refs.menuWrapper
-        if (curMove < 0) {
-          this.carNum = 'A'
-        } else if (curMove > maxHeight) {
-          this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
-        } else {
-          menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
-        }
+        let listItem = document.querySelectorAll('.sq-brandCars-list > .sq-brandCars-item')
+        let itemLi = listItem[this.carIndex]
+        this.menuScroll.scrollToElement(itemLi, 300)
+        this.carNum = this.brandCategorys[this.carIndex]
+        e.stopPropagation()
+        e.preventDefault()
       })
-      e.stopPropagation()
-      e.preventDefault()
     },
     touchEnd (e) {
       this.showStartColor = false
-      let curMove = e.changedTouches[0].clientY - this.curDistance / 4
-      const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
-      this.carIndex = Math.floor(curMove / everyDistance)
-      let maxHeight = (this.curDistance - 0) / 2
       this.$nextTick(() => {
-        let menuWrapper = this.$refs.menuWrapper
-        if (curMove < 0) {
-          this.carNum = 'A'
-        } else if (curMove > maxHeight) {
-          this.carNum = this.brandCategorys[this.brandCategorys.length - 1]
-        } else {
-          menuWrapper.scrollTop = this.titlePos[this.brandCategorys[this.carIndex]]
-        }
+        let listItem = document.querySelectorAll('.sq-brandCars-list > .sq-brandCars-item')
+        let itemLi = listItem[this.carIndex]
+        this.menuScroll.scrollToElement(itemLi, 300)
+        this.carNum = this.brandCategorys[this.carIndex]
+        e.stopPropagation()
+        e.preventDefault()
       })
       e.stopPropagation()
       e.preventDefault()
@@ -384,17 +372,31 @@ export default {
           this.scrollArr.push(scroll)
           this.titlePos[item] = scroll
         })
-        let _this = this
-        this.$refs.menuWrapper.addEventListener('scroll', _this.handleScroll, true)
+
+        this.menuScroll = new BScroll(this.$refs.brandCars, {
+          click: true,
+          probeType: 3
+        })
+        console.dir(this.$refs.brandCars)
+        this.menuScroll.on('scroll', (pos) => {
+          this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
+          this.handleScroll(this.scrollY)
+        })
       })
     },
     showModel (code, name, item) {
       this.showSelectCar = true
       this.showIndex = false
+      this.$refs.menuWrapper.style.overflowY = 'hidden'
       this.$nextTick(() => {
         // 目标盒子内容总高度 - 窗口可视区域高度
         let clientWidth = document.documentElement.clientWidth || document.body.clientWidth
         this.slideHeight = this.$refs.slide.offsetHeight - clientWidth
+        setTimeout(() => {
+          this.childScroll = new BScroll(this.$refs.selectCar, {
+            click: true
+          })
+        }, 30)
       })
       this.brandCategoryData.code = code
       this.brandCategoryData.name = name
@@ -405,7 +407,9 @@ export default {
       this.showSelectModel = true
       this.showSelectCar = false
       this.isShowBrandCars = false
+      this.$refs.menuWrapper.style.overflowY = 'hidden'
       this.$emit('brandModelId', { brandId, familyId })
+      this.childScroll.destroy()
       try {
         setTimeout(() => {
           if (this.$refs.wrapper) {
@@ -418,12 +422,14 @@ export default {
     },
     closeCarModal () {
       this.showSelectCar = false
+      this.$refs.menuWrapper.style.overflowY = 'scroll'
     },
     closeSelectModel (detail) {
       this.showSelectModel = false
       this.myShowChooseCar = false
       this.showSelectCar = false
       this.showIndex = false
+      this.$refs.menuWrapper.style.overflowY = 'scroll'
       this.$emit('update:showChooseCar', this.myShowChooseCar)
       this.$emit('praent-event', this.myShowChooseCar)
       this.$emit('carDetail', detail)
@@ -459,6 +465,8 @@ export default {
         this.showSearchModal = true
         this.showIndex = false
         this.isShowBrandCars = false
+        this.$refs.menuWrapper.style.overflowY = 'hidden'
+        this.menuScroll.destroy()
         setTimeout(() => {
           if (this.$refs.searchWap) {
             this.searchWapperHeight = document.documentElement.clientHeight - this.$refs.searchWap.getBoundingClientRect().top
@@ -473,6 +481,7 @@ export default {
         this.$toast.text('搜索字符不能少于5位', 3000)
         return
       }
+      this.menuScroll.destroy()
       this.$emit('searchOption', this.search, this.getSearchCar)
     },
     getKeyCode (e) {
@@ -498,21 +507,21 @@ export default {
       this.searchLoading = true
       this.$emit('searchLoadMore', this.searchCallBack)
     },
-    handleScroll () {
-      let scrollTop = this.$refs.menuWrapper.scrollTop
+    handleScroll (scrollTop) {
       let findIndexArr = this.scrollArr.findIndex((item, index) => {
         return (item >= scrollTop)
       })
       this.rightIndex = this.brandCategorys[findIndexArr]
-      if (scrollTop < (this.scrollArr[0] - 40)) {
-        this.rightIndex = ''
-      }
     }
   },
   mounted () {
     if (this.myShowChooseCar) {
       this.getBrandCategoryArr()
     }
+  },
+  destroyed () {
+    this.menuScroll && this.menuScroll.destroy()
+    this.childScroll && this.childScroll.destroy()
   }
 }
 </script>
@@ -521,15 +530,15 @@ export default {
 /*依赖 base 里的动画 */
 .sq-brandCars {
   overflow-x: hidden;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: #fff;
   z-index: 333;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0,0,0);
   &-search {
     background: #F5F5F5;
     padding: 10px 15px;
@@ -553,10 +562,19 @@ export default {
     font-size: 20px;
   }
   &-menu-wrapper {
+    // width: 100%;
+    // overflow: auto;
+    // background: #fff;
+    overflow-x: hidden;
     width: 100%;
-    // overflow-x: hidden;
-    overflow: auto;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     background: #fff;
+    z-index: 333;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
     box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
   }
   &-list {
@@ -660,12 +678,17 @@ export default {
 }
 
 .sq-selectcar {
+  overflow-x: hidden;
+  width: 70%;
+  height: 100%;
   position: fixed;
   top: 0;
   right: 0;
-  width: 75%;
-  height: 100%;
+  background: #fff;
   z-index: 556;
+  transition-property: transform, -webkit-transform;
+  animation: fadeLeft 0.4s ease-out;
+  animation-fill-mode: forwards;
   &-car-modal {
     position: fixed;
     top: 0;
@@ -675,28 +698,9 @@ export default {
     background: rgba(0, 0, 0, 0.3);
     z-index: 555;
   }
-  &-cars-wrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 333;
-    background: #fff;
-    overflow-x: hidden;
-    transition-property: transform, -webkit-transform;
-    animation: fadeLeft 0.4s ease-out;
-    animation-fill-mode: forwards;
-    box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
-  }
-  &-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition-property: transform, -webkit-transform;
-  }
   &-slide {
     height: auto;
+    background: #fff;
   }
   &-cars-ul {
     margin: 0;
@@ -775,17 +779,18 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  // background: #fff;
+  overflow-x: hidden;
+  background: #fff;
   z-index: 888;
   animation: fadeInRight 0.5s ease;
   animation-fill-mode: forwards;
   &-wrap {
     width: 100%;
-    height: 100%;
+    // height: 100%;
     background: #fff;
     position: relative;
     z-index: 333;
-    box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
+    // box-shadow: rgba(0, 0, 0, 0.5) -2px 0px 5px;
   }
   &-model-modal {
     position: fixed;

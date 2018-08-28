@@ -20,11 +20,14 @@
     "build:src": "cross-env BUILD_TYPE=src node build/build.js",
     "build:lib": "rm -rf lib && npm run build:dev && npm run build:prod && npm run build:src"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {
+    "better-scroll": "^1.12.6",
     "vue": ">= 2.5.0"
   },
   "devDependencies": {
+    "postcss-pxtorem": "^4.0.1",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
