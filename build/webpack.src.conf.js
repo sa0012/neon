@@ -47,6 +47,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     // extract css into its own file
+    new ExtractTextPlugin(utils.assetsPath('../[name]/style/index.css')),
     new ExtractTextPlugin(utils.assetsPath('../[name]/style.css'))
   ]
 })

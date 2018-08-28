@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/mixins';
+// @import '~@/common/styles/mixins';
 $prefixCls: sq-childinsurance-cell;
 
 .#{$prefixCls} {

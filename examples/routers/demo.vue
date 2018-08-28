@@ -65,6 +65,7 @@ a {
     padding: 20px 0;
     margin: 0 20px;
     border-bottom: 1px solid #d5d5d5;
+    font-size: 16px;
   }
   .demo-index-ul-wrap {
     overflow: hidden;
@@ -80,6 +81,7 @@ a {
         line-height: 1.5;
         padding: 10px 0;
         position: relative;
+        font-size: 16px;
         &::after {
           content: " ";
           display: inline-block;

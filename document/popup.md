@@ -8,7 +8,7 @@ import { Popup } from '@insaic/neon'
 Vue.use(Popup)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/popup.vue)
 ```html
 <sq-popup v-model="isShowCenter">中间弹出</sq-popup>
 

@@ -8,7 +8,7 @@ import { Steps, StepItem } from '@insaic/neon'
 Vue.use(Steps).use(StepItem)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/steps.vue)
 ```html
 <sq-steps :active="1">
   <sq-step-item>登录登录</sq-step-item>

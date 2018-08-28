@@ -8,7 +8,7 @@ import { Switch } from '@insaic/neon'
 Vue.use(Switch)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/switch.vue)
 ```html
 <!-- 普通形式 -->
 <sq-switch v-model="isChecked"/>

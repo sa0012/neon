@@ -7,7 +7,7 @@ import { Agree } from '@insaic/neon'
 Vue.use(Agree)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/agree.vue)
 ```html
 <sq-agree v-model="isAgree">
   我已阅读并接受

@@ -8,7 +8,7 @@ import { NoticeBar } from '@insaic/neon'
 Vue.use(NoticeBar)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/noticeBar.vue)
 ```html
 <!-- 基础用法 -->
 <sq-notice-bar text="为了确保您的资金安全，请设置支付密码"/>

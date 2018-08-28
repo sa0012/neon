@@ -8,7 +8,7 @@ import { Sendcode } from '@insaic/neon'
 Vue.use(Sendcode)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/sendcode.vue)
 ```html
 <!-- 刷新保留倒计时 -->
 <sq-sendcode

@@ -242,7 +242,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/mixins';
+// @import '~@/common/styles/mixins';
 .sq-choose-city {
   overflow-x: hidden;
   width: 100%;

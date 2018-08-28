@@ -2,7 +2,7 @@
   <div class="sq-picker">
     <div class="sq-picker-header sq-picker-bottom-line" v-show="showToolbar">
       <div @click="$_cancel">{{ cancelButtonText }}</div>
-      <div>{{ title }}{{isCascade}}</div>
+      <div>{{ title }}</div>
       <div @click="$_confirm">{{ confirmButtonText }}</div>
     </div>
     <div class="sq-picker-body" @touchmove.prevent>
@@ -157,8 +157,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/common/styles/mixins';
-@import '~@/common/styles/variable';
+// @import '~@/common/styles/mixins';
+// @import '~@/common/styles/variable';
 
 $prefixCls: sq-picker;
 

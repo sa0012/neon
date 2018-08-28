@@ -7,7 +7,7 @@ import { Actionsheet } from '@insaic/neon'
 Vue.use(Actionsheet)
 ```
 
-#### 例子
+#### 例子 [demo源码](https://github.com/insaic/neon/blob/dev/examples/routers/actionsheet.vue)
 ```html
 <actionsheet
   v-model="value"
