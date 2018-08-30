@@ -1,7 +1,7 @@
 <template>
-  <div class="sq-agree" @click="$_Click">
+  <div class="sq-agree" @click.stop="$_Click">
     <div class="sq-agree-wrap">
-      <sq-checkicon v-model="value"></sq-checkicon>
+      <sq-checkicon :value="value" @check.stop="$_Click"></sq-checkicon>
       <span class="sq-agree-text">
         <slot></slot>
       </span>
