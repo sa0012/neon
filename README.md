@@ -17,37 +17,37 @@ CDN
 
 ```html
 <!-- 引入样式 -->
-<link rel="stylesheet" href="https://unpkg.com/@insaic/neon/lib/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@insaic/neon/lib/style.min.css">
 
 <!-- 引入组件 -->
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-<script src="https://unpkg.com/@insaic/neon/lib/index.js"></script>
+<script src="https://unpkg.com/@insaic/neon/lib/index.min.js"></script>
 ```
 
 #### 引入组件
 
 #### 1.按需引入（推荐）
 
-使用 [babel-plugin-component](https://github.com/ElementUI/babel-plugin-component)，该插件是一款 babel 插件，它会在编译过程中将
+使用 [babel-plugin-import](https://github.com/ant-design/babel-plugin-import#readme)，该插件是一款 babel 插件，它会在编译过程中将
 ```js
-import { Button } from 'components'
+import { Button } from '@insaic/neon'
 ```
  的写法自动转换为按需引入的方式 
  ```js
-const button = require('components/lib/button')
-require('components/lib/button/style.css')
+const button = require('@insaic/neon/lib/button')
+require('@insaic/neon/lib/button/style')
  ```
 
  ```bash
- # 安装 babel-plugin-component 插件
- npm i babel-plugin-component -D
+ # 安装 babel-plugin-import 插件
+ npm i babel-plugin-import -D
  ```
 
  在`.babelrc`里添加插件配置
  ```js
  "plugins": [
   [
-    "component",
+    "import",
     {
       "libraryName": "@insaic/neon",
       "style": true
