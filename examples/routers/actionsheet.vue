@@ -1,14 +1,20 @@
 <template>
-  <div class="demo-page-wrap">
+  <div>
     <demo-title>基础用法</demo-title>
-    <sq-button type="primary" size="small" @click="isShowAction1 = !isShowAction1">弹出Actionsheet</sq-button>
+    <sq-cell title="含取消按钮">
+      <sq-switch v-model="isShowAction1"></sq-switch>
+    </sq-cell>
+
+    <demo-title>其他</demo-title>
+    <sq-cell title="不含取消按钮">
+      <sq-switch v-model="isShowAction2"></sq-switch>
+    </sq-cell>
+
     <sq-actionsheet
       v-model="isShowAction1"
       :action-list="list"
       @on-item-click="action"
     />
-    <demo-title>隐藏取消按钮</demo-title>
-    <sq-button type="primary" size="small" @click="isShowAction2 = !isShowAction2">弹出Actionsheet</sq-button>
     <sq-actionsheet
       v-model="isShowAction2"
       :action-list="list"

@@ -1,21 +1,27 @@
 <template>
-  <div class="demo-page-wrap">
-    <demo-title>选中状态</demo-title>
-    <sq-switch v-model="isChecked1"/>
-
-    <demo-title>未选中状态</demo-title>
-    <sq-switch v-model="isChecked2"/>
-
-    <demo-title>选中下的禁用状态</demo-title>
-    <sq-switch v-model="isChecked3" disabled/>
-
-    <demo-title>未选中下的禁用状态</demo-title>
-    <sq-switch v-model="isChecked4" disabled/>
-  
+  <div>
+    <demo-title>基础用法</demo-title>
+    <sq-cell title="选中状态">
+      <sq-switch v-model="isChecked1"/>
+    </sq-cell>
+    <sq-cell title="未选中状态">
+      <sq-switch v-model="isChecked2"/>
+    </sq-cell>
+    <sq-cell title="选中下的禁用状态">
+      <sq-switch v-model="isChecked3" disabled/>
+    </sq-cell>
+    <sq-cell title="未选中下的禁用状态">
+      <sq-switch v-model="isChecked4" disabled/>
+    </sq-cell>
 
     <demo-title>调整大小</demo-title>
-    <sq-switch v-model="isChecked5" size="20px"/>
-    <sq-switch v-model="isChecked5" size="40px"/>
+    <sq-cell title="size=20px">
+      <sq-switch v-model="isChecked5" size="20px"/>
+    </sq-cell>
+    <sq-cell title="size=40px">
+      <sq-switch v-model="isChecked5" size="40px"/>
+    </sq-cell>
+
   </div>
 </template>
 

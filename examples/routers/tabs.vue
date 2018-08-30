@@ -1,5 +1,5 @@
 <template>
-  <div class="demo-page-wrap">
+  <div>
     <demo-title>基础用法</demo-title>
     <sq-tabs active="name1" line-scale="0.6" font-size="14" title-height="40">
       <sq-tabpane label="第一年" name="name1">

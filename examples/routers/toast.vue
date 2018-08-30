@@ -1,19 +1,31 @@
 <template>
-  <div class="demo-page-wrap">
-    <demo-title>消息提示</demo-title>
-    <sq-button type="primary" size="small" @click="showToast">消息提示</sq-button>
+  <div>
+    <demo-title>基本用法</demo-title>
+    <sq-cell title="消息提示">
+      <sq-button size="small" @click="showToast">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="成功提示">
+      <sq-button size="small" @click="showSuccess">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="失败提示">
+      <sq-button size="small" @click="showError">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="警告提示">
+      <sq-button size="small" @click="showWarn">开启</sq-button>
+    </sq-cell>
 
-    <demo-title>成功/失败/警告提示</demo-title>
-    <sq-button type="primary" size="small" @click="showSuccess">成功提示</sq-button>
-    <sq-button type="primary" size="small" @click="showError">失败提示</sq-button>
-    <sq-button type="primary" size="small" @click="showWarn">警告提示</sq-button>
+    <demo-title>加载中</demo-title>
+    <sq-cell title="加载提示">
+      <sq-button size="small" @click="showLoading">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="加载提示无文字">
+      <sq-button size="small" @click="showLoading2">开启</sq-button>
+    </sq-cell>
 
-    <demo-title>加载提示</demo-title>
-    <sq-button type="primary" size="small" @click="showLoading">加载提示</sq-button>
-    <sq-button type="primary" size="small" @click="showLoading2">加载提示无文字</sq-button>
-
-    <demo-title>自定义iconClass</demo-title>
-    <sq-button type="primary" size="small" @click="showDiy">自定义</sq-button>
+    <demo-title>自定义</demo-title>
+    <sq-cell title="自定义iconClass">
+      <sq-button size="small" @click="showDiy">开启</sq-button>
+    </sq-cell>
   </div>
 </template>
 
