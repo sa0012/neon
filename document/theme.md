@@ -25,6 +25,11 @@
 // vue.config.js
 module.exports = {
   // ...
+  // 将neon源码包里的js进行babel-loader转译
+  transpileDependencies: [
+    '@insaic'
+  ],
+  // 将neon源码包里的scss变量引入，实现自定义样式主题
   css: {
     loaderOptions: {
       sass: {
