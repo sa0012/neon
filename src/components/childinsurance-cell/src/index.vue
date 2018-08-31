@@ -10,7 +10,7 @@
           :type="borderType"
           @change="$_clickiconChangeHandle"
         >
-          <span style="color:rgb(153, 153, 153);">{{ middleText }}</span>
+          <span style="color:rgb(153, 153, 153);margin-left:6px;">{{ middleText }}</span>
         </sq-child-checkicon>
       <div
         class="sq-childinsurance-cell-right sq-childinsurance-cell-arrow"
