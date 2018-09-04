@@ -63,12 +63,11 @@ require('@insaic/neon/lib/button/style')
  ```
  的方式引入需要的组件
 
-::: warning 注意： 按需引入组件 也需引入基础样式 
-```js
-import { Style } from '@insaic/neon'
-Vue.use(Style)
-```
-:::
+> 注意： 按需引入组件 也需引入基础样式 
+> ```js
+> import { Style } from '@insaic/neon'
+> Vue.use(Style)
+> ```
 
 
 #### 2.全局引入
@@ -78,9 +77,10 @@ import Neon from '@insaic/neon'
 Vue.use(Neon)
 ```
 
-::: warning 注意
-全局引入已包含了基础样式
-:::
+> 注意
+> 全局引入已包含了基础样式
+
+---
 
 ### 主题定制
 
