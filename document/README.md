@@ -1,13 +1,21 @@
----
-home: true
-actionText: 查看文档 →
-actionLink: /quickstart
-footer: MIT Licensed | Copyright © 2018-present INSAIC | website based on <a href="https://vuepress.vuejs.org/" target="_blank">vuepress</a> by Evan You
----
+# doc
 
-<div align=center>
+## Project setup
+```
+npm install
+```
 
-![示例](./qrcode.png)
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-<h3>扫码查看示例</h3>
-</div>
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```

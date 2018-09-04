@@ -1,4 +1,11 @@
 const menu = {
+  // 开发指南
+  developmentGuide: [
+    { to: 'quickstart', name: '快速上手' },
+    { to: 'defaultStyle', name: '内置样式' },
+    { to: 'theme', name: '主题定制' },
+    { to: 'changelog', name: '更新日志' }
+  ],
   // 基础
   base: [
     { to: 'accordion', name: 'Accordion - 折叠面板' },
@@ -13,7 +20,7 @@ const menu = {
     { to: 'swiper', name: 'Swiper - 轮播' },
     { to: 'tabs', name: 'Tabs - 标签页' },
     { to: 'tag', name: 'Tag - 标记' },
-    { to: 'rater', name: 'Rater - 评分' },
+    { to: 'rater', name: 'Rater - 评分' }
   ],
   // 表单
   form: [
