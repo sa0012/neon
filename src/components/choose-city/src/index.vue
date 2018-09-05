@@ -20,7 +20,6 @@
       </div>
       <div class="car-index" v-show="showStartColor">{{ cityIndex[carIndex] || carNum }}</div>
       <div class="sq-choose-city-index-wrap" :class="{'select': showStartColor}"  @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd">
-        <!-- @touchstart.stop="touchStart" @touchmove.stop="touchMove" @touchend.stop="touchEnd" -->
         <div class="sq-choose-city-index-inner">
           <div class="sq-choose-city-index-title"  v-for="(item, index) in cityIndex" :key="index">
             <div :class="{ 'active': item ===  rightIndex }">{{ item }}</div>
@@ -69,7 +68,8 @@ export default {
       myShowCity: this.showCity,
       scrollArr: [],
       rightIndex: '',
-      scrollY: 0
+      scrollY: 0,
+      isScroll: false
     }
   },
   watch: {
@@ -100,8 +100,8 @@ export default {
           probeType: 3
         })
         this.menuScroll.on('scroll', (pos) => {
-          this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
-          this.handleScroll(this.scrollY)
+          this.scrollY = Math.abs(pos.y) // 将位置四舍五入后取绝对值
+          !this.isScroll && this.handleScroll(this.scrollY)
         })
       })
     },
@@ -119,6 +119,7 @@ export default {
       let listItem = document.querySelectorAll('.sq-choose-city-city-list > .sq-choose-city-city-item')
       let itemLi = listItem[this.carIndex]
       this.menuScroll.scrollToElement(itemLi, 300)
+      this.isScroll = true
       e.stopPropagation()
       e.preventDefault()
     },
@@ -143,19 +144,20 @@ export default {
         let itemLi = listItem[this.carIndex]
         this.menuScroll.scrollToElement(itemLi, 300)
         this.carNum = this.cityIndex[this.carIndex]
+        this.rightIndex = this.carNum
         e.stopPropagation()
         e.preventDefault()
       })
     },
     touchEnd (e) {
       this.showStartColor = false
+      this.isScroll = false
       this.$nextTick(() => {
         let listItem = document.querySelectorAll('.sq-choose-city-city-list > .sq-choose-city-city-item')
         let itemLi = listItem[this.carIndex]
         this.menuScroll.scrollToElement(itemLi, 300)
         this.carNum = this.cityIndex[this.carIndex]
-        e.stopPropagation()
-        e.preventDefault()
+        this.rightIndex = this.carNum
       })
       e.stopPropagation()
       e.preventDefault()
@@ -224,9 +226,12 @@ export default {
       this.touchEndLogic(e, 'cityWrapper', 'myShowCity', 'selectCityStartX')
     },
     handleScroll (scrollTop) {
-      let findIndexArr = this.scrollArr.findIndex((item, index) => {
-        return (item >= scrollTop)
-      })
+      let findIndexArr
+      for (var i = 0; i < this.scrollArr.length; i++) {
+        if (this.scrollArr[i] <= scrollTop && this.scrollArr[i+1] > scrollTop) {
+          findIndexArr = i
+        }
+      }
       this.rightIndex = this.cityIndex[findIndexArr]
     }
   },
