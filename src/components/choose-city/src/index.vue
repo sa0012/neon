@@ -228,7 +228,7 @@ export default {
     handleScroll (scrollTop) {
       let findIndexArr
       for (var i = 0; i < this.scrollArr.length; i++) {
-        if (this.scrollArr[i] <= scrollTop && this.scrollArr[i+1] > scrollTop) {
+        if (this.scrollArr[i] <= scrollTop && this.scrollArr[i + 1] > scrollTop) {
           findIndexArr = i
         }
       }
