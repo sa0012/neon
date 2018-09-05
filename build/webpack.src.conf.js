@@ -15,10 +15,12 @@ function getComponentsEntrys() {
   const componentNameList = fs.readdirSync(basePath)
   if (componentNameList) {
     componentNameList.forEach(name => {
-      const componentPath = path.join(basePath, name)
-      // 排除非文件夹的内容
-      if (fs.statSync(componentPath).isDirectory()) {
-        componentsEntrys[name] = componentPath
+      if (name !== 'icon') {
+        const componentPath = path.join(basePath, name)
+        // 排除非文件夹的内容
+        if (fs.statSync(componentPath).isDirectory()) {
+          componentsEntrys[name] = componentPath
+        }
       }
     })
   }
