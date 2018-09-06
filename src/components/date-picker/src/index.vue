@@ -15,6 +15,7 @@
 </template>
 
 <script>
+// forked from https://github.com/youzan/vant/blob/dev/packages/datetime-picker/index.vue
 import picker from '../../picker'
 
 const currentYear = new Date().getFullYear()
