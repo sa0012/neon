@@ -26,6 +26,11 @@ Vue.use(Swiper).use(SwiperItem)
   <sq-swiper-item>4</sq-swiper-item>
 </sq-swiper>
 ```
+
+:::warning 注意
+组件块默认高度为250px，可在组件块最外层添加 `style` 自定义宽高
+:::
+
 #### Props
  名称            | 类型              | 说明                    | 默认值   | 可选值         
 :-----------     |:---------         |:---------------        |:------- |:-------- 
