@@ -1,13 +1,21 @@
 <template>
   <div>
-    <sq-button type="primary" size="small" @click.stop="show(0)">显示普通键盘</sq-button>
+    <demo-title>基础用法</demo-title>
+    <sq-cell title="普通键盘">
+      <sq-switch v-model="isShow0"></sq-switch>
+    </sq-cell>
+    <sq-cell title="身份证键盘">
+      <sq-switch v-model="isShow1"></sq-switch>
+    </sq-cell>
+    <sq-cell title="含小数点键盘">
+      <sq-switch v-model="isShow2"></sq-switch>
+    </sq-cell>
     <sq-number-keyboard
       v-model="isShow0"
       @delete="onDelete"
       @confirm="onConfirm"
       @key-click="onKeyClick"
     />
-    <sq-button type="primary" size="small" @click.stop="show(1)">显示身份证键盘</sq-button>
     <sq-number-keyboard
       v-model="isShow1"
       type="idcard"
@@ -15,7 +23,6 @@
       @confirm="onConfirm"
       @key-click="onKeyClick"
     />
-    <sq-button type="primary" size="small" @click.stop="show(2)">显示数字键盘</sq-button>
     <sq-number-keyboard
       v-model="isShow2"
       type="amount"

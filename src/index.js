@@ -13,6 +13,7 @@ import Stepper from './components/stepper'
 import Steps from './components/steps'
 import StepItem from './components/step-item'
 import Swiper from './components/swiper'
+import SwiperItem from './components/swiper-item'
 import Tabpane from './components/tabpane'
 import Tabs from './components/tabs'
 import Tag from './components/tag'
@@ -62,6 +63,7 @@ const components = [
   Steps,
   StepItem,
   Swiper,
+  SwiperItem,
   Tabpane,
   Tabs,
   Tag,
@@ -124,6 +126,7 @@ export {
   Steps,
   StepItem,
   Swiper,
+  SwiperItem,
   Tabpane,
   Tabs,
   Tag,

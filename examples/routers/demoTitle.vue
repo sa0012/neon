@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss">
 .demo-title {
-  padding: 25px 15px 7px 0;
+  padding: 25px 15px 7px;
   font-size: 14px;
   color: #666;
 }

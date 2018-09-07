@@ -185,7 +185,8 @@ export default {
       scrollArr: [],
       rightIndex: '',
       finishedText: '',
-      showIndex: true
+      showIndex: true,
+      isScroll: false
     }
   },
   watch: {
@@ -208,6 +209,7 @@ export default {
   methods: {
     touchStart (e) {
       this.showStartColor = true
+      this.isScroll = true
       this.start = e.changedTouches[0].clientY - this.curDistance / 4
       const everyDistance = (this.curDistance - 0) / this.brandCategorys.length / 2
       this.carIndex = Math.floor(this.start / everyDistance)
@@ -238,19 +240,20 @@ export default {
         let itemLi = listItem[this.carIndex]
         this.menuScroll.scrollToElement(itemLi, 300)
         this.carNum = this.brandCategorys[this.carIndex]
+        this.rightIndex = this.carNum
         e.stopPropagation()
         e.preventDefault()
       })
     },
     touchEnd (e) {
       this.showStartColor = false
+      this.isScroll = false
       this.$nextTick(() => {
         let listItem = document.querySelectorAll('.sq-brandCars-list > .sq-brandCars-item')
         let itemLi = listItem[this.carIndex]
         this.menuScroll.scrollToElement(itemLi, 300)
         this.carNum = this.brandCategorys[this.carIndex]
-        e.stopPropagation()
-        e.preventDefault()
+        this.rightIndex = this.carNum
       })
       e.stopPropagation()
       e.preventDefault()
@@ -379,7 +382,7 @@ export default {
         })
         this.menuScroll.on('scroll', (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
-          this.handleScroll(this.scrollY)
+          !this.isScroll && this.handleScroll(this.scrollY)
         })
       })
     },
@@ -508,9 +511,12 @@ export default {
       this.$emit('searchLoadMore', this.searchCallBack)
     },
     handleScroll (scrollTop) {
-      let findIndexArr = this.scrollArr.findIndex((item, index) => {
-        return (item >= scrollTop)
-      })
+      let findIndexArr
+      for (var i = 0; i < this.scrollArr.length; i++) {
+        if (this.scrollArr[i] <= scrollTop && this.scrollArr[i + 1] > scrollTop) {
+          findIndexArr = i
+        }
+      }
       this.rightIndex = this.brandCategorys[findIndexArr]
     }
   },

@@ -1,15 +1,28 @@
 <template>
-  <div class="demo-page-wrap">
-    <sq-button type="primary" size="large" @click="pluginClick1" style="font-size:14px;">插件式调用--默认今天[date类型]</sq-button>
-    <sq-button type="primary" size="large" @click="pluginClick2" style="font-size:14px;">插件式调用--默认明天[date类型]</sq-button>
-    <sq-button type="primary" size="large" @click="pluginClick3" style="font-size:14px;">插件式调用--默认明天[datetime类型]</sq-button>
-    <sq-button type="primary" size="large" @click="pluginClick4" style="font-size:14px;">插件式调用--默认今天[yearMonth类型]</sq-button>
-    <sq-button type="primary" size="large" @click="pluginClick5" style="font-size:14px;">插件式调用--默认今天[time类型]</sq-button>
-    <br>
-    <sq-button type="primary" size="small"
+  <div>
+    <demo-title>插件式调用</demo-title>
+    <sq-cell title="默认今天[date类型]">
+      <sq-button size="small" @click="pluginClick1">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="默认明天[date类型]">
+      <sq-button size="small" @click="pluginClick2">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="默认明天[datetime类型]">
+      <sq-button size="small" @click="pluginClick3">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="默认今天[yearMonth类型]">
+      <sq-button size="small" @click="pluginClick4">开启</sq-button>
+    </sq-cell>
+    <sq-cell title="默认今天[time类型]">
+      <sq-button size="small" @click="pluginClick5">开启</sq-button>
+    </sq-cell>
+    
+    <demo-title>标签式调用</demo-title>
+    <demo-title>
+      yyyy-MM-dd形式 {{dataValue1 | formatDate('yyyy-MM-dd')}}
+      <sq-button size="small"
       @click.native="dataValue1 = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)">设置日期为后天</sq-button>
-    <demo-title>yyyy-MM-dd形式</demo-title>
-    "{{dataValue1 | formatDate('yyyy-MM-dd')}}"
+    </demo-title>
     <sq-date-picker
       :min-date="minDate"
       :max-date="maxDate"
@@ -20,9 +33,10 @@
       @on-change="onChange2"
     />
 
-    <sq-button type="primary" size="small" @click.native="dataValue2 = new Date()">设置日期为当前</sq-button>
-    <demo-title>yyyy-MM-dd hh:mm形式</demo-title>
-    "{{dataValue2 | formatDate('yyyy-MM-dd hh:mm')}}"
+    <demo-title>
+      yyyy-MM-dd hh:mm形式 {{dataValue2 | formatDate('yyyy-MM-dd hh:mm')}}
+      <sq-button size="small" @click.native="dataValue2 = new Date()">设置日期为当前</sq-button>
+    </demo-title>
     <sq-date-picker
       type="datetime"
       v-model="dataValue2"
@@ -32,8 +46,7 @@
       @on-change="onChange2"
     />
 
-    <demo-title>yyyy-MM形式</demo-title>
-    "{{dataValue3 | formatDate('yyyy-MM')}}"
+    <demo-title>yyyy-MM形式 {{dataValue3 | formatDate('yyyy-MM')}}</demo-title>
     <sq-date-picker
       v-model="dataValue3"
       type="year-month"
@@ -41,8 +54,7 @@
       @cancel="cancel1"
       @on-change="onChange2"
     />
-    <demo-title>hh-mm形式</demo-title>
-    "{{dataValue4 | formatDate('hh-mm')}}"
+    <demo-title>hh-mm形式 {{dataValue4 | formatDate('hh-mm')}}</demo-title>
     <sq-date-picker
       v-model="dataValue4"
       type="time"
@@ -51,8 +63,13 @@
       @on-change="onChange2"
     />
 
-    <demo-title>搭配popup使用</demo-title>
-    <sq-button type="primary" size="small" @click="isShow = !isShow">click{{dataValue5 | formatDate('yyyy-MM-dd')}}</sq-button>
+    <demo-title>搭配popup使用 {{ dataValue5 | formatDate('yyyy-MM-dd') }}</demo-title>
+    <sq-cell title="搭配popup使用">
+      <sq-switch v-model="isShow"></sq-switch>
+    </sq-cell>
+    <br>
+    <br>
+    <br>
     <sq-popup v-model="isShow" position="bottom">
       <sq-date-picker
         v-model="dataValue5"

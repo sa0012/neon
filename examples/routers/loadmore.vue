@@ -61,7 +61,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 /* h1, h2 {
   font-weight: normal;
   margin: 0;
@@ -71,6 +71,7 @@ export default {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  background-color: #fff;
 }
 .li {
   display: block;

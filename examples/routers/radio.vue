@@ -1,32 +1,48 @@
 <template>
   <div>
-    <p style="padding-left:15px;">
-      <sq-radio-group v-model="value1" @change="change">
-        <sq-radio name="pt">普通</sq-radio>
-      </sq-radio-group>
-    </p>
-    <p style="padding-left:15px;">
-      <sq-radio-group v-model="value2" @change="change">
-        <sq-radio name="mrxz">默认选中</sq-radio>
-      </sq-radio-group>
-    </p>
-    <p style="padding-left:15px;">
-      <sq-radio-group v-model="value3" disabled @change="change">
-        <sq-radio name="jy">禁用</sq-radio>
-      </sq-radio-group>
-    </p>
-    <p style="padding-left:15px;">
-      <sq-radio-group v-model="value4" disabled @change="change">
-        <sq-radio name="xzqjy">选中且禁用</sq-radio>
-      </sq-radio-group>
-    </p>
+    <demo-title left>基础用法</demo-title>
+    <sq-cell>
+      <template slot="title">
+        <sq-radio-group v-model="value1" @change="change">
+          <sq-radio name="pt">普通</sq-radio>
+        </sq-radio-group>
+      </template>
+    </sq-cell>
+
+    <sq-cell>
+      <template slot="title">
+        <sq-radio-group v-model="value2" @change="change">
+          <sq-radio name="mrxz">默认选中</sq-radio>
+        </sq-radio-group>
+      </template>
+    </sq-cell>
+
+    <sq-cell>
+      <template slot="title">
+        <sq-radio-group v-model="value3" disabled @change="change">
+          <sq-radio name="jy">禁用</sq-radio>
+        </sq-radio-group>
+      </template>
+    </sq-cell>
+
+    <sq-cell>
+      <template slot="title">
+        <sq-radio-group v-model="value4" disabled @change="change">
+          <sq-radio name="xzqjy">选中且禁用</sq-radio>
+        </sq-radio-group>
+      </template>
+    </sq-cell>
     
     <demo-title left>禁用状态</demo-title>
-    <sq-radio-group style="padding-left:15px;" v-model="radioValue" @change="change" :disabled="radioDisabled">
-      <sq-radio name="pg">苹果</sq-radio>
-      <sq-radio name="xj">香蕉</sq-radio>
-      <sq-radio name="hmg">哈密瓜</sq-radio>
-    </sq-radio-group>
+    <sq-cell>
+      <template slot="title">
+        <sq-radio-group v-model="radioValue" @change="change" :disabled="radioDisabled">
+          <sq-radio name="pg">苹果</sq-radio>
+          <sq-radio name="xj">香蕉</sq-radio>
+          <sq-radio name="hmg">哈密瓜</sq-radio>
+        </sq-radio-group>
+      </template>
+    </sq-cell>
 
     <demo-title left>列表 cell 样式</demo-title>
     <sq-radio-group v-model="value5" type="cell" @change="change">

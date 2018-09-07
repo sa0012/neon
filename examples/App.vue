@@ -33,5 +33,8 @@ body {
   min-height: 100%;
   box-sizing: border-box;
   background-color: #EDF0F4;
+  .demo-title {
+    padding: 25px 15px 7px 0;
+  }
 }
 </style>

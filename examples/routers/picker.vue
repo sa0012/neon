@@ -1,12 +1,20 @@
 <template>
-  <div class="demo-page-wrap">
-    <sq-button size="small" type="primary" @click="value1 = ['广州']">设置新值</sq-button>
-    <sq-button size="small" type="primary" @click="list1 = ['苹果', '香蕉', '菠萝', '草莓']">改变数据源</sq-button>
-    <p>{{value1}}</p>
-    <demo-title>单列形式 -- ['']数据结构</demo-title>
+  <div>
+    <demo-title>搭配popup使用</demo-title>
+    <sq-cell title="搭配popup使用">
+      <sq-switch v-model="isShow"></sq-switch>
+    </sq-cell>
+    <demo-title>单列形式 -- ['']数据结构 {{value1}}</demo-title>
+    <sq-cell title="设置新值-广州">
+      <sq-button size="small" @click="$refs.pickerRef1.setValues(['广州'])">设置新值</sq-button>
+    </sq-cell>
+    <sq-cell title="改变数据源">
+      <sq-button size="small" @click="list1 = ['苹果', '香蕉', '菠萝', '草莓']">改变数据源</sq-button>
+    </sq-cell>
+    <br>
     <sq-picker
+      ref="pickerRef1"
       show-toolbar
-      v-model="value1"
       :columns="list1"
       :row-height="34"
       :row-count="7"
@@ -14,34 +22,17 @@
       @cancel="handleCancel"
       @on-change="onChange"
     />
-    <!-- <sq-button size="small" type="primary" @click="value2 = ['菠萝', 'B']">设置新值</sq-button>
-    <sq-button size="small" type="primary" @click="list2 = [['苹果', '香蕉', '菠萝', '草莓'], ['A', 'B', 'C', 'D']]">改变数据源</sq-button>
-    <p>{{value2}}</p>
-    <demo-title>单列形式 -- ['']数据结构</demo-title>
-    <sq-picker
-      show-toolbar
-      v-model="value2"
-      :columns="list2"
-      @confirm="handleConfirm"
-      @cancel="handleCancel"
-      @on-change="onChange"
-    /> -->
-    <p>***************</p>
     <demo-title>多列形式 -- [[''],['']]数据结构</demo-title>
-    <p>{{value3}}</p>
     <sq-picker
       show-toolbar
-      v-model="value3"
       :columns="list2"
       @confirm="handleConfirm"
       @cancel="handleCancel"
       @on-change="onChange"
     />
     <demo-title>多列形式 -- [{},{}]数据结构</demo-title>
-    <p>{{value4}}</p>
     <sq-picker
       show-toolbar
-      v-model="value4"
       :columns="list3"
       @confirm="handleConfirm"
       @cancel="handleCancel"
@@ -50,10 +41,8 @@
     />
 
     <demo-title>联动形式</demo-title>
-    <!-- value-key="label" -->
     <sq-picker
       show-toolbar
-      v-model="value5"
       :columns="list4"
       @confirm="handleConfirm"
       @cancel="handleCancel"
@@ -62,12 +51,11 @@
     
     <demo-title>loading状态</demo-title>
     <sq-picker
+      show-toolbar
       :columns="list0"
       :loading="true"
     />
 
-    <demo-title>搭配popup使用</demo-title>
-    <sq-button type="primary" size="small" @click="isShow = !isShow">show</sq-button>
     <sq-popup v-model="isShow" position="bottom">
       <sq-picker
         show-toolbar
@@ -147,36 +135,28 @@ export default {
     },
     onChange (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
     },
     cancel1 (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
     },
     confirm1 (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
     },
     handleChange (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
     },
     handleCancel (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
     },
     handleConfirm (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
     },
     cancel (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
       this.isShow = !this.isShow
     },
     confirm (result) {
       console.log(result)
-      // this.$toast.text(`当前值为${item}`)
       this.isShow = !this.isShow
     },
     handleChange5 (value, picker) {
