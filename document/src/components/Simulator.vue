@@ -84,6 +84,12 @@ export default {
   height: 704px
   background: url(~@/assets/images/iphoneX.png) no-repeat 0 0/cover
 
+@media screen and (max-height: 770px)
+  .neon-doc-simulator
+    margin-top: 0
+    top: initial
+    transform: translateY(0)
+
 .neon-doc-simulator
   &__nav
     position: relative
