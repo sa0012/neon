@@ -6,6 +6,10 @@ const menu = {
     { to: 'theme', name: '主题定制' },
     { to: 'changelog', name: '更新日志' }
   ],
+  // 自定义指令
+  directives: [
+    { to: 'sq-input', name: 'sq-input' }
+  ],
   // 基础
   base: [
     { to: 'accordion', name: 'Accordion - 折叠面板' },
@@ -56,4 +60,5 @@ const menu = {
     { to: 'submitBar', name: 'SubmitBar - 提交订单栏' }
   ]
 }
-module.exports = menu
+
+export default menu

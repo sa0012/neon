@@ -32,6 +32,8 @@ const $ = {
 }
 
 export default {
+  name: 'sq-input',
+
   bind (el, binding, vnode) {
     if (!binding.arg) {
       throw Error(`[v -sq-input]:unknow binding.arg`)
