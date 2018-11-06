@@ -210,10 +210,13 @@ export default {
           const value = String(target.value).replace(/[^a-zA-Z0-9]/g, '').toLocaleUpperCase()
           if (required && !value) {
             vnode.context.$toast ? vnode.context.$toast.text('请输入车架号') : alert('请输入车架号')
+            return false
           }
           if (value && !$.isVin(value)) {
             vnode.context.$toast ? vnode.context.$toast.text('请输入正确的车架号') : alert('请输入正确的车架号')
+            return false
           }
+          return true
         }
         target.oninput = () => {
           let context = vnode.context

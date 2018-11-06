@@ -7,14 +7,14 @@
 #### 注册全局指令
 
 ```js
-import { sqInput } from '~@insaic/neon/src/directives'
+import { sqInput } from '@insaic/neon/src/directives'
 
 Vue.use(sqInput)
 ```
 #### 注册局部指令
 
 ```js
-import { sqInput } from '~@insaic/neon/src/directives'
+import { sqInput } from '@insaic/neon/src/directives'
 
 export default {
   directives: {
