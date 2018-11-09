@@ -16,6 +16,9 @@
         <button class="home-btn scan-code" :class="{'active': active}">
           扫码体验<img src="~@/assets/images/qrcode.png" alt="示例" class="qrcode">
         </button>
+        <!-- <a href="https://github.com/insaic/neon" target="_blank" class="star">
+          <i class="github-logo"></i>Star<span class="star-num" v-show="starNum && starNum > 0">{{ starNum }}</span>
+        </a> -->
       </div>
       <div class="right home-img"></div>
     </section>
@@ -80,8 +83,15 @@ AOS.init()
 export default {
   data () {
     return {
-      active: false
+      active: false,
+      starNum: undefined
     }
+  },
+
+  created () {
+    // this.ajax('https://api.github.com/repos/insaic/neon', 'get', {}, (response) => {
+    //   this.starNum = response.stargazers_count
+    // })
   },
 
   mounted () {
@@ -95,6 +105,36 @@ export default {
       } else if (this.active) {
         this.active = false
       }
+    },
+    ajax (url, method, params, cb) {
+      let xhr = new XMLHttpRequest()
+      xhr.open(method, url, true)
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          let data = xhr.responseText
+          try {
+            data = JSON.parse(data)
+          } catch (exc) {
+          }
+          if (cb) {
+            cb(data)
+          }
+        }
+      }
+
+      let body
+      if (params) {
+        let bodies = []
+        for (var name in params) {
+          bodies.push(name + '=' + encodeURIComponent(params[name]))
+        }
+
+        body = bodies.join('&')
+        if (body.length) {
+          xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+        }
+      }
+      xhr.send(body)
     }
   },
 
@@ -114,6 +154,52 @@ body
   height: 100%
   background-color: #fff
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace
+  .github-logo
+    position: absolute
+    top: 3px
+    left: 8px
+    display: inline-block
+    width: 20px
+    height: 20px
+    margin-right: 4px
+    background: url('~@/assets/images/github.png') no-repeat 0 0/cover
+  .star
+    padding: 4px 8px 4px 32px
+    margin-left: 24px
+    color: #444
+    position: relative
+    width: 68px
+    height: 28px
+    line-height: 28px
+    border-radius: 2px
+    border: 1px solid #d1d2d3
+    background-color: #eff3f6
+    background-image: linear-gradient(180deg,#fafbfc,#e4ebf0)
+    transition: all .3s
+    text-decoration: none
+    &:hover
+      background-image: linear-gradient(180deg,#f0f3f6,#dce3ec)
+    &-num
+      background-color: #243241
+      color: #fff
+      padding: 2px 14px
+      position: absolute
+      left: 100%
+      margin-left: 14px
+      top: 4px
+      border-radius: 20px
+      font-size: 12px
+      line-height: initial
+      &:before
+        content: ''
+        position: absolute
+        left: -10px
+        top: 50%
+        margin-top: -6px
+        border-top: 6px solid #fff
+        border-left: 6px solid #fff
+        border-right: 6px solid #243241
+        border-bottom: 6px solid #fff
   .logo-wrap
     margin-left: 34px
   .header
@@ -280,4 +366,30 @@ body
         color: #697b8c
       .link
         color: #009ce4
+
+@media screen and (max-width: 750px)
+  .neon-home
+    .section1
+      text-align: center
+      .left
+        position: initial
+        width: 100%
+        margin-top: 314px
+        .name
+          margin-top: 0
+          &-left
+            font-size: 18px
+          &-right
+            font-size: 24px
+      .right
+        position: absolute
+        width: 100%
+        min-width: initial
+        min-height: 50%
+        transform: scale(.7)
+      .home-btn
+        font-size: 16px
+    .section2
+      .part
+        transform: scale(.8) !important
 </style>
