@@ -236,7 +236,7 @@ export default {
         target.placeholder = attrs.placeholder || '请输入发动机号'
 
         target.onblur = () => {
-          const value = String(target.value).replace(/[^a-zA-Z0-9]/g, '')
+          const value = String(target.value).replace(/[^a-zA-Z0-9]/g, '').toLocaleUpperCase()
           if (required && !value) {
             vnode.context.$toast ? vnode.context.$toast.text('请输入发动机号') : alert('请输入发动机号')
             return false
@@ -253,7 +253,7 @@ export default {
           expression.forEach((item, index) => {
             (index !== expression.length - 1) && context[item] && (context = context[item])
           })
-          context[expression[expression.length - 1]] = String(target.value).replace(/[^a-zA-Z0-9]/g, '')
+          context[expression[expression.length - 1]] = String(target.value).replace(/[^a-zA-Z0-9]/g, '').toLocaleUpperCase()
         }
         break
       default:
