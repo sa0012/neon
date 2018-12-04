@@ -55,7 +55,6 @@ const menu = {
     { to: 'childinsuranceCell', name: 'ChildinsuranceCell - 子险列表' },
     { to: 'chooseCar', name: 'ChooseCar - 选择车型' },
     { to: 'chooseCity', name: 'ChooseCity - 选择城市组件' },
-    { to: 'citySelector', name: 'CitySelector - 城市选择' },
     { to: 'sendcode', name: 'Sendcode - 发送验证码' },
     { to: 'submitBar', name: 'SubmitBar - 提交订单栏' }
   ]
