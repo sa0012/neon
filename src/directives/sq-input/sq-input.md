@@ -105,7 +105,9 @@ export default {
 :--------       |:---------    |:-------  |:------
  required       | 验证是否必填   | --       | --
 
- :::tip 注意
+:::tip 注意
 指令arg参数为 `mobile`、`idNo`、`email` 时需传入所对应的 `expression`
-  
+
+在含v-sq-input代码块中 请勿使用v-if，用v-show代替，否则会引起bug
+:::
 
