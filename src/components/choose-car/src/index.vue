@@ -412,6 +412,7 @@ export default {
       this.$refs.menuWrapper.style.overflowY = 'hidden'
       this.$emit('brandModelId', { brandId, familyId })
       this.childScroll && this.childScroll.destroy()
+      this.childScroll.scrollTo(0, 0)
       try {
         setTimeout(() => {
           if (this.$refs.wrapper) {
