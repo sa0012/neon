@@ -264,7 +264,6 @@ export default {
       let lastDistanceX = Math.abs(currentDisX - this[touchStartX])
       let lastDistanceY = Math.abs(currentDisY - this[touchStartY])
       let currentMoveDisX = currentDisX - this[touchStartX]
-
       // 判断滑动方向
       if (this.firstMove) {
         if (lastDistanceX > lastDistanceY && (currentDisX - this[touchStartX] > 0)) {
@@ -312,7 +311,6 @@ export default {
             this.$emit('update:showChooseCar', this.myShowChooseCar)
             this.$emit('praent-event', this.myShowChooseCar)
           }
-
           if (showModal === 'showSelectCar' || showModal === 'showSearchModal') {
             this.showIndex = true
           }
@@ -375,73 +373,62 @@ export default {
           this.scrollArr.push(scroll)
           this.titlePos[item] = scroll
         })
-
         if (!this.menuScroll) {
           this.menuScroll = new BScroll(this.$refs.brandCars, {
+            // 内容区可点击
             click: true,
-            probeType: 3,
-            scrollY: true
+            // 向外派发事件
+            probeType: 3
           })
           this.menuScroll.on('scroll', (pos) => {
             this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
             !this.isScroll && this.handleScroll(this.scrollY)
           })
         } else {
-          this.menuScrill.refresh()
+          this.menuScroll.refresh()
         }
       })
     },
-    async showModel (code, name, item) {
-      await new Promise((resolve, reject) => {
-        resolve()
-        this.menuScroll && this.menuScroll.destroy()
-      })
-      await new Promise((resolve, reject) => {
-        resolve()
-        this.showSelectCar = true
-        this.showIndex = false
-        this.$refs.menuWrapper.style.overflowY = 'hidden'
+    showModel (code, name, item) {
+      this.showSelectCar = true
+      this.showIndex = false
+      this.$refs.menuWrapper.style.overflowY = 'hidden'
+      this.$nextTick(() => {
+        // 目标盒子内容总高度 - 窗口可视区域高度
+        let clientWidth = document.documentElement.clientWidth || document.body.clientWidth
+        this.slideHeight = this.$refs.slide.offsetHeight - clientWidth
+        this.menuScroll.destroy()
         this.$nextTick(() => {
-          // 目标盒子内容总高度 - 窗口可视区域高度
-          let clientWidth = document.documentElement.clientWidth || document.body.clientWidth
-          this.slideHeight = this.$refs.slide.offsetHeight - clientWidth
           if (!this.childScroll) {
             this.childScroll = new BScroll(this.$refs.selectCar, {
-              click: true,
-              scrollY: true
+              click: true
             })
           } else {
             this.childScroll.refresh()
           }
         })
-        this.brandCategoryData.code = code
-        this.brandCategoryData.name = name
-        this.brandCategoryData.item = item
-        this.$emit('brandCategoryCode', code)
       })
+      this.brandCategoryData.code = code
+      this.brandCategoryData.name = name
+      this.brandCategoryData.item = item
+      this.$emit('brandCategoryCode', code)
     },
-    async jumpChooseCar (brandId, familyId) {
-      await new Promise((resolve, reject) => {
-        resolve()
-        this.childScroll && this.childScroll.destroy()
-      })
-      await new Promise((resolve, reject) => {
-        resolve()
-        this.showSelectModel = true
-        this.showSelectCar = false
-        this.isShowBrandCars = false
-        this.$refs.menuWrapper.style.overflowY = 'hidden'
-        this.$emit('brandModelId', { brandId, familyId })
-        try {
-          setTimeout(() => {
-            if (this.$refs.wrapper) {
-              this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top
-            }
-          }, 30)
-        } catch (e) {
-
-        }
-      })
+    jumpChooseCar (brandId, familyId) {
+      this.showSelectModel = true
+      this.showSelectCar = false
+      this.isShowBrandCars = false
+      this.$refs.menuWrapper.style.overflowY = 'hidden'
+      this.$emit('brandModelId', { brandId, familyId })
+      this.childScroll.destroy()
+      this.childScroll.scrollTo(0, 0)
+      try {
+        setTimeout(() => {
+          if (this.$refs.wrapper) {
+            this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top
+          }
+        }, 30)
+      } catch (e) {
+      }
     },
     closeCarModal () {
       this.showSelectCar = false
@@ -505,7 +492,6 @@ export default {
         this.$toast.text('搜索字符不能少于5位', 3000)
         return
       }
-      this.menuScroll && this.menuScroll.destroy()
       this.$emit('searchOption', this.search, this.getSearchCar)
     },
     getKeyCode (e) {
@@ -703,7 +689,6 @@ export default {
     }
   }
 }
-
 .sq-selectcar {
   overflow-x: hidden;
   width: 70%;
@@ -799,7 +784,6 @@ export default {
     }
   }
 }
-
 .sq-selectmodel {
   position: fixed;
   top: 0;
@@ -914,7 +898,6 @@ export default {
     @include mix-1px($top: 1);
   }
 }
-
 .car-index {
   position: fixed;
   top: 50%;
@@ -931,7 +914,6 @@ export default {
   font-size: 24px;
   font-weight: bold;
 }
-
 .sq-search {
   position: fixed;
   top: 0;
