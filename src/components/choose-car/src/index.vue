@@ -376,51 +376,72 @@ export default {
           this.titlePos[item] = scroll
         })
 
-        this.menuScroll = new BScroll(this.$refs.brandCars, {
-          click: true,
-          probeType: 3
-        })
-        this.menuScroll.on('scroll', (pos) => {
-          this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
-          !this.isScroll && this.handleScroll(this.scrollY)
-        })
-      })
-    },
-    showModel (code, name, item) {
-      this.showSelectCar = true
-      this.showIndex = false
-      this.$refs.menuWrapper.style.overflowY = 'hidden'
-      this.$nextTick(() => {
-        // 目标盒子内容总高度 - 窗口可视区域高度
-        let clientWidth = document.documentElement.clientWidth || document.body.clientWidth
-        this.slideHeight = this.$refs.slide.offsetHeight - clientWidth
-        setTimeout(() => {
-          this.childScroll = new BScroll(this.$refs.selectCar, {
-            click: true
+        if (!this.menuScroll) {
+          this.menuScroll = new BScroll(this.$refs.brandCars, {
+            click: true,
+            probeType: 3,
+            scrollY: true
           })
-        }, 30)
+          this.menuScroll.on('scroll', (pos) => {
+            this.scrollY = Math.abs(Math.round(pos.y)) // 将位置四舍五入后取绝对值
+            !this.isScroll && this.handleScroll(this.scrollY)
+          })
+        } else {
+          this.menuScrill.refresh()
+        }
       })
-      this.brandCategoryData.code = code
-      this.brandCategoryData.name = name
-      this.brandCategoryData.item = item
-      this.$emit('brandCategoryCode', code)
     },
-    jumpChooseCar (brandId, familyId) {
-      this.showSelectModel = true
-      this.showSelectCar = false
-      this.isShowBrandCars = false
-      this.$refs.menuWrapper.style.overflowY = 'hidden'
-      this.$emit('brandModelId', { brandId, familyId })
-      this.childScroll && this.childScroll.destroy()
-      try {
-        setTimeout(() => {
-          if (this.$refs.wrapper) {
-            this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top
+    async showModel (code, name, item) {
+      await new Promise((resolve, reject) => {
+        resolve()
+        this.menuScroll && this.menuScroll.destroy()
+      })
+      await new Promise((resolve, reject) => {
+        resolve()
+        this.showSelectCar = true
+        this.showIndex = false
+        this.$refs.menuWrapper.style.overflowY = 'hidden'
+        this.$nextTick(() => {
+          // 目标盒子内容总高度 - 窗口可视区域高度
+          let clientWidth = document.documentElement.clientWidth || document.body.clientWidth
+          this.slideHeight = this.$refs.slide.offsetHeight - clientWidth
+          if (!this.childScroll) {
+            this.childScroll = new BScroll(this.$refs.selectCar, {
+              click: true,
+              scrollY: true
+            })
+          } else {
+            this.childScroll.refresh()
           }
-        }, 30)
-      } catch (e) {
+        })
+        this.brandCategoryData.code = code
+        this.brandCategoryData.name = name
+        this.brandCategoryData.item = item
+        this.$emit('brandCategoryCode', code)
+      })
+    },
+    async jumpChooseCar (brandId, familyId) {
+      await new Promise((resolve, reject) => {
+        resolve()
+        this.childScroll && this.childScroll.destroy()
+      })
+      await new Promise((resolve, reject) => {
+        resolve()
+        this.showSelectModel = true
+        this.showSelectCar = false
+        this.isShowBrandCars = false
+        this.$refs.menuWrapper.style.overflowY = 'hidden'
+        this.$emit('brandModelId', { brandId, familyId })
+        try {
+          setTimeout(() => {
+            if (this.$refs.wrapper) {
+              this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top
+            }
+          }, 30)
+        } catch (e) {
 
-      }
+        }
+      })
     },
     closeCarModal () {
       this.showSelectCar = false
