@@ -1,15 +1,22 @@
 <template>
   <div class="sq-sendcode">
     <div class="sq-sendcode-input-wrapper">
-      <input type="text" pattern="[0-9]*" v-model="inputValue" class="sq-sendcode-input" :maxlength="maxlength" :placeholder="placeholder">
+      <input
+        :type="type"
+        :value="inputValue"
+        @input="onInput"
+        :pattern="pattern"
+        class="sq-sendcode-input"
+        :maxlength="maxlength"
+        :placeholder="placeholder"
+      >
     </div>
     <sq-button
       class="sq-sendcode-btn"
       type="ghost"
       :disabled="disabled"
       @click="$_click"
-      :style="styles"
-    >
+      :style="styles">
       {{ text }}
     </sq-button>
   </div>
@@ -53,6 +60,16 @@ export default {
     },
     sessionStorageKey: {
       type: String
+    },
+    pattern: {
+      default: '[0-9]*'
+    },
+    replaceHandle: {
+      type: Function
+    },
+    inputType: {
+      type: String,
+      default: 'text'
     }
   },
 
@@ -79,6 +96,13 @@ export default {
   },
 
   methods: {
+    onInput (event) {
+      if (this.replaceHandle) {
+        event.target.value = this.inputValue = this.replaceHandle(event.target.value)
+      } else {
+        this.inputValue = event.target.value
+      }
+    },
     $_click () {
       this.$emit('click')
     },
