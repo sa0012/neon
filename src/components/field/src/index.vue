@@ -146,11 +146,13 @@ export default {
   },
 
   beforeDestroy () {
-    if (typeof this.$refs.inputRef.onblur === 'function') {
-      this.$refs.inputRef.onblur = null
-    }
-    if (typeof this.$refs.inputRef.oninput === 'function') {
-      this.$refs.inputRef.oninput = null
+    if (this.$refs.inputRef) {
+      if (typeof this.$refs.inputRef.onblur === 'function') {
+        this.$refs.inputRef.onblur = null
+      }
+      if (typeof this.$refs.inputRef.oninput === 'function') {
+        this.$refs.inputRef.oninput = null
+      }
     }
   },
 
