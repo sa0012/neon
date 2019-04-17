@@ -33,6 +33,10 @@ export default {
   },
 
   props: {
+    type: {
+      type: String,
+      default: 'text'
+    },
     value: {
       type: Boolean,
       default: false
